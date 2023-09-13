@@ -1,0 +1,39 @@
+body {
+    background-color: #f5f5f5;
+}
+
+.input-box {
+    font-size: 20px;
+    margin-bottom: 10px; /* Adiciona espaço entre campos e botões fim da page */
+    color: black;
+    display: flex; /* coloca nome e checklist na mesma linha */
+    align-items: flex-end; /* centraliza o botão inserir */
+}
+
+.input-box label::after {
+    content: "\00a0"; /* Adiciona um espaço em branco após o texto do rótulo */
+    margin-right: 10px; /* Adicione um espaço de 10px após o rótulo */
+}
+
+.input-box input {
+    margin-right: 30px; /* Adiciona espaço após o rótulo e o campo*/
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.section-itens {
+    margin-top: 70px; /* Ajuste o espaçamento entre as duas seções*/
+}
+
+.form-submit-categoria {
+    margin-top: 100px; /* Ajuste o espaçamento entre as duas seções*/
+    
+}
+
+
+
+

@@ -1,0 +1,18 @@
+.input-box input#id_checklist {
+    margin-right: 5px; /* Ajuste a margem conforme desejado */
+}
+
+.checklist-container {
+    display: flex; /* Usar flexbox para centralizar verticalmente */
+    align-items: center; /* Centralizar verticalmente */
+    height: 100vh; /* Altura igual à altura da janela de visualização (viewport) */
+}
+
+.id_checklist {
+    background-color: #3498db;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: #fff;
+}
+
