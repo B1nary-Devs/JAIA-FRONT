@@ -1,6 +1,4 @@
 import './assets/css/cadastroCategoria/cadastroCategoria.css'
-import './assets/css/cadastroCategoria/checklist.css'
-//import './assets/css/header/header.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
