@@ -1,4 +1,7 @@
 <template>
+    <div class="comp">
+        
+    </div>
    <nav>
     <div class="nav-user">
         <img src="icons/nav/User.svg" alt="">
