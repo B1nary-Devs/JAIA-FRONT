@@ -1,7 +1,8 @@
 <template>
     <div class="form-cadastro">
         <div class="form-title">
-            <h1>Prestador de Serviço > Cadastro</h1>
+            <h1>Prestador de Serviço</h1>
+            <span>> Cadastro</span>
         </div>
         <div class="form-body">
             <div class="input-group">
@@ -15,9 +16,9 @@
                     <input type="number" id="id_cnpj" placeholder="00.000.000/0000-00">
                 </div>
 
-                <div class="input-box">
+                <div class="input-box-categ">
                     <label for="id_categoria">Categoria</label>
-                    <Dropdown v-model="selectCategoria" :options="categorias" optionLabel="name" placeholder="Selecione uma categoria" class="w-full md:w-14rem" />
+                    <Dropdown id="select-categ" v-model="selectCategoria" editable :options="categorias" optionLabel="name" placeholder="Select a City" class="w-full md:w-14rem" />
                 </div>
 
                 <div class="input-box">
@@ -29,13 +30,12 @@
                     <label for="id_senha">Senha</label>
                     <input type="password" id="id_senha">
                 </div>
+            </div>
 
-                <div class="form-submit">
+            <div class="form-submit">
                     <button>Voltar</button>
 
                     <button>Cadastrar</button>
-                </div>
-
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
 <script setup lang="ts">
     import Dropdown from 'primevue/dropdown';
     import { ref } from "vue";
-
+    import '../assets/css/cadprestador/cadprestador.css'
     
 const selectCategoria = ref();
 const categorias = ref([
