@@ -8,9 +8,8 @@
         <div class="input-group">
             <div class="input-box">
                 <label for="id_nome">Nome da categoria</label>
-                <input type="text" class="input-nome-categoria" id="id_nome" placeholder="Ex.: Elétrica" />
+                <input type="text" class="input-nome-categoria" id="id_nome" v-model="nomeCategoria" placeholder="Ex.: Elétrica" />
             </div>
-            
             <div class="input-box">
                 <label for="id_checklist">Item do checklist</label>
                 <div class="checklist">
@@ -24,8 +23,10 @@
         <div class="section-title-itens"> 
             <h1>Itens cadastrados</h1>
         </div>
-        <div class="itens">
-          <p v-for="(itemCadastrado, index) in itens" :key="index">{{ index + 1 }}: {{ itemCadastrado }}</p>
+        <div class="itens" v-for="(itemCadastrado, index) in itens" :key="index">
+            <div class="column">{{ index + 1 }}: {{ itemCadastrado }}</div>
+            <div class="column"><button id="btn-remover" class="botao-remover" @click="removerItem(index)">Remover</button></div>
+          </div>
         </div>
     </div>
           <div class="form-submit-categoria">
@@ -39,14 +40,13 @@
             <p>B1naryInspec | V.01</p>
           </footer>
         </div>
-      </div>
   </template>
   
   <script setup lang="ts">
-  import '../assets/css/cadastroCategoria/cadastroCategoria.css'
-  import { onMounted, ref } from 'vue';
-  import axios from 'axios';
+  import { ref } from 'vue';
+import '../assets/css/cadastroCategoria/cadastroCategoria.css';
 
+  let nomeCategoria = ref("");
   let item = ref("");
   let itens = ref<string[]>([]);;
 
@@ -56,6 +56,12 @@
       item.value = "";
     }
   }
+
+  async function removerItem(index : number) {
+    itens.value.splice(index, 1);
+  }
+
+
   
   </script>
   
