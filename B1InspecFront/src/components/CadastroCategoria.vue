@@ -14,8 +14,8 @@
             <div class="input-box">
                 <label for="id_checklist">Item do checklist</label>
                 <div class="checklist">
-                    <input type="text" class="input-itens" id="id_checklist" placeholder="Ex.: Pontos de energia" />
-                    <button id="btn-inserir" class="botao-azul">Inserir</button>
+                    <input type="text" v-model="item" class="input-itens" id="id_checklist" placeholder="Ex.: Pontos de energia" />
+                    <button id="btn-inserir" class="botao-azul" @click="inserirItem">Inserir</button>
                 </div>              
             </div>
         </div>
@@ -24,21 +24,38 @@
         <div class="section-title-itens"> 
             <h1>Itens cadastrados</h1>
         </div>
-
+        <div class="itens">
+          <p v-for="(itemCadastrado, index) in itens" :key="index">{{ index + 1 }}: {{ itemCadastrado }}</p>
+        </div>
     </div>
-
           <div class="form-submit-categoria">
-            <button class="botao-branco">Voltar</button>
-  
-            <button class="botao-azul">Cadastrar</button>
+            <div class="botoes">
+              <button class="botao-branco">Voltar</button>
+              <button class="botao-azul">Cadastrar</button>  
+            </div>
           </div>
+          <div class="blank"></div>
+          <footer class="footer">
+            <p>B1naryInspec | V.01</p>
+          </footer>
         </div>
       </div>
   </template>
   
   <script setup lang="ts">
-  import { ref } from 'vue'
   import '../assets/css/cadastroCategoria/cadastroCategoria.css'
+  import { onMounted, ref } from 'vue';
+  import axios from 'axios';
+
+  let item = ref("");
+  let itens = ref<string[]>([]);;
+
+  async function inserirItem(){
+    if(item.value.trim() != ""){
+      itens.value.push(item.value);
+      item.value = "";
+    }
+  }
   
   </script>
   
