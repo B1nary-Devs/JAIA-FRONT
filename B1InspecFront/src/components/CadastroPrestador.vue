@@ -36,7 +36,7 @@
                     <button>Voltar</button>
 
                     <button>Cadastrar</button>
-                </div>
+            </div>
         </div>
     </div>
 </template>
