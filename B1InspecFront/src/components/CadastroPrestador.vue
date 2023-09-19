@@ -16,9 +16,13 @@
                     <input type="number" id="id_cnpj" placeholder="00.000.000/0000-00">
                 </div>
 
-                <div class="input-box-categ">
+                <div class="input-box">
                     <label for="id_categoria">Categoria</label>
-                    <Dropdown id="select-categ" v-model="selectCategoria" editable :options="categorias" optionLabel="name" placeholder="Select a City" class="w-full md:w-14rem" />
+                    <select id="id_categoria" name="select">
+                        <option class="option-categ" value="value1">Eletricista</option>
+                        <option value="value2">Mecânico</option>
+                        <option value="value3">Engenheiro</option>
+                    </select>
                 </div>
 
                 <div class="input-box">
@@ -37,6 +41,11 @@
 
                     <button>Cadastrar</button>
             </div>
+
+        </div>
+
+        <div class="form-footer">
+            <p>© B1naryInspec | V.01</p>
         </div>
     </div>
 </template>
