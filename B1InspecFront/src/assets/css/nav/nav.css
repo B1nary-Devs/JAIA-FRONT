@@ -1,0 +1,142 @@
+*{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*componente pai*/
+.componente-nav{
+    position: absolute;
+    z-index: 9999;
+    background-color: transparent;
+}
+
+/*animação*/
+@keyframes wipe-in-down {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
+    to {
+      clip-path: inset(0 0 0 0);
+    }
+  }
+  
+  [transition-style="in:wipe:down"] {
+    animation: 1.5s cubic-bezier(.25, 1, .30, 1) wipe-in-down both;
+  }
+
+
+nav{
+    z-index: 998;
+    top: 0;
+    position: fixed;
+    bottom: 100;
+    left: 0;
+    height: 100vh;
+    width: 60px;
+    background-color: rgb(33, 37, 33);
+    overflow: hidden;
+    transition: width 0.2s linear;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, alpha);
+}
+
+.logo{
+    display: flex;
+    width: 200px;
+}
+
+.logo-link-item{
+    width: 200px;
+    margin-left: 10px;
+    margin-top: 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    transition: all .55s ease;
+}
+
+.logo-link-item svg{
+    width: 35px;
+    fill: rgb(125, 184, 231);
+}
+
+.logo-link-item p{
+    color: rgb(125, 184, 231);
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+/*ANIMAÇÕES*/
+.logo-link-item:hover{
+    fill: #ffffff;
+    transform: translateX(8px);
+}
+
+.logo-link-item:hover svg{
+    fill: #ffffff;
+}
+
+.logo-link-item:hover p{
+    color: #ffffff;
+}
+
+/*linha divisoria*/
+.divisor{
+    height: 1px;
+    width: 100%;
+    margin-top: 15px;
+    background-color: rgba(94, 94, 94, 0.781);
+}
+
+/*section dos menus de link*/
+.nav-menu{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/*ITENS*/
+.nav-item{
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    align-items: center;
+}
+
+/*LINKS*/
+.link-item{
+    padding: 0;
+    margin: 0;
+    width: 270px;
+    height: 50px;
+    color: rgb(125, 184, 231);
+    display: flex;
+    align-items: center;
+    transition: all .55s ease;
+}
+
+.link-item svg{
+    width: 35px;
+}
+
+.link-item p{
+    margin-left: 20px;
+}
+
+/*ANIMAÇÕES*/
+nav:hover{
+    width: 278px;
+    transition: all 0.5s ease;
+}
+
+.link-item:hover{
+    color: #ffffff;
+    transform: translateX(8px);
+}
