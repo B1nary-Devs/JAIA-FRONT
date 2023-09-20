@@ -102,7 +102,7 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: right;
     background-color: white;
     height: 50px;
 }
@@ -128,10 +128,10 @@ body {
 
 
 
-  
+
 
   
-  .botao-azul {
+  .botao-inserir {
     background-color: #3498db;
     border: none;
     border-radius: 4px;
@@ -140,21 +140,37 @@ body {
     box-shadow: 2px 2px 2px grey;
   }
 
-  .botao-azul:active{
+  .botao-inserir:active{
     transform: scale(0.98);
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
   }
 
-  .botao-branco {
+  .botao-cadastrar {
+    background-color: #3498db;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 22px;
+    color: #fff;
+    box-shadow: 2px 2px 2px grey;
+    margin-left: 15px;
+  }
+
+  .botao-cadastrar:active{
+    transform: scale(0.98);
+    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+  }
+
+  .botao-voltar {
     background-color: #fff;
     border: none;
     border-radius: 4px;
-    padding: 8px 20px;
+    padding: 10px 22px;
     color: #000000;
     box-shadow: 2px 2px 2px grey;
+    border: 1px solid rgb(225, 225, 225)
   }
 
-  .botao-branco:active{
+  .botao-voltar:active{
     transform: scale(0.98);
     box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
   }
@@ -165,11 +181,41 @@ body {
     border-radius: 4px;
     padding: 4px 10px;
     color: #000000;
-    box-shadow: 1px 1px 2px grey;
+    box-shadow: 1px 1px 2px rgb(179, 179, 179);
     font-size: 12px;
   }
   
   .botao-remover:active{
+    transform: scale(0.98);
+    box-shadow: 2px 1px 4px 2px rgba(8, 8, 8, 0.24);
+  }
+
+  .botao-editar {
+    background-color: #e7e7e7;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    color: #000000;
+    box-shadow: 1px 1px 2px rgb(179, 179, 179);
+    font-size: 12px;
+  }
+  
+  .botao-editar:active{
+    transform: scale(0.98);
+    box-shadow: 2px 1px 4px 2px rgba(8, 8, 8, 0.24);
+  }
+
+  .botao-salvarEdicao {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    box-shadow: 1px 1px 2px rgb(179, 179, 179);
+    font-size: 12px;
+  }
+  
+  .botao-salvarEdicao:active{
     transform: scale(0.98);
     box-shadow: 2px 1px 4px 2px rgba(8, 8, 8, 0.24);
   }
