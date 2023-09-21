@@ -19,7 +19,7 @@
                 <div class="input-box">
                     <label for="id_categoria">Categoria</label>
                     <select id="id_categoria">
-                        <option v-for="ctg in categoria" name="select" :key="ctg.id" value="value1">{{ ctg.nome }}</option>
+                        <option v-for="ctg in categoria" name="select" :key="ctg.id" value={{ctg.id}}>{{ ctg.nome }}</option>
                     </select>
                 </div>
 
@@ -37,7 +37,7 @@
             <div class="form-submit">
                     <button>Voltar</button>
 
-                    <button>Cadastrar</button>
+                    <button @click="cadastrarPrestador">Cadastrar</button>
             </div>
 
         </div>
@@ -71,14 +71,27 @@
   }
 
   async function cadastrarPrestador() {
-    await axios.get('http://localhost:8080/prestador' ,
+    await axios.post('http://localhost:8080/prestador' ,
     {
-    
+      prestadorNome: nome.value,
+      cnpj: cnpj.value,
+      email: email.value,
+      senha: senha.value,
+      categoria: categoria.value
 
     });
+    
+  }
+
+  function teste(){
+    const se = document.getElementById('id_categoria')
+    console.log(se.value);
+    
   }
 
   onMounted(()=>{
     coletarCategoria();
   })
+
+  
 </script>
