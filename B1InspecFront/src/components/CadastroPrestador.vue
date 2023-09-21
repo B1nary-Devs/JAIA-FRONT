@@ -17,7 +17,9 @@
 
                 <div class="input-box">
                     <label for="id_categoria">Categoria</label>
-                    <Dropdown v-model="selectCategoria" :options="categorias" optionLabel="name" placeholder="Selecione uma categoria" class="w-full md:w-14rem" />
+                    <select id="id_categoria">
+                        <option v-for="ctg in categoria" name="select" :key="ctg.id" value={{ctg.id}}>{{ ctg.nome }}</option>
+                    </select>
                 </div>
 
         <div class="input-box">
@@ -33,25 +35,61 @@
                 <div class="form-submit">
                     <button>Voltar</button>
 
-                    <button>Cadastrar</button>
-                </div>
-
+                    <button @click="cadastrarPrestador">Cadastrar</button>
             </div>
+
+        </div>
+
+        <div class="form-footer">
+            <p>© B1naryInspec | V.01</p>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-    import Dropdown from 'primevue/dropdown';
-    import { ref } from "vue";
+  import { onMounted, ref } from "vue";
+  import '../assets/css/cadprestador/cadprestador.css'
+  import axios from 'axios';
 
+  const nome = document.getElementById('id_nome')
+  const cnpj = ref("Cnpj");
+  const email = ref("Email");
+  const senha = ref("Senha");
+  const categoria = ref([]);
+  const prestador = ref();
+
+  async function coletarCategoria() {
+    try {
+      const response = await axios.get('http://localhost:8080/categoria');
+      categoria.value = response.data; // Atribuir diretamente à ref
+      console.log(categoria.value);
+    } catch (error) {
+      console.error('Ocorreu um erro ao coletar a categoria:', error);
+    }
+  }
+
+  async function cadastrarPrestador() {
+    await axios.post('http://localhost:8080/prestador' ,
+    {
+      prestadorNome: nome.value,
+      cnpj: cnpj.value,
+      email: email.value,
+      senha: senha.value,
+      categoria: categoria.value
+
+    });
     
-const selectCategoria = ref();
-const categorias = ref([
-  { name: 'New York', code: 'NY' },
-  { name: 'Rome', code: 'RM' },
-  { name: 'London', code: 'LDN' },
-  { name: 'Istanbul', code: 'IST' },
-  { name: 'Paris', code: 'PRS' }
-])
+  }
+
+  function teste(){
+    const se = document.getElementById('id_categoria')
+    console.log(se.value);
+    
+  }
+
+  onMounted(()=>{
+    coletarCategoria();
+  })
+
+  
 </script>

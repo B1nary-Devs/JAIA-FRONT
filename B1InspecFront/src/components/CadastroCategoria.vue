@@ -73,7 +73,7 @@
   }
 
   async function cadastrarDepartamento() {
-    await axios.post('http://localhost:8080/categoria',{
+    await axios.post('http://localhost:5173/categoria',{
       nome : nomeCategoria
     })
 
@@ -82,8 +82,9 @@
     })
 
     .catch(error => {
-      console.log("não deu ${error}")
-    })
+      console.error(error);
+      console.log("não deu");
+      console.log(nomeCategoria)
   }
 
   /*if(itens.value.length > 0 && nomeDepartamento.value.trim() !== "");*/
