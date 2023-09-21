@@ -38,7 +38,6 @@
               <button class="botao-cadastrar" @click="cadastrarDepartamento()">Cadastrar</button>  
             </div>
           </div>
-          <div class="blank"></div>
           <footer class="footer">
             <p>B1naryInspec | V.01</p>
           </footer>
@@ -46,9 +45,8 @@
   </template>
   
   <script setup lang="ts">
-  import { ref } from 'vue';
-import '../assets/css/cadastroCategoria/cadastroCategoria.css';
-import axios from 'axios';
+    import { ref } from 'vue';
+    import axios from 'axios';
 
   let nomeCategoria = ref("");
   let item = ref("");
