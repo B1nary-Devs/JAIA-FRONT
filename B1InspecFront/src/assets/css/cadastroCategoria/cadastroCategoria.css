@@ -1,24 +1,55 @@
-body {
+* {
+  font-family: 'Quicksand', sans-serif;
+}
+
+.form-cadastro {
+  margin-left: 60px;
+
+  top: 50%;
+
+  width: 11OOpx;
+
+  background-color: #f8f8f9;
+}
+
+.form-title {
+  width: 100%;
+
+  height: 60px;
+
+  display: flex;
+
+  align-items: center;
+
+  flex-direction: row;
+
   background-color: #ffffff;
-  margin-left: 50px;
+
+  box-shadow:
+    rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
-.cadastro-categoria{
-    width: 100%;
-    background-color: #6b4747;
+.form-title h1 {
+  margin-left: 10px;
+
+  color: black;
+
+  font-size: 20px;
+
+  font-weight: bold;
+
+  letter-spacing: 2px;
 }
 
-.title-categoria{
-    width: 100%;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    background-color: #ffffff;
-}
+.form-title span {
+  font-size: 20px;
 
-.title-categoria h1{
-    margin-left: 25px;
-    font-size: 25px;
+  color: black;
+
+  margin-left: 5px;
+
+  font-weight: bolder;
 }
 
 .body-categoria {
@@ -30,7 +61,7 @@ body {
 
 .input-group {
     width: 100%;
-    background-color: #1e7c19;
+    background-color: #26e4de;
     display: flex;
     height: 150px;
     align-items: center;
@@ -43,9 +74,6 @@ body {
     flex-direction: column;
 }
 
-.input-group .input-box label {
-    font-size: 18px;
-}
 
 .input-group .input-box input {
     width: 350px;
@@ -55,17 +83,21 @@ body {
     border: 1px solid rgb(90, 90, 90);
 }
 
-.input-group .input-box .checklist {
-    display: flex;
-}
-
-.input-group .input-box .checklist button {
-    margin-left: 5px;
-}
-
 .section-itens {
-    width: 100%;
-    background-color: rgb(176, 9, 9);
+    width: 60%;
+
+    height: 20%;
+  
+    display: flex;
+  
+    flex-direction: column;
+  
+    justify-content: center;
+  
+    margin-right: 80px;
+  
+    margin-top: 40px;
+  
 }
 
 .section-title-itens {
@@ -128,54 +160,6 @@ body {
 }
 
 
-
-
-
-  
-  .botao-inserir {
-    background-color: #3498db;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 20px;
-    color: #fff;
-    box-shadow: 2px 2px 2px grey;
-  }
-
-  .botao-inserir:active{
-    transform: scale(0.98);
-    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-  }
-
-  .botao-cadastrar {
-    background-color: #3498db;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 22px;
-    color: #fff;
-    box-shadow: 2px 2px 2px grey;
-    margin-left: 15px;
-  }
-
-  .botao-cadastrar:active{
-    transform: scale(0.98);
-    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-  }
-
-  .botao-voltar {
-    background-color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 22px;
-    color: #000000;
-    box-shadow: 2px 2px 2px grey;
-    border: 1px solid rgb(225, 225, 225)
-  }
-
-  .botao-voltar:active{
-    transform: scale(0.98);
-    box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-  }
-
   .botao-remover {
     background-color: #e7e7e7;
     border: none;
@@ -195,10 +179,10 @@ body {
     background-color: #e7e7e7;
     border: none;
     border-radius: 4px;
-    padding: 4px 10px;
+    padding: 2px 8px;
     color: #000000;
     box-shadow: 1px 1px 2px rgb(179, 179, 179);
-    font-size: 12px;
+    font-size: px;
   }
   
   .botao-editar:active{

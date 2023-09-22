@@ -1,10 +1,11 @@
 <template>
-    <div class="cadastro-categoria">
-      <div class="title-categoria">
-        <h1> <span style ="font-weight: normal">Categoria > </span>Cadastro</h1>
-      </div>
+    <div class="form-cadastro">
+      <div class="form-title">
+      <h1>Departamento</h1>
+      <span>> Cadastro</span>
+    </div>
 
-      <div class="body-categoria">
+      <div class="form-body">
         <div class="input-group">
             <div class="input-box">
                 <label for="id_nome">Nome da categoria</label>
@@ -12,11 +13,9 @@
             </div>
             <div class="input-box">
                 <label for="id_checklist">Item do checklist</label>
-                <div class="checklist">
-                    <input type="text" v-model="item" class="input-itens" id="id_checklist" placeholder="Ex.: Pontos de energia" @keydown.enter="inserirItem" />
-                    <button id="btn-inserir" class="botao-inserir" @click="inserirItem">Inserir</button>
-                </div>              
+                    <input type="text" v-model="item" class="input-itens" id="id_checklist" placeholder="Ex.: Pontos de energia" @keydown.enter="inserirItem" />            
             </div>
+              <button id="butCad" class="botao-inserir" @click="inserirItem">Inserir</button>
         </div>
 
     <div class="section-itens"> 
@@ -32,21 +31,24 @@
           </div>
         </div>
     </div>
-          <div class="form-submit-categoria">
+          <div class="form-submit">
             <div class="botoes">
               <button class="botao-voltar">Voltar</button>
-              <button class="botao-cadastrar" @click="cadastrarDepartamento()">Cadastrar</button>  
+              <button id="butCad" class="botao-cadastrar" @click="cadastrarDepartamento()">Cadastrar</button>  
             </div>
           </div>
-          <footer class="footer">
-            <p>B1naryInspec | V.01</p>
-          </footer>
+          
+          <div class="form-footer">
+            <p>© B1naryInspec | V.01</p>
+        </div>
         </div>
   </template>
   
   <script setup lang="ts">
     import { ref } from 'vue';
     import axios from 'axios';
+    import '../assets/css/cadastroCategoria/cadastroCategoria.css'
+    import '../assets/css/cadprestador/cadprestador.css'
 
   let nomeCategoria = ref("");
   let item = ref("");
@@ -73,8 +75,8 @@
   }
 
   async function cadastrarDepartamento() {
-    await axios.post('http://localhost:5173/categoria',{
-      nome : nomeCategoria
+    await axios.post('http://localhost:8080/categoria',{
+      nome : nomeCategoria.value
     })
 
     .then(response => {
@@ -85,12 +87,10 @@
       console.error(error);
       console.log("não deu");
       console.log(nomeCategoria)
+    })
   }
 
   /*if(itens.value.length > 0 && nomeDepartamento.value.trim() !== "");*/
 
-
-
-  
   </script>
   
