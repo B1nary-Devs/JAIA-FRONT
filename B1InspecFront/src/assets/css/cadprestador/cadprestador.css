@@ -141,6 +141,19 @@ button:hover{
     transition: 0.5s;
 }
 
+.button-return{
+    background-color: rgb(255, 255, 255);
+    color: #00A4C8;
+}
+
+.button-return:hover{
+    background-color: #00A4C8;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+
 .form-footer{
     width: 100%;
     height: 50px;
