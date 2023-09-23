@@ -1,7 +1,6 @@
 <template>
-    <div class="cover">
-    </div>
-    <div class="card">
+    <div v-if="showPopup" class="cover"></div>
+    <div class="card" :class="{ active: showPopup }">
         <button class="dismiss" type="button">×</button>
         <div class="header">
             <div class="image">
@@ -15,16 +14,51 @@
                 </svg>
             </div>
             <div class="content">
-                <span class="title">Registrado com Sucesso</span>
-                <p class="message">Cadastro realizado com sucesso.</p>
+                <span class="title">{{ title }}</span>
+                <p class="message">{{ mensagem }}</p>
             </div>
             <div class="actions">
-                <button class="history" type="button">Ok</button>
+                <button class="button-ok" @click="ocultarPopup">Ok</button>
             </div>
         </div>
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+import { ref } from 'vue';
 import '../assets/css/popup/popup.css'
+
+const popup = ref(false)
+const mensagem = ref("");
+const title = ref("");
+const cod = ref(0);
+
+function exibirPopup(titulo: string, msg: string, codigo: number) {
+  popup.value = true;
+  mensagem.value = msg;
+  title.value = titulo;
+  cod.value = codigo;
+  console.log(popup.value);
+}
+
+export default {
+  data() {
+    return {
+      showPopup: popup,
+      mensagem: mensagem,
+      title: title,
+      cod: cod,
+    };
+  },
+  methods: {
+    mostrarPopup() {
+      this.showPopup = true; // Define showPopup como true para exibir o popup
+    },
+    ocultarPopup() {
+      this.showPopup = false; // Define showPopup como false para ocultar o popup
+    }
+  }
+}
+
+export { exibirPopup }; // Exporte a função
 </script>

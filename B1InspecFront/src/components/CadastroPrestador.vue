@@ -35,7 +35,6 @@
           </div>
 
           <div class="form-submit">
-                  <button class="button-return">Voltar</button>
                   <button @click="cadastrarPrestador">Cadastrar</button>
           </div>
 
@@ -45,12 +44,14 @@
           <p>© B1naryInspec | V.01</p>
       </div>
   </div>
+  <ThePopUp></ThePopUp>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import '../assets/css/cadprestador/cadprestador.css';
 import ThePopUp from '../components/ThePopUp.vue';
+import {exibirPopup} from '../components/ThePopUp.vue'
 import axios from 'axios';
 
  // Capturando os valores dos campos
@@ -88,12 +89,12 @@ try {
     email: email.value,
     senha: senha.value,
     categoria: {
-      id: categoriaSelecionada.value // Use a categoria selecionada aqui
+      id: 1 // Use a categoria selecionada aqui
     }
   });
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
-  alert('Cadastro confirmado!');
+  exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
 } catch (error) {
   console.error('Ocorreu um erro ao cadastrar o prestador:', error);
   alert('Erro ao cadastrar o prestador.');

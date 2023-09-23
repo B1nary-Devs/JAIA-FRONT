@@ -26,7 +26,7 @@ const router = createRouter({
       component: () => import('../components/CadastroPrestador.vue')
     },
     {
-      path: '/cadCategoria',
+      path: '/cadSegmento',
       name: 'cadCategoria',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route

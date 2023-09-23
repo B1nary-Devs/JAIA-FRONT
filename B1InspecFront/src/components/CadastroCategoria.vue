@@ -73,6 +73,7 @@
       <p>© B1naryInspec | V.01</p>
     </div>
   </div>
+  <ThePopUp></ThePopUp>
 </template>
 
 <script setup lang="ts">
@@ -80,6 +81,8 @@ import { ref } from 'vue'
 import axios from 'axios'
 import '../assets/css/cadastroCategoria/cadastroCategoria.css'
 import '../assets/css/cadprestador/cadprestador.css'
+import ThePopUp from '../components/ThePopUp.vue';
+import {exibirPopup} from '../components/ThePopUp.vue'
 
 let nomeCategoria = ref('')
 let item = ref('')
@@ -141,6 +144,7 @@ async function cadastrarChecklist(idCategoria) {
       await axios.post('http://localhost:8080/checklist', nomeItem)
 
       console.log(`Requisição POST para ${nomeItem.checklistNome} concluída.`)
+      exibirPopup('Cadastro Realizado com Sucesso', 'Novo Segmento Registrado.', 123)
     }
 
     console.log('Todos os checklists foram cadastrados com sucesso.')
