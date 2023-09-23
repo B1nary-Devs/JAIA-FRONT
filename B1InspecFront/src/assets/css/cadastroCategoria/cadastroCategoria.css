@@ -150,18 +150,6 @@
     height: 75px;
 }
 
-.footer {
-    background-color: white;
-    width: 100%;
-}
-
-.footer p { 
-    justify-content: center;
-    text-align: right;
-    color: black;
-}
-
-
   .botao-remover {
     background-color: #e7e7e7;
     border: none;

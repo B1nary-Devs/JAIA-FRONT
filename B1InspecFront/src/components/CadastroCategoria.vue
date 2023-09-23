@@ -57,7 +57,7 @@
       </div>
       <div class="form-submit">
         <div class="botoes">
-          <button class="botao-voltar">Voltar</button>
+          <button class="button-return">Voltar</button>
           <button
             id="butCad"
             class="botao-cadastrar"
