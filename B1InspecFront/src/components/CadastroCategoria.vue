@@ -87,10 +87,10 @@
     if (response.data.id) {
       const categoriaId = response.data.id;
       if (callback) {
-        callback(categoriaId); // Chame o callback com o ID da categoria
+        callback(categoriaId); 
       }
     } else {
-      throw new Error('ID da categoria não encontrado na resposta.');
+      throw new Error('ID do segmento não encontrado na resposta.');
     }
   } catch (error) {
     console.error(error);
@@ -102,7 +102,7 @@ async function cadastrarChecklist(idCategoria) {
   try {
     const nomesItens = itens.value.map(item => ({
       categorias: [{
-        id: idCategoria // Acesso direto ao ID da categoria
+        id: idCategoria
       }],
       checklistNome: item
     }));
