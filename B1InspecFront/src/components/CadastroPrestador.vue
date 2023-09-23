@@ -39,12 +39,44 @@
                     <button @click="cadastrarPrestador">Cadastrar</button>
             </div>
 
+        <div class="input-box">
+          <label for="id_cnpj">CNPJ</label>
+
+          <input type="number" id="id_cnpj" placeholder="00.000.000/0000-00" />
         </div>
 
-        <div class="form-footer">
-            <p>© B1naryInspec | V.01</p>
+        <div class="input-box">
+          <label for="id_categoria">Categoria</label>
+
+          <select id="id_categoria">
+            <option></option>
+          </select>
         </div>
+
+        <div class="input-box">
+          <label for="id_email">Email</label>
+
+          <input type="email" id="id_email" placeholder="Ex: joao@gmail.com" />
+        </div>
+
+        <div class="input-box">
+          <label for="id_senha">Senha</label>
+
+          <input type="password" id="id_senha" />
+        </div>
+      </div>
+
+      <div class="form-submit">
+        <button>Voltar</button>
+
+        <button id="butCad">Cadastrar</button>
+      </div>
     </div>
+
+    <div class="form-footer">
+      <p>© B1naryInspec | V.01</p>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
