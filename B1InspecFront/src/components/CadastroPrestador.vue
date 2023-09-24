@@ -88,15 +88,25 @@ try {
     cnpj: cnpj.value,
     email: email.value,
     senha: senha.value,
-    categoria_id: categoriaSelecionada.value 
+    categoriaId: categoriaSelecionada.value 
   });
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
   exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
+  limparCampos();
+  
 } catch (error) {
   console.error('Ocorreu um erro ao cadastrar o prestador:', error);
   alert('Erro ao cadastrar o prestador.');
 }
+}
+
+function limparCampos(){
+  nome.value = "";
+  cnpj.value = "";
+  email.value = "";
+  senha.value = "";
+  categoriaSelecionada.value = null;
 }
 
 onMounted(()=>{
