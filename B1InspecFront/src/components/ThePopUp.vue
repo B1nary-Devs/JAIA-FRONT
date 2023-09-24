@@ -1,7 +1,7 @@
 <template>
     <div v-if="showPopup" class="cover"></div>
     <div class="card" :class="{ active: showPopup }">
-        <button class="dismiss" type="button">×</button>
+        <button @click="ocultarPopup" class="dismiss" type="button">×</button>
         <div class="header">
             <div class="image">
                 <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

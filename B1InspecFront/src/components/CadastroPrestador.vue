@@ -2,7 +2,7 @@
   <div class="form-cadastro">
       <div class="form-title">
           <h1>Prestador de Serviço</h1>
-          <span> Cadastro</span>
+          <span>> Cadastro</span>
       </div>
       <div class="form-body">
           <div class="input-group">
@@ -35,6 +35,7 @@
           </div>
 
           <div class="form-submit">
+                  <button @click="returnarPag" class="button-return">Voltar</button>
                   <button @click="cadastrarPrestador">Cadastrar</button>
           </div>
 
@@ -107,6 +108,10 @@ function limparCampos(){
   email.value = "";
   senha.value = "";
   categoriaSelecionada.value = null;
+}
+
+function returnarPag(){
+  window.history.back();
 }
 
 onMounted(()=>{

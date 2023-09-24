@@ -57,7 +57,7 @@
       </div>
       <div class="form-submit">
         <div class="botoes">
-          <button class="button-return">Voltar</button>
+          <button @click="returnarPag" class="button-return">Voltar</button>
           <button
             id="butCad"
             class="botao-cadastrar"
@@ -127,6 +127,10 @@ async function cadastrarDepartamento(callback) {
     console.error(error)
     throw error
   }
+}
+
+function returnarPag(){
+  window.history.back();
 }
 
 async function cadastrarChecklist(idCategoria) {
