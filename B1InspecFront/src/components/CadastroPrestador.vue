@@ -88,9 +88,7 @@ try {
     cnpj: cnpj.value,
     email: email.value,
     senha: senha.value,
-    categoria_id: {
-      id: categoriaSelecionada.value // Use a categoria selecionada aqui
-    }
+    categoria_id: categoriaSelecionada.value 
   });
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
