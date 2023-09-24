@@ -88,8 +88,8 @@ try {
     cnpj: cnpj.value,
     email: email.value,
     senha: senha.value,
-    categoria: {
-      id: 1 // Use a categoria selecionada aqui
+    categoria_id: {
+      id: categoriaSelecionada.value // Use a categoria selecionada aqui
     }
   });
 
