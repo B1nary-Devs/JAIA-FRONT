@@ -1,0 +1,291 @@
+/*------------------------------------------------------- FILTROS ---------------------------------------------------------------- */
+/*Container filtro*/
+
+.container-table {
+    width: 100%;
+    height: 100vh;
+    background: #f8f8f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cons-title {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    background-color: #ffffff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.cons-title h1 {
+    margin-left: 80px;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.cons-table {
+    width: 100%;
+    margin-top: 3%;
+    background-color: #ffffff;
+}
+
+.filter {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    margin-left: 80px;
+}
+
+.input-filter {
+    border-radius: 10px;
+    margin-left: 20px;
+}
+
+.form-select {
+    cursor: pointer;
+}
+
+.form-label {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.Buttons {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    width: 100px;
+    margin-left: 15px;
+}
+
+/* Botões Bootstrap */
+.Buttons button {
+    justify-content: center;
+    display: flex;
+    margin-left: 1px;
+}
+/*----------------------------------------------------------- TABLE ---------------------------------------------------------------------- */
+
+table {
+    width: 85%;
+    max-height: 400px; 
+    margin: auto;
+    margin-top: 2%;
+    margin-bottom: 70px;
+    border-collapse: collapse;
+    overflow-y: scroll;
+  }
+  
+
+table td,
+table th {
+    height: 50px;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    flex-direction: row;
+}
+
+table th {
+    text-align: center;
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f7f7f771;
+}
+
+tr {
+    transition: all .2s ease-in;
+    cursor: pointer;
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+    border-bottom: 1px solid black;
+    
+}
+
+tr:hover {
+    transform: scale(1.02);
+    border-bottom: black 2px solid;
+}
+
+
+
+.btn-info {
+    width: 35px;
+    height: 35px;
+    background-color: #0862e9e8;
+    border-radius: 5px;
+    border-color: transparent;
+    margin-right: 8px;
+}
+
+.btn-info svg{
+    width: 30px;
+    height: 18px;
+    fill: white;
+}
+
+.btn-info:hover{
+    transition: 0.5s;
+    background-color: #ffffff;
+    cursor: pointer;
+    border: 0.5px solid #0862e9e8;
+}
+
+.btn-info:hover svg{
+    fill: #0862e9e8;;
+}
+
+.btn-edit{
+    width: 35px;
+    height: 35px;
+    background-color: #3ba710b7;
+    border-radius: 5px;
+    border-color: transparent;
+    margin-right: 8px;
+}
+
+.btn-edit svg{
+    width: 30px;
+    height: 18px;
+    fill: rgb(255, 255, 255);
+}
+
+.btn-edit:hover{
+    transition: 0.5s;
+    background-color: #ffffff;
+    cursor: pointer;
+    border: 0.5px solid #246d08bd;
+}
+
+.btn-edit:hover svg{
+    fill: #246d08bd;
+}
+
+.footer {
+    background-color: #ffffff;
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+}
+
+.cons-buttons{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    height: 80px;
+    background-color: #ffffff;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+.cons-buttons .button-return{
+    margin-right: 15px;
+    background-color: rgb(255, 255, 255);
+    color: #00A4C8;
+    width: 100px;
+    height: 50px;
+    border-radius: 20px;
+    border: 1px solid #00A4C8;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.cons-buttons .button-return:hover{
+    background-color: #00A4C8;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.go-cadPrestador{
+    margin-right: 40px;
+    background-color: #00A4C8;
+    width: 100px;
+    height: 50px;
+    border-radius: 20px;
+    border: 1px solid #00A4C8;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.go-cadPrestador .go-link p{
+    color: rgb(253, 253, 253);
+}
+
+.cons-buttons .go-cadPrestador:hover{
+    background-color: rgb(255, 255, 255);
+    color: #00A4C8;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.cons-buttons .go-cadPrestador:hover .go-link p{
+    color: #00A4C8;
+}
+
+
+
+.footer p {
+    margin-right: 80px;
+    font-size: 12px;
+}
+
+@media(max-width: 500px) {
+    table thead {
+        display: none;
+    }
+
+    table,
+    table tbody,
+    table tr,
+    table td {
+        display: block;
+        width: 100%;
+    }
+
+    table tr {
+        margin-bottom: 15px;
+    }
+
+    table td {
+        text-align: right;
+        padding-left: 50%;
+        text-align: right;
+        position: relative;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+@keyframes square-in-center {
+    from {
+        clip-path: inset(100% 100% 100% 100%);
+    }
+
+    to {
+        clip-path: inset(0 0 0 0);
+    }
+}
