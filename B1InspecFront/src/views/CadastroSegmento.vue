@@ -11,9 +11,9 @@
           <label for="id_nome">Nome do segmento</label>
           <input
             type="text"
-            class="input-nome-categoria"
+            class="input-nome-segmento"
             id="id_nome"
-            v-model="nomeCategoria"
+            v-model="nomeSegmento"
             placeholder="Ex.: Elétrica"
           />
         </div>
@@ -61,7 +61,7 @@
           <button
             id="butCad"
             class="botao-cadastrar"
-            @click="cadastrarDepartamento(cadastrarChecklist)"
+            @click="cadastrarSegmento(cadastrarChecklist)"
           >
             Cadastrar
           </button>
@@ -84,7 +84,7 @@ import '../assets/css/cadprestador/cadprestador.css'
 import ThePopUp from '../components/ThePopUp.vue';
 import {exibirPopup} from '../components/ThePopUp.vue'
 
-let nomeCategoria = ref('')
+let nomeSegmento = ref('')
 let item = ref('')
 let itens = ref<string[]>([])
 let estadoEdicao = ref(-1)
@@ -109,16 +109,16 @@ function salvarEdicao(index: number) {
   estadoEdicao.value = -1
 }
 
-async function cadastrarDepartamento(callback) {
+async function cadastrarSegmento(callback: (idSegmento: number) => void) {
   try {
     const response = await axios.post('http://localhost:8080/categoria', {
-      nome: nomeCategoria.value
+      nome: nomeSegmento.value
     })
 
     if (response.data.id) {
-      const categoriaId = response.data.id
+      const segmentoId = response.data.id
       if (callback) {
-        callback(categoriaId)
+        callback(segmentoId)
       }
     } else {
       throw new Error('ID do segmento não encontrado na resposta.')
@@ -133,12 +133,12 @@ function returnarPag(){
   window.history.back();
 }
 
-async function cadastrarChecklist(idCategoria) {
+async function cadastrarChecklist(idSegmento : number) {
   try {
     const nomesItens = itens.value.map((item) => ({
-      categorias: [
+      segmentos: [
         {
-          id: idCategoria
+          id: idSegmento
         }
       ],
       checklistNome: item
