@@ -86,7 +86,6 @@ let nomeSegmento = ref('')
 let item = ref('')
 let itens = ref<string[]>([])
 let estadoEdicao = ref(-1)
-let dadosDeResposta: null = null
 
 async function inserirItem() {
   if (item.value.trim() != '') {
@@ -109,7 +108,7 @@ function salvarEdicao(index: number) {
 
 async function cadastrarSegmento(callback: (idSegmento: number) => void) {
   try {
-    const response = await axios.post('http://localhost:8080/categoria', {
+    const response = await axios.post('http://localhost:8080/segmento', {
       nome: nomeSegmento.value
     })
 

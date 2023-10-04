@@ -77,7 +77,7 @@ const segmento = ref([]);
 
 async function loadTabela() {
     try {
-        const response = await axios.get('http://192.168.1.163:8080/categoria');
+        const response = await axios.get('http://192.168.1.163:8080/segmento');
         segmento.value = response.data; // Atribuir diretamente à ref
         console.log(segmento.value);
     } catch (error) {
