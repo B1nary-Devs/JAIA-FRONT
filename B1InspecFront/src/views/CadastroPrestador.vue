@@ -65,7 +65,7 @@ const senha = ref("");
 
 async function coletarCategoria() {
   try {
-    const response = await axios.get('http://localhost:8080/categoria');
+    const response = await axios.get('http://localhost:8080/segmento');
     categoria.value = response.data; // Atribuir diretamente à ref
     console.log(categoria.value);
   } catch (error) {
