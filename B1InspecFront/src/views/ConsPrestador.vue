@@ -7,18 +7,18 @@
             <div class="filter">
 
                 <div class="input-filter">
-                    <label class="form-label" for="initial-date">Nome</label><br>
-                    <input class="form-control" type="text">
+                    <label class="form-label" for="filtro-nome">Nome</label><br>
+                    <input v-model="nomeFiltro" class="form-control" type="text" id="filtro-nome">
                 </div>
 
                 <div class="input-filter">
-                    <label class="form-label" for="final-date">CNPJ</label><br>
-                    <input class="form-control" type="number">
+                    <label class="form-label" for="filtro-cnpj">CNPJ</label><br>
+                    <input v-model="cnpjFiltro" class="form-control" type="text" id="filtro-cnpj">
                 </div>
 
                 <div class="Buttons">
 
-                    <button type="button">Filtrar</button>
+                    <button type="button" @click="aplicarFiltros">Filtrar</button>
 
                 </div>
 
@@ -37,7 +37,7 @@
                         <td>{{ prestador.prestadorNome }}</td>
                         <td>{{ prestador.cnpj }}</td>
                         <td>{{ prestador.email }}</td>
-                        <td>{{ prestador.categoria.nome }}</td>
+                        <td>{{ prestador.segmento.nome }}</td>
                         <td>
                             <button class="btn-info">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -78,18 +78,22 @@
 </template>
 
 <script setup lang="ts">
-import '../assets/css/table/table.css'
+import '../assets/css/table/table.css';
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onMounted, watchEffect, ref } from 'vue';
 import PreLoader from '../components/PreLoader.vue';
-import { exibirPreload } from '../components/PreLoader.vue'
+import { exibirPreload } from '../components/PreLoader.vue';
 
 const prestador = ref([]);
+const nomeFiltro = ref('');
+const cnpjFiltro = ref('');
+let dadosOriginais = [];
 
 async function loadTabela() {
     try {
-        const response = await axios.get('http://192.168.1.163:8080/prestador');
-        prestador.value = response.data; // Atribuir diretamente à ref
+        const response = await axios.get('http://localhost:8080/prestador');
+        prestador.value = response.data;
+        dadosOriginais = response.data; // Armazenar os dados originais
         console.log(prestador.value);
     } catch (error) {
         console.error('Ocorreu um erro ao coletar os prestadores:', error);
@@ -100,10 +104,38 @@ function returnarPag() {
     window.history.back();
 }
 
+function aplicarFiltros() {
+    const nomeFiltroValue = nomeFiltro.value.trim().toLowerCase();
+    const cnpjFiltroValue = cnpjFiltro.value.trim();
+
+    if (nomeFiltroValue === '' && cnpjFiltroValue === '') {
+        // Se ambos os campos de filtro estiverem vazios, exiba todos os dados originais
+        prestador.value = dadosOriginais;
+    } else {
+        // Caso contrário, aplique os filtros
+        prestador.value = dadosOriginais.filter((prestador) => {
+            const cellNome = prestador.prestadorNome.trim().toLowerCase();
+            const cellCnpj = prestador.cnpj.trim();
+
+            return (
+                (nomeFiltroValue === '' || cellNome.includes(nomeFiltroValue)) &&
+                (cnpjFiltroValue === '' || cellCnpj.includes(cnpjFiltroValue))
+            );
+        });
+    }
+}
+
+// Limpa os filtros quando ambos os campos de filtro estiverem vazios
+watchEffect(() => {
+    if (nomeFiltro.value === '' && cnpjFiltro.value === '') {
+        aplicarFiltros();
+    }
+});
+
 onMounted(() => {
     exibirPreload();
     setTimeout(() => {
         loadTabela();
     }, 2000);
-})
+});
 </script>

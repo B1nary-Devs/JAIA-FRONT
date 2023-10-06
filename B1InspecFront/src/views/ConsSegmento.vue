@@ -1,19 +1,19 @@
 <template>
     <div class="container-table">
         <div class="cons-title">
-            <h1>Segmento</h1>
+            <h1>Segmentos</h1>
         </div>
         <div class="cons-table">
             <div class="filter">
 
                 <div class="input-filter">
-                    <label class="form-label" for="initial-date">Nome</label><br>
-                    <input class="form-control" type="text">
+                    <label class="form-label" for="filtro-nome">Nome</label><br>
+                    <input v-model="nomeFiltro" class="form-control" type="text" id="filtro-nome">
                 </div>
 
                 <div class="Buttons">
 
-                    <button type="button">Filtrar</button>
+                    <button type="button" @click="aplicarFiltros">Filtrar</button>
 
                 </div>
 
@@ -26,9 +26,10 @@
                 </thead>
                 <tbody>
                     <tr v-for="segmento in segmento" :key="segmento.segmentoId">
-                        <td>{{ segmento.segmentoNome }}</td>
+                        <td>{{ segmento.nome }}</td>
+                        <td>{{ segmento.checklist }}</td>
                         <td>
-                            <button class="btn-info">
+                            <button class="btn-info" @click="exibirModal(segmento.nome, segmento.checklist, segmento.items, segmento.codigo)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-eye" viewBox="0 0 16 16">
                                     <path
@@ -67,21 +68,28 @@
 </template>
 
 <script setup lang="ts">
-import '../assets/css/table/table.css'
+import '../assets/css/table/table.css';
+import ModalConsSegmento from '../components/ModalConsSegmento.vue';
 import axios from 'axios';
-import { onMounted, ref } from 'vue';
+import { onMounted, watchEffect, ref } from 'vue';
 import PreLoader from '../components/PreLoader.vue';
-import { exibirPreload } from '../components/PreLoader.vue'
+import { exibirPreload } from '../components/PreLoader.vue';
+import { exibirModal } from '../components/ModalConsSegmento.vue';
+
 
 const segmento = ref([]);
+const nomeFiltro = ref('');
+const cnpjFiltro = ref('');
+let dadosOriginais = [];
 
 async function loadTabela() {
     try {
-        const response = await axios.get('http://192.168.1.163:8080/segmento');
-        segmento.value = response.data; // Atribuir diretamente à ref
+        const response = await axios.get('http://localhost:8080/segmento');
+        segmento.value = response.data;
+        dadosOriginais = response.data; // Armazenar os dados originais
         console.log(segmento.value);
     } catch (error) {
-        console.error('Ocorreu um erro ao coletar os segmentos:', error);
+        console.error('Ocorreu um erro ao consultar os segmentos:', error);
     }
 }
 
@@ -89,10 +97,35 @@ function returnarPag() {
     window.history.back();
 }
 
+function aplicarFiltros() {
+    const nomeFiltroValue = nomeFiltro.value.trim().toLowerCase();
+
+    if (nomeFiltroValue === '') {
+        // Se ambos os campos de filtro estiverem vazios, exiba todos os dados originais
+        segmento.value = dadosOriginais;
+    } else {
+        // Caso contrário, aplique os filtros
+        segmento.value = dadosOriginais.filter((segmento) => {
+            const cellNome = segmento.nome.trim().toLowerCase();
+
+            return (
+                (nomeFiltroValue === '' || cellNome.includes(nomeFiltroValue))
+            );
+        });
+    }
+}
+
+// Limpa os filtros quando ambos os campos de filtro estiverem vazios
+watchEffect(() => {
+    if (nomeFiltro.value === '') {
+        aplicarFiltros();
+    }
+});
+
 onMounted(() => {
     exibirPreload();
     setTimeout(() => {
         loadTabela();
     }, 2000);
-})
+});
 </script>

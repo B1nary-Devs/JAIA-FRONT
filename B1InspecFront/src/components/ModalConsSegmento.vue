@@ -1,29 +1,71 @@
 <template>
-  <div v-if="showModal" class="modal-background">
-    <div class="modal">
-      <button @click="fecharModal" class="close-button">×</button>
-      <div class="modal-content">
-        <!-- Conteúdo do seu modal aqui -->
-        <h2>{{ title }}</h2>
-        <p>{{ mensagem }}</p>
+  <div v-if="showModal" class="cover"></div>
+  <div class="card" :class="{ active: showModal }">
+      <button @click="ocultarModal" class="dismiss" type="button">×</button>
+      <div class="header">
+          <div class="image">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                  <g id="SVGRepo_iconCarrier">
+                      <path d="M20 7L9.00004 18L3.99994 13" stroke="#000000" stroke-width="1.5" stroke-linecap="round"
+                          stroke-linejoin="round"></path>
+                  </g>
+              </svg>
+          </div>
+          <div class="content">
+              <span class="segmento">{{ segmento }}</span>
+              <p class="checklist">{{ checklist }}</p>
+              <p class="itens">{{ itens }}</p>
+          </div>
+          <div class="actions">
+              <button class="button-ok" @click="ocultarModal">Ok</button>
+          </div>
       </div>
-    </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from 'vue';
+import '../assets/css/modal/modal.css'
+import '../components/ModalConsSegmento.vue'
+
+const modal = ref(false)
+const segmento = ref("");
+const checklist = ref("");
+const itens = ref<string[]>([]);
+const cod = ref(0);
+
+export function exibirModal(nomeSegmento: string, tituloChecklist: string, itensChecklist: string[] | string, codigo: number) {
+modal.value = true;
+segmento.value = nomeSegmento;
+checklist.value = tituloChecklist;
+itens.value = Array.isArray(itensChecklist) ? itensChecklist : [itensChecklist];;
+cod.value = codigo;
+console.log(modal.value);
+}
 
 export default {
-  props: {
-    showModal: Boolean,
-    mensagem: String,
-    title: String,
+data() {
+  return {
+    showModal: modal,
+    segmento: segmento,
+    checklist: checklist,
+    itens : itens,
+    cod: cod,
+  };
+},
+methods: {
+  mostrarModal() {
+    this.showModal = true; // Define showPopup como true para exibir o popup
   },
-  methods: {
-    fecharModal() {
-      this.$emit('fechar-modal'); // Emita um evento para fechar o modal
-    },
-  },
-};
+  ocultarModal() {
+    this.showModal = false; // Define showPopup como false para ocultar o popup
+  }
+}
+}
+
+
+
+; // Exporte a função
 </script>
