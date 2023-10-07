@@ -27,9 +27,9 @@
                 <tbody>
                     <tr v-for="segmento in segmento" :key="segmento.segmentoId">
                         <td>{{ segmento.nome }}</td>
-                        <td>{{ segmento.checklist }}</td>
+                        <!-- <td>{{ segmento.checklist }}</td> -->
                         <td>
-                            <button class="btn-info" @click="exibirModal(segmento.nome, segmento.checklist, segmento.items, segmento.codigo)">
+                            <button class="btn-info" @click="exibirModal(segmento.nome,123)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-eye" viewBox="0 0 16 16">
                                     <path
@@ -69,17 +69,15 @@
 
 <script setup lang="ts">
 import '../assets/css/table/table.css';
-import ModalConsSegmento from '../components/ModalConsSegmento.vue';
 import axios from 'axios';
 import { onMounted, watchEffect, ref } from 'vue';
 import PreLoader from '../components/PreLoader.vue';
-import { exibirPreload } from '../components/PreLoader.vue';
+import ModalConsSegmento from '../components/ModalConsSegmento.vue';
 import { exibirModal } from '../components/ModalConsSegmento.vue';
-
+import { exibirPreload } from '../components/PreLoader.vue';
 
 const segmento = ref([]);
 const nomeFiltro = ref('');
-const cnpjFiltro = ref('');
 let dadosOriginais = [];
 
 async function loadTabela() {

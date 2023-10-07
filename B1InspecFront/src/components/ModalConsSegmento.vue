@@ -15,11 +15,8 @@
           </div>
           <div class="content">
               <span class="segmento">{{ segmento }}</span>
-              <p class="checklist">{{ checklist }}</p>
-              <p class="itens">{{ itens }}</p>
-          </div>
-          <div class="actions">
-              <button class="button-ok" @click="ocultarModal">Ok</button>
+              <!-- <p class="checklist">{{ checklist }}</p>
+              <p class="itens">{{ itens }}</p> -->
           </div>
       </div>
   </div>
@@ -28,21 +25,20 @@
 <script lang="ts">
 import { ref } from 'vue';
 import '../assets/css/modal/modal.css'
-import '../components/ModalConsSegmento.vue'
 
 const modal = ref(false)
 const segmento = ref("");
-const checklist = ref("");
-const itens = ref<string[]>([]);
+// const checklist = ref("");
+// const itens = ref<string[]>([]);
 const cod = ref(0);
 
-export function exibirModal(nomeSegmento: string, tituloChecklist: string, itensChecklist: string[] | string, codigo: number) {
+export function exibirModal(nomeSegmento: string, /*tituloChecklist: string, itensChecklist: string[] | string, */codigo: number) {
 modal.value = true;
 segmento.value = nomeSegmento;
-checklist.value = tituloChecklist;
-itens.value = Array.isArray(itensChecklist) ? itensChecklist : [itensChecklist];;
-cod.value = codigo;
-console.log(modal.value);
+// checklist.value = tituloChecklist;
+// itens.value = Array.isArray(itensChecklist) ? itensChecklist : [itensChecklist];;
+ cod.value = codigo;
+// console.log(modal.value);
 }
 
 export default {
@@ -50,9 +46,9 @@ data() {
   return {
     showModal: modal,
     segmento: segmento,
-    checklist: checklist,
-    itens : itens,
-    cod: cod,
+    // checklist: checklist,
+    // itens : itens,
+     cod: cod,
   };
 },
 methods: {
@@ -64,8 +60,4 @@ methods: {
   }
 }
 }
-
-
-
-; // Exporte a função
 </script>
