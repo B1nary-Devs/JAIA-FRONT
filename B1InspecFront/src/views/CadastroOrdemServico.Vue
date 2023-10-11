@@ -17,9 +17,16 @@
       </div>
 
       <div class="input-group">
-        <div class="input-box">
+        <div class="input-box"  v-if="picked === 'novo'">
           <label for="id_nome">Nome da Empresa</label>
           <input type="text" id="id_nome" v-model="nome" />
+        </div>
+
+        <div class="input-box" v-else>
+          <label for="id_selnome">Nome da Empresa</label>
+          <select id="id_selnome" v-model="selnome">
+            <option></option>
+          </select>
         </div>
 
         <div class="input-box">
@@ -102,6 +109,7 @@ import { exibirPopup } from '../components/ThePopUp.vue'
 import axios from 'axios'
 
 const nome = ref("");
+const selnome = ref("");
 const cnpj = ref("");
 const descricao = ref("");
 const prestador = ref("");
@@ -111,6 +119,7 @@ const itens = ref<string[]>([])
 const estadoEdicao = ref(-1)
 
 const picked = ref('novo')
+
 
 async function inserirItem() {
   if (checklist.value.trim() != '') {
