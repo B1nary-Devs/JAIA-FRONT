@@ -96,6 +96,7 @@ nav{
     margin: 0;
     display: flex;
     flex-direction: column;
+    font-weight: bold;
 }
 
 /*ITENS*/
@@ -108,6 +109,7 @@ nav{
     flex-direction: row;
     margin-top: 10px;
     align-items: center;
+
 }
 
 /*LINKS*/
@@ -124,11 +126,19 @@ nav{
 
 .link-item svg{
     width: 35px;
+    
 }
 
 .link-item p{
     margin-left: 20px;
+    font-weight: bold;
 }
+
+.icons-item {
+    display: flex;
+    align-items: center;
+}
+
 
 /*ANIMAÇÕES*/
 nav:hover{
@@ -140,3 +150,82 @@ nav:hover{
     color: #ffffff;
     transform: translateX(8px);
 }
+
+.menu-submenu {
+    padding: 0;
+    width: 100px;
+    margin-left: 10px;
+    display: block;
+    flex-direction: column;
+    margin-top: 10px;
+    align-items: center;
+    
+}
+
+.submenu {
+    display: block; 
+    flex-direction: column;
+
+}
+
+.item-submenu{
+  background-color: rgb(37, 40, 37);
+  width: 260px;
+  height: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.item-submenu p {
+    color: rgb(201, 201, 201);
+}
+
+.item-submenu:hover{
+    background-color:  #00A4C8;
+}
+
+.item-submenu:hover p{
+    color:  #000000;
+}
+
+.arrow-rotate {
+    transform: rotate(90deg); /* Gira a seta 90 graus para apontar para baixo */
+  }
+  
+
+
+
+/*.cadastrar-prestador p,
+.consultar-prestador p {
+  background-color: rgb(0, 0, 0);
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  color: rgb(201, 201, 201);
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+  margin-left: 20%;
+  margin-top: 1%;
+  z-index: 1;
+}
+
+.cadastrar-prestador p:hover,
+.consultar-prestador p:hover {
+  background-color: #677a8e;
+}
+
+.menu-submenu {
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    margin-left: 10px;
+    display: block;
+    flex-direction: column;
+    margin-top: 10px;
+    align-items: center;
+}
+/*
