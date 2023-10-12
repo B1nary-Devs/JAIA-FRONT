@@ -41,15 +41,15 @@
 
         <div class="input-box">
         <label for="id_segmento">Segmento</label>
-          <select id="id_segmento" v-model="segmento">
-            <option></option>
+          <select id="id_segmento" v-model="segmentoSelecionado">
+            <option v-for="ctg in segmento" :key="ctg.id" :value="ctg.id">{{ ctg.nome }}</option>
           </select>
         </div>
 
         <div class="input-box">
           <label for="id_prestador">Prestador de Serviço</label>
-          <select id="id_prestador" v-model="prestador">
-            <option></option>
+          <select id="id_prestador" v-model="prestadorSelecionado">
+            <option v-for="ptr in prestador" :key="ptr.id" :value="ptr.id">{{ ptr.nome }}</option>
           </select>
         </div>
 
@@ -90,7 +90,7 @@
 
       <div class="form-submit">
         <button @click="" class="button-return">Voltar</button>
-        <button @click="">Cadastrar</button>
+        <button @click="cadastrarOrdemServico">Cadastrar</button>
       </div>
     </div>
 
@@ -119,7 +119,8 @@ const itens = ref<string[]>([])
 const estadoEdicao = ref(-1)
 
 const picked = ref('novo')
-
+const segmentoSelecionado = ref(null);
+const prestadorSelecionado = ref(null);
 
 async function inserirItem() {
   if (checklist.value.trim() != '') {
@@ -139,5 +140,58 @@ function editarItem(index: number) {
 function salvarEdicao(index: number) {
   estadoEdicao.value = -1
 }
+
+async function coletarSegmento() {
+  try {
+    const response = await axios.get('http://localhost:8080/segmento');
+    segmento.value = response.data; // Atribuir diretamente à ref
+    console.log(segmento.value);
+  } catch (error) {
+    console.error('Ocorreu um erro ao coletar o segmento:', error);
+  }
+}
+
+async function coletarPrestador() {
+  try {
+    const response = await axios.get('http://localhost:8080/prestador');
+    prestador.value = response.data; // Atribuir diretamente à ref
+    console.log(prestador.value);
+  } catch (error) {
+    console.error('Ocorreu um erro ao coletar o prestador:', error);
+  }
+}
+
+async function cadastrarOrdemServico() {
+
+if (nome.value === null) {
+  alert('Insira on nome da empresa');
+  return;
+}
+
+
+try {
+  await axios.post('http://localhost:8080/ordemservico', {
+    clienteNome: nome.value,
+    cnpj: cnpj.value,
+    descricao: descricao.value,
+    segmentoId: segmentoSelecionado.value,
+    prestadorId: prestadorSelecionado.value,
+
+  });
+
+  
+  exibirPopup('Cadastro Realizado com Sucesso', 'Nova Ordem de Serviço Cadastrada.', 123)
+  
+  
+} catch (error) {
+  console.error('Ocorreu um erro ao cadastrar a ordem de serviço:', error);
+  alert('Erro ao cadastrar a ordem de serviço.');
+}
+}
+
+onMounted(()=>{
+  coletarSegmento();
+  coletarPrestador();
+})
 
 </script>
