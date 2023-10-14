@@ -3,16 +3,22 @@
         <div class="modal">
             <div class="modal-title">
                 <h1>N° {{ id }}</h1>
-                <!-- usando a função para trocar o estado do modal-->
-                <button class="modal-fechar" @click="toggleModalEdit()">
+                <div class="modal-title-buttons">
+                    <button class="modal-fechar" @click="toggleModalEdit()">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                         <path
                             d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                     </svg>
                 </button>
-                <button class="modal-fechar" @click="() => { toggleModalEdit(); atualizarPrestador(); }">
-                    finalizar
+                <button class="modal-aplicar" @click="() => { toggleModalEdit(); atualizarPrestador(); }">
+                    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-check2"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                    </svg>
                 </button>
+                </div>
+                <!-- usando a função para trocar o estado do modal-->
             </div>
             <div class="modal-cons-body">
                 <div class="modal-box-group">
@@ -86,13 +92,13 @@
 import '../assets/css/modal/modal.css'
 
 async function coletarCategoria() {
-  try {
-    const response = await axios.get('http://localhost:8080/segmento');
-    categoria.value = response.data; // Atribuir diretamente à ref
-    console.log(categoria.value);
-  } catch (error) {
-    console.error('Ocorreu um erro ao coletar a categoria:', error);
-  }
+    try {
+        const response = await axios.get('http://localhost:8080/segmento');
+        categoria.value = response.data; // Atribuir diretamente à ref
+        console.log(categoria.value);
+    } catch (error) {
+        console.error('Ocorreu um erro ao coletar a categoria:', error);
+    }
 }
 
 import { onMounted, ref } from 'vue';
@@ -115,30 +121,30 @@ const senha = ref();
 const categoriaSelecionada = ref(null); // Inicialize com um valor padrão ou null
 
 async function atualizarPrestador() {
-// Verifique se uma categoria foi selecionada
-if (categoriaSelecionada.value === null) {
-  alert('Selecione uma categoria antes de cadastrar.');
-  return;
-}
+    // Verifique se uma categoria foi selecionada
+    if (categoriaSelecionada.value === null) {
+        alert('Selecione uma categoria antes de cadastrar.');
+        return;
+    }
 
-// Fazendo a requisição POST com os valores capturados
-try {
-    let rota = 'http://localhost:8080/prestador/' + id.value
-    console.log(rota);
-  await axios.put(rota, {
-    prestadorNome: nome.value,
-    cnpj: cnpj.value,
-    email: email.value,
-    senha: senha.value,
-    segmentoId: 1 
-  });
+    // Fazendo a requisição POST com os valores capturados
+    try {
+        let rota = 'http://localhost:8080/prestador/' + id.value
+        console.log(rota);
+        await axios.put(rota, {
+            prestadorNome: nome.value,
+            cnpj: cnpj.value,
+            email: email.value,
+            senha: senha.value,
+            segmentoId: 1
+        });
 
-    alert('Registro atualizado!!');
-  
-} catch (error) {
-  console.error('Ocorreu um erro ao cadastrar o prestador:', error);
-  alert('Erro ao cadastrar o prestador.');
-}
+        alert('Registro atualizado!!');
+
+    } catch (error) {
+        console.error('Ocorreu um erro ao cadastrar o prestador:', error);
+        alert('Erro ao cadastrar o prestador.');
+    }
 }
 
 //aqui importando a função para ser usada no modal
@@ -157,8 +163,8 @@ const props = defineProps({
 
 });
 
-onMounted(()=>{
-  coletarCategoria();
+onMounted(() => {
+    coletarCategoria();
 })
 
 </script>

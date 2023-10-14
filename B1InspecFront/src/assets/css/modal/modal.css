@@ -41,6 +41,12 @@
     height: 40px;
 }
 
+.modal-title-buttons{
+    display: flex;
+    width: 100px;
+    justify-content: end;
+}
+
 .modal-title h1{
     margin-left: 15px;
     color: rgb(255, 255, 255);
@@ -50,12 +56,32 @@
 }
 
 .modal-fechar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(248, 49, 49, 0.74);
     margin-right: 15px;
     width: 30px;
     height: 25px;
     border: 1px solid transparent;
     border-radius: 8px;
+}
+
+.modal-aplicar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(11, 141, 28, 0.74);
+    margin-right: 15px;
+    width: 30px;
+    height: 25px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+
+.modal-aplicar svg{
+    width: 20px;
+    fill: white;
 }
 
 .modal-title .modal-fechar svg{
@@ -100,7 +126,7 @@
     fill: rgb(0, 0, 0);
 }
 
-.modal-box span{
+.modal-box span, #text-desc{
     color: rgb(83, 83, 83);
     font-weight: bold;
 }
@@ -113,15 +139,3 @@
     padding: 8px;
     border: 1px solid rgb(211, 211, 211);
 }
-
-/*                    <div class="card-box-group">
-                        <div class="card-box">
-                            <p>Empresa:</p>
-                            <span>{{ os.cliente.clienteNome }}</span>
-                        </div>
-                        <div class="card-box">
-                            <p>CNPJ:</p>
-                            <span>{{ os.cliente.clienteCnpj }}</span>
-                        </div>
-                    </div>
-*/

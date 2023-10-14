@@ -2,11 +2,12 @@
     <div class="modal-ordem-background">
         <div class="modal">
             <div class="modal-title">
-                <h1>Ordem N° </h1>
+                <h1>Ordem N° {{ id }}</h1>
                 <!-- usando a função para trocar o estado do modal-->
                 <button class="modal-fechar" @click="toggleModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                        <path
+                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                     </svg>
                 </button>
             </div>
@@ -23,7 +24,7 @@
                             </svg>
                             Data de Abertura:
                         </p>
-                        <span>a</span>
+                        <span>{{ dtaAbertura }}</span>
                     </div>
                 </div>
                 <div class="modal-box-group">
@@ -38,7 +39,20 @@
                             </svg>
                             Data de Fechamento:
                         </p>
-                        <span>a</span>
+                        <span>{{ dtaFechamento }}</span>
+                    </div>
+                </div>
+                <div class="modal-box-group">
+                    <div class="modal-box">
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                            </svg>
+                            Prestador:
+                        </p>
+                        <span>{{ prestador }}</span>
                     </div>
                 </div>
                 <div class="modal-box-group">
@@ -51,24 +65,37 @@
                                 <path
                                     d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V1Zm11 0H3v14h3v-2.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V15h3V1Z" />
                             </svg>
-                            Empresa:
+                            Cliente:
                         </p>
-                        <span>a</span>
+                        <span>{{ cliente }}</span>
                     </div>
                 </div>
                 <div class="modal-box-group">
                     <div class="modal-box">
                         <p>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-file-text"
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-bookmark"
                                 viewBox="0 0 16 16">
                                 <path
-                                    d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z" />
-                                <path
-                                    d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2zm10-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z" />
+                                    d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
                             </svg>
-                            CNPJ:
+                            status:
                         </p>
-                        <span>a</span>
+                        <span>{{ status }}</span>
+                    </div>
+                </div>
+                <div class="modal-box-group">
+                    <div class="modal-box">
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                class="bi bi-wrench-adjustable-circle" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.496 8a4.491 4.491 0 0 1-1.703 3.526L9.497 8.5l2.959-1.11c.027.2.04.403.04.61Z" />
+                                <path
+                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0Zm-1 0a7 7 0 1 0-13.202 3.249l1.988-1.657a4.5 4.5 0 0 1 7.537-4.623L7.497 6.5l1 2.5 1.333 3.11c-.56.251-1.18.39-1.833.39a4.49 4.49 0 0 1-1.592-.29L4.747 14.2A7 7 0 0 0 15 8Zm-8.295.139a.25.25 0 0 0-.288-.376l-1.5.5.159.474.808-.27-.595.894a.25.25 0 0 0 .287.376l.808-.27-.595.894a.25.25 0 0 0 .287.376l1.5-.5-.159-.474-.808.27.596-.894a.25.25 0 0 0-.288-.376l-.808.27.596-.894Z" />
+                            </svg>
+                            segmento:
+                        </p>
+                        <span>{{ segmento }}</span>
                     </div>
                 </div>
                 <div class="modal-box-group">
@@ -83,20 +110,13 @@
                             </svg>
                             Descrição
                         </h4>
-                        <p>Texto é uma produção, verbal ou não verbal, que se constitui com algum código, no intuito de
-                            comunicar algo a alguém, em determinado tempo e espaço. Sua definição ampla se deve ao fato de
-                            também abranger diversos formatos.
-
-                            Pode-se compreender o texto verbal,<br>oral e escrito, como uma prática social que utiliza
-                            estruturas verbais, organizadas e caracterizadas por suas estruturas linguísticas e sua função
-                            social, com vistas a cumprir um papel<br> pessoal ou coletivo na vida humana. O mesmo se aplica
-                            aos textos não verbais, também compreendidos como uma ação social, diferenciando-se somente em
-                            função das estruturas e códigos utilizados.</p>
+                        <p id="text-desc">{{ desc }}</p>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
-</div></template>
+</template>
 
 <script setup lang="ts">
 import '../assets/css/modal/modal.css'
@@ -112,7 +132,10 @@ const props = defineProps({
     id: String,
     dtaAbertura: String,
     dtaFechamento: String,
-    empresa: String,
+    prestador: String,
+    segmento: String,
+    cliente: String,
+    status: String,
     desc: String
 });
 //outra parte do import
