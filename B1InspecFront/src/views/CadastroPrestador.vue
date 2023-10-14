@@ -89,7 +89,8 @@ try {
     cnpj: cnpj.value,
     email: email.value,
     senha: senha.value,
-    segmentoId: categoriaSelecionada.value 
+    segmentoId: categoriaSelecionada.value
+   
   });
 
   // Requisição bem-sucedida, exibir um alerta de confirmação

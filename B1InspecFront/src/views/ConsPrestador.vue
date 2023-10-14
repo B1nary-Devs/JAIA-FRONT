@@ -34,12 +34,15 @@
                 </thead>
                 <tbody>
                     <tr v-for="prestador in prestador" :key="prestador.prestadorId">
+
                         <td>{{ prestador.prestadorNome }}</td>
                         <td>{{ prestador.cnpj }}</td>
                         <td>{{ prestador.email }}</td>
                         <td>{{ prestador.segmento.nome }}</td>
                         <td>
-                            <button class="btn-info">
+                            <button
+                                @click="() => { valoresPrestador(prestador.cnpj); toggleModal('buttonTriggers'); }"
+                                class="btn-info">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-eye" viewBox="0 0 16 16">
                                     <path
@@ -48,7 +51,9 @@
                                         d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                                 </svg>
                             </button>
-                            <button class="btn-edit">
+                            <button
+                                @click="() => { valoresPrestador(prestador.cnpj); toggleModalEdit('buttonTriggersEdit'); }"
+                                class="btn-edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pen" viewBox="0 0 16 16">
                                     <path
@@ -74,20 +79,61 @@
             <p>© B1naryInspec | V.01</p>
         </div>
     </div>
+    <!--passe as variaveis ref dentro dos parametros DAS PROPS do modal-->
+    <ModalPrestador :id="id" :nome="nome" :email="email" :cnpj="cnpj" :segmento="segmento"
+        v-if="modalTriggers.buttonTriggers" :toggleModal="() => toggleModal('buttonTriggers')">
+    </ModalPrestador>
+
+    <!--passe os valores ref dentro dos parametros DAS PROPS do modal-->
+    <ModalPrestadorEdit :id="id" :nome="nome" :email="email" :cnpj="cnpj" :segmento="segmento"
+        v-if="modalTriggersEdit.buttonTriggersEdit" :toggleModalEdit="() => toggleModalEdit('buttonTriggersEdit')">
+    </ModalPrestadorEdit>
+
     <PreLoader></PreLoader>
 </template>
 
 <script setup lang="ts">
+/*IMPORTAÇÃO DOS MODAIS*/
+import ModalPrestador from '../components/ModalPrestador.vue';
+import ModalPrestadorEdit from '../components/ModalPrestadorEdit.vue';
+
 import '../assets/css/table/table.css';
 import axios from 'axios';
 import { onMounted, watchEffect, ref } from 'vue';
 import PreLoader from '../components/PreLoader.vue';
 import { exibirPreload } from '../components/PreLoader.vue';
 
+/*filtros*/
 const prestador = ref([]);
 const nomeFiltro = ref('');
 const cnpjFiltro = ref('');
 let dadosOriginais = [];
+
+/*VARIAVEIS REF PARA PREENCHER A PROPS*/
+const nome = ref('');
+const email = ref('');
+const cnpj = ref('');
+const id = ref('');
+const segmento = ref('');
+
+/*função para realizar a requisição por cnpj do prestador*/
+async function valoresPrestador(cnpjPrestador) {
+    cnpj.value = cnpjPrestador.toString();
+    try {
+        const response = await axios.get('http://localhost:8080/prestador/cnpj/' + cnpj.value);
+        const prestadorData = response.data;
+        /*passe os valores do response para as ref*/
+        id.value = prestadorData.prestadorId;
+        email.value = prestadorData.email;
+        nome.value = prestadorData.prestadorNome;
+        cnpj.value = prestadorData.cnpj;
+        segmento.value = prestadorData.segmento.nome;
+
+    } catch (error) {
+        console.error('Ocorreu um erro ao coletar do prestador:', error);
+    }
+};
+
 
 async function loadTabela() {
     try {
@@ -104,6 +150,7 @@ function returnarPag() {
     window.history.back();
 }
 
+/*aplicação de filtros*/
 function aplicarFiltros() {
     const nomeFiltroValue = nomeFiltro.value.trim().toLowerCase();
     const cnpjFiltroValue = cnpjFiltro.value.trim();
@@ -131,6 +178,28 @@ watchEffect(() => {
         aplicarFiltros();
     }
 });
+
+/* ------------MODAL DE CONSULTA PRESTADOR----------------------*/
+//aqui a variavel responsavel por guardar se exibe o modal ou nao
+const modalTriggers = ref<{ [key: string]: boolean }>({
+    buttonTriggers: false
+});
+
+//variavel que usa um evento para mudar o estado de exibir do modal
+const toggleModal = (trigger: keyof typeof modalTriggers.value) => {
+    modalTriggers.value[trigger] = !modalTriggers.value[trigger];
+    console.log(modalTriggers.value)
+};
+
+/* ------------MODAL DE EDITAR PRESTADOR----------------------*/
+const modalTriggersEdit = ref<{ [key: string]: boolean }>({
+    buttonTriggersEdit: false
+});
+
+const toggleModalEdit = (trigger: keyof typeof modalTriggersEdit.value) => {
+    modalTriggersEdit.value[trigger] = !modalTriggersEdit.value[trigger];
+    console.log(modalTriggersEdit.value)
+};
 
 onMounted(() => {
     exibirPreload();

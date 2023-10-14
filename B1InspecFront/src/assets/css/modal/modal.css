@@ -1,0 +1,129 @@
+/*MODAL DE ORDEM DE SERVIÇO*/
+.modal-ordem-background{
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    z-index: 99;
+    background-color: rgb(0, 0, 0, 0.2);
+    opacity: 0.3;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+/*MODAL DE PRESTADOR*/
+.modal-prestador-background{
+    position: absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom: 0;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.945);
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+.modal{
+    background: white;
+    opacity: 0.8;
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.modal-title{
+    background-color: rgb(9, 21, 43);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+}
+
+.modal-title h1{
+    margin-left: 15px;
+    color: rgb(255, 255, 255);
+    font-size: 23px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.modal-fechar{
+    background-color: rgba(248, 49, 49, 0.74);
+    margin-right: 15px;
+    width: 30px;
+    height: 25px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+}
+
+.modal-title .modal-fechar svg{
+    width: 15px;
+    fill: white;
+}
+
+.modal-cons-body{
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.modal-box-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.modal-box{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.modal-box p, .modal-box-desc h4{
+    margin-right: 10px;
+    font-size: 18px;
+    color: black;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.modal-box p svg, .modal-box-desc h4 svg{
+    margin-right: 5px;
+    width: 25px;
+    fill: rgb(0, 0, 0);
+}
+
+.modal-box span{
+    color: rgb(83, 83, 83);
+    font-weight: bold;
+}
+
+.modal-box-desc p{
+    scroll-behavior: smooth;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 95%;
+    padding: 8px;
+    border: 1px solid rgb(211, 211, 211);
+}
+
+/*                    <div class="card-box-group">
+                        <div class="card-box">
+                            <p>Empresa:</p>
+                            <span>{{ os.cliente.clienteNome }}</span>
+                        </div>
+                        <div class="card-box">
+                            <p>CNPJ:</p>
+                            <span>{{ os.cliente.clienteCnpj }}</span>
+                        </div>
+                    </div>
+*/
