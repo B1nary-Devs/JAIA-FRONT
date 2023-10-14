@@ -6,24 +6,19 @@
         <div class="cons-table">
             <div class="filter">
 
-                <div class="input-filter">
-                    <label class="form-label" for="filtro-nome">Nome</label><br>
-                    <input v-model="nomeFiltro" class="form-control" type="text" id="filtro-nome">>
-                </div>
-
             </div>
 
             <table>
                 <thead>
                     <th>Nome</th>
-                    <th>Ações</th>
+                    <th colspan="2">Ações</th>
                 </thead>
                 <tbody>
-                    <tr v-for="segmento in segmento" :key="segmento.segmentoId">
-                        <td>{{ segmento.nome }}</td>
-                        <td>{{ segmento.checklist }}</td>
+                    <tr v-for="seg in segmento" :key="segmento.segmentoId">
+                        <td>{{ seg.nome }}</td>
+                        <td>{{ seg.checklist }}</td>
                         <td>
-                            <button class="btn-info" @click="() => { toggleModal('buttonTriggers'); }">
+                            <button class="btn-info" @click="() => {segmentoCaptura(seg.id); toggleModal('buttonTriggers'); }">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-eye" viewBox="0 0 16 16">
                                     <path
@@ -86,13 +81,13 @@ import { exibirPreload } from '../components/PreLoader.vue'
 const segmento = ref([]);
 const nomeFiltro = ref('');
 
-const nomeSegmento = ref('teste02');
-const idSegmento = ref('1');
+const nomeSegmento = ref('');
+const idSegmento = ref('');
 
-async function nomesSegmento() {
-    nomeSegmento.value = nomeSegmento.toString();
+async function segmentoCaptura(id: string) {
+    
     try {
-        const response = await axios.get('http://localhost:8080/segmento/1');
+        const response = await axios.get('http://localhost:8080/segmento/' + id);
         const segmentoData = response.data;
         console.log(segmentoData);
         /*passe os valores do response para as ref*/
