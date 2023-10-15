@@ -19,6 +19,16 @@
                             <span>{{ os.dataFechamento }}</span>
                         </div>
                     </div>
+                    <div class="card-box-group">
+                        <div class="card-box">
+                            <p>Empresa</p>
+                            <span>{{ os.cliente.clienteNome }}</span>
+                        </div>
+                        <div class="card-box">
+                            <p>Status:</p>
+                            <span>{{ os.status }}</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-cons-actions">
                     <button @click="() => { capturarOrdem(os.servicoId); toggleModal('buttonTriggers'); }"
