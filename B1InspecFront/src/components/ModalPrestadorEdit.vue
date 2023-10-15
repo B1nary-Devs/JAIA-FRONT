@@ -136,7 +136,7 @@ async function atualizarPrestador() {
             cnpj: cnpj.value,
             email: email.value,
             senha: senha.value,
-            segmentoId: 1
+            segmentoId: categoriaSelecionada.value
         });
 
         alert('Registro atualizado!!');

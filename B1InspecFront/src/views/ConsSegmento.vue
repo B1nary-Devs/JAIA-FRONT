@@ -41,13 +41,6 @@
         </div>
         <div class="cons-buttons">
             <button class="button-return" @click="returnarPag">Voltar</button>
-            <button class="go-cadSegmento">
-                <router-link to="/cadSegmento" title="Realizar um novo cadastro">
-                    <div class="go-link">
-                        <p>Cadastrar</p>
-                    </div>
-                </router-link>
-            </button>
         </div>
         <div class="footer">
             <p>© B1naryInspec | V.01</p>
