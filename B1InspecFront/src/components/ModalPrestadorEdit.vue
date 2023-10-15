@@ -140,6 +140,7 @@ async function atualizarPrestador() {
         });
 
         alert('Registro atualizado!!');
+        window.location.reload();
 
     } catch (error) {
         console.error('Ocorreu um erro ao cadastrar o prestador:', error);
