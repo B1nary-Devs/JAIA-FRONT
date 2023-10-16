@@ -65,7 +65,7 @@ const senha = ref("");
 
 async function coletarCategoria() {
   try {
-    const response = await axios.get('http://localhost:8080/categoria');
+    const response = await axios.get('http://localhost:8080/segmento');
     categoria.value = response.data; // Atribuir diretamente à ref
     console.log(categoria.value);
   } catch (error) {
@@ -89,7 +89,8 @@ try {
     cnpj: cnpj.value,
     email: email.value,
     senha: senha.value,
-    categoriaId: categoriaSelecionada.value 
+    segmentoId: categoriaSelecionada.value
+   
   });
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
