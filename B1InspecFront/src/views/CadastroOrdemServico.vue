@@ -8,11 +8,11 @@
 
       <div class="check-itens">
         
-        <input type="radio" value="existente" v-model="picked" />
-        <label for="">Selecionar cliente existente</label>
-        
-        <input type="radio" value="novo" v-model="picked" />
-        <label for="">Cadastrar novo cliente</label>
+        <input type="radio" value="existente" v-model="picked" @click="radio(true)"/>
+        <label for="existente">Selecionar cliente existente</label>
+
+        <input type="radio" value="novo" v-model="picked" @click="radio(false)"/>
+        <label for="novo">Cadastrar novo cliente</label>
         
       </div>
 
@@ -24,8 +24,8 @@
 
         <div class="input-box" v-else>
           <label for="id_selnome">Nome da Empresa</label>
-          <select id="id_selnome" v-model="selnome">
-            <option></option>
+          <select id="id_selnome" v-model="clienteSelecionado.value">
+          <option v-for="cliente in clienteSelecionado" :key="cliente.clienteId" :value="cliente.clienteId">{{ cliente.clienteNome }}</option>
           </select>
         </div>
 
@@ -48,7 +48,7 @@
 
         <div class="input-box">
         <label for="id_prestador">Prestador de Serviço</label>
-        <select id="id_prestador" v-model="prestador" @change="atualizarPrestadorSelecionado">
+        <select id="id_prestador" v-model="prestador" @change="prestadorSelecionado">
           <option v-for="prestador in prestadoresSelecionados" :key="prestador.prestadorId" :value="prestador.prestadorId">{{ prestador.prestadorNome }}</option>
         </select>
         </div>
@@ -95,7 +95,7 @@
 
       <div class="form-submit">
         <button @click="" class="button-return">Voltar</button>
-        <button @click="cadastrarOrdemServico">Cadastrar</button>
+        <button @click="cadastrarOrdemServico" >Cadastrar</button>
       </div>
     </div>
 
@@ -119,8 +119,10 @@ const cnpj = ref("");
 const descricao = ref("");
 const segmento = ref("");
 const checklist = ref("");
-const picked = ref('novo')
+const picked = ref('novo');
 const segmentoSelecionado = ref(null);
+const clienteSelecionado = ref(null);
+const nomeSelecionado = ref([]);
 const prestador = ref(null);
 const prestadoresSelecionados = ref([]);
 const itens = ref<string[]>([])
@@ -128,11 +130,14 @@ const estadoEdicao = ref(-1)
 const checklistsAtribuidos = ref([]);
 const item = ref("");
 const itemEditando = ref(null);
+const radioB = ref();
 
-async function inserirItem() {
-  if (item.value.trim() != '') {
-    itens.value.push(item.value)
-    item.value = ''
+function inserirItem() {
+  console.log(`chechlistvalor -->  ${checklist.value}`)
+  if (checklist.value.trim() !== "") {
+    checklistsAtribuidos.value.push(checklist.value);
+    console.log(`lista -->  ${checklistsAtribuidos.value}`)
+    checklist.value = "";
   }
 }
 
@@ -163,6 +168,14 @@ function removerItem(index) {
   checklistsAtribuidos.value.splice(index, 1);
 }
 
+
+function radio(valor: boolean){
+  radioB.value = valor;
+  console.log(clienteSelecionado.value);
+  const valor2 = clienteSelecionado.value;
+  console.log(`eu sou o valor ${valor2}`);
+}
+
 async function coletarSegmento() {
   try {
     const response = await axios.get('http://localhost:8080/segmento');
@@ -173,17 +186,25 @@ async function coletarSegmento() {
   }
 }
 
+async function coletarCliente() {
+  try {
+    const response = await axios.get('http://localhost:8080/cliente');
+    const clientes = response.data;
+    clienteSelecionado.value = clientes; // Agora estamos preenchendo o valor selecionado
+  } catch (error) {
+    console.error('Ocorreu um erro ao coletar o segmento:', error);
+  }
+}
+
+
+
 async function buscarChecklistsPorSegmento(segmentoId) {
   try {
     if (segmentoId) {
-      const response = await axios.get('http://localhost:8080/checklist');
+      const response = await axios.get(`http://localhost:8080/segmento/${segmentoId}`);
 
       if (response.status === 200) {
-        const checklists = response.data.filter(checklist => {
-          return checklist.segmentos.some(segmento => segmento.id === segmentoId);
-        });
-
-        checklistsAtribuidos.value = checklists;
+        checklistsAtribuidos.value = response.data.checklistList;
       } else {
         console.error(`Falha na requisição GET: Código de status ${response.status}`);
       }
@@ -194,6 +215,7 @@ async function buscarChecklistsPorSegmento(segmentoId) {
     console.error('Ocorreu um erro na requisição GET:', error);
   }
 }
+
 
 async function carregarPrestadoresAndChecklists() {
   await carregarPrestadores();
@@ -222,24 +244,38 @@ async function carregarPrestadores() {
   }
 }
 
-async function carregarChecklists() {
-  const segmentoId = segmentoSelecionado.value; 
-
-  if (!segmentoId) {
-    return;
-  }
-
-  try {
-    const response = await axios.get(`http://localhost:8080/checklist?segmentoId=${segmentoId}`);
-    if (response.status === 200) {
-      checklistsAtribuidos.value = response.data;
-    } else {
-      console.error(`Falha na requisição GET: Código de status ${response.status}`);
-    }
-  } catch (error) {
-    console.error('Ocorreu um erro na requisição GET:', error);
+function prestadorSelecionado() {
+  // Quando um prestador é selecionado, você pode acessar o ID do prestador em prestador.value
+  if (prestador.value) {
+    // Adicione o ID do prestador aos dados da ordem de serviço
+    ordemServicoData.prestadores = [prestador.value];
   }
 }
+
+
+async function cadastrarCliente() {
+  try {
+    const clienteData = {
+      clienteCnpj: cnpj.value,
+      clienteNome: nome.value,
+    };
+
+    const response = await axios.post('http://localhost:8080/cliente', clienteData);
+
+    if (response.status === 201) {
+      const clienteId = response.data.clienteId;
+      return clienteId; // Retorne o ID do cliente
+    } else {
+      console.error(`Falha na solicitação POST: Código de status ${response.status}`);
+      throw new Error('Falha ao cadastrar o cliente');
+    }
+  } catch (error) {
+    console.error('Ocorreu um erro ao cadastrar o cliente:', error);
+    throw error; // Propague o erro para que a função de chamada possa tratá-lo
+  }
+}
+
+
 
 async function cadastrarOrdemServico() {
   if (!nome.value) {
@@ -248,25 +284,31 @@ async function cadastrarOrdemServico() {
   }
 
   try {
+    if (!prestador.value) {
+      alert('Selecione um prestador de serviço');
+      return;
+    }
+    
+    //if (radioB.value){
+      //const clienteId = clienteSelecionado
+   
+    //}
+
+    const clienteId = await cadastrarCliente();
+
+  
     const ordemServicoData = {
-      dataFechamento: "20/08/2020 11:20:00",
+      dataFechamento: null,
       status: "aberto em andamento",
-      descricao: descricao.value,
-      cliente: 2,  
-      prestadores: [8], 
+      descricao: descricao.value, 
+      cliente: clienteId,
+      prestadores: [prestador.value], 
+
     };
 
     const ordemServicoResponse = await axios.post('http://localhost:8080/ordemservico', ordemServicoData);
 
-    const ordemServicoId = ordemServicoResponse.data.id;
-
-    const clienteData = {
-      clienteCnpj: cnpj.value,
-      clienteNome: nome.value,
-    };
-
-    await axios.post('http://localhost:8080/cliente', clienteData);
-
+   
     exibirPopup('Cadastro Realizado com Sucesso', 'Nova Ordem de Serviço Cadastrada.', 123);
   } catch (error) {
     console.error('Ocorreu um erro ao cadastrar a ordem de serviço:', error);
@@ -274,8 +316,10 @@ async function cadastrarOrdemServico() {
   }
 }
 
+
 onMounted(() => {
   coletarSegmento();
+  coletarCliente();
 });
 
 </script>
