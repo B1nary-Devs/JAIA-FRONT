@@ -136,10 +136,11 @@ async function atualizarPrestador() {
             cnpj: cnpj.value,
             email: email.value,
             senha: senha.value,
-            segmentoId: 1
+            segmentoId: categoriaSelecionada.value
         });
 
         alert('Registro atualizado!!');
+        window.location.reload();
 
     } catch (error) {
         console.error('Ocorreu um erro ao cadastrar o prestador:', error);
