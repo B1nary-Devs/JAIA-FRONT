@@ -14,20 +14,26 @@
                     <th colspan="2">Ações</th>
                 </thead>
                 <tbody>
-                    <tr v-for="seg in segmento" :key="segmento.segmentoId">
-                        <td>{{ seg.nome }}</td>
-                        <td>{{ seg.checklist }}</td>
+                    <tr v-for="segmento in segmento" :key="segmento.id">
+                        <td>{{ segmento.nome }}</td>
+                        <!-- <div class="itens" v-for="checklist in segmento.checklistList" :key="checklist.checklistId">
+                                - {{ checklist.checklistNome }}
+                        </div> -->
                         <td>
-                            <button class="btn-info" @click="() => {segmentoCaptura(seg.id); toggleModal('buttonTriggers'); }">
+                            <button 
+                            @click ="() => {segmentoCaptura(segmento.id); toggleModal('buttonTriggers'); }"
+                            class="btn-info" >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-eye" viewBox="0 0 16 16">
+                                    c   lass="bi bi-eye" viewBox="0 0 16 16">
                                     <path
                                         d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
                                     <path
                                         d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                                 </svg>
                             </button>
-                            <button class="btn-edit"  @click="() => {  nomesSegmento();  toggleModalEdit('buttonTriggersEdit'); }">
+                            <button 
+                            @click="() => {  segmentoCaptura(segmento.id);  toggleModalEdit('buttonTriggersEdit'); }"
+                            class="btn-edit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                     class="bi bi-pen" viewBox="0 0 16 16">
                                     <path
@@ -58,10 +64,10 @@
         v-if="modalTriggers.buttonTriggers" :toggleModal="() => toggleModal('buttonTriggers')">
     </ModalSegmento>
 
-    <!--passe os valores ref dentro dos parametros DAS PROPS do modal
+    <!-- passe os valores ref dentro dos parametros DAS PROPS do modal -->
     <ModalSegmentoEdit :idSegmento="idSegmento" :nomeSegmento="nomeSegmento"
         v-if="modalTriggersEdit.buttonTriggersEdit" :toggleModalEdit="() => toggleModalEdit('buttonTriggersEdit')">
-    </ModalSegmentoEdit>-->
+    </ModalSegmentoEdit>
 
     <PreLoader></PreLoader>
 </template>
@@ -70,29 +76,35 @@
 /*IMPORTAÇÃO DOS MODAIS*/
 import ModalSegmento from '../components/ModalSegmento.vue';
 import ModalSegmentoEdit from '../components/ModalSegmentoEdit.vue';
-
 import '../assets/css/table/table.css'
 import axios from 'axios';
 import { onMounted, watchEffect, ref } from 'vue';
 import PreLoader from '../components/PreLoader.vue';
 import { exibirPreload } from '../components/PreLoader.vue'
 
-/*filtros*/
 const segmento = ref([]);
 const nomeFiltro = ref('');
 
+
+/*VARIAVEIS REF PARA PREENCHER A PROPS*/
 const nomeSegmento = ref('');
 const idSegmento = ref('');
+const checklistList = ref([]);
+const checklistNome = ref('');
+const checklistId = ref('');
 
-async function segmentoCaptura(id: string) {
-    
+async function segmentoCaptura(id) {
+    idSegmento.value = id.toString();
     try {
-        const response = await axios.get('http://localhost:8080/segmento/' + id);
+        const response = await axios.get('http://localhost:8080/segmento/' + idSegmento.value);
         const segmentoData = response.data;
         console.log(segmentoData);
         /*passe os valores do response para as ref*/
-        idSegmento.value = segmentoData.id;
+        idSegmento.value = segmentoData.id.toString();
         nomeSegmento.value = segmentoData.nome;
+        checklistNome.value = segmentoData.checklistList.checklistNome;
+        checklistId.value = segmentoData.checklistList.checklistId;
+        checklistList.value = segmentoData.checklistList;
 
     } catch (error) {
         console.error('Ocorreu um erro ao coletar do segmento:', error);

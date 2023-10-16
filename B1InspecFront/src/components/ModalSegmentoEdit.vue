@@ -3,16 +3,22 @@
         <div class="modal">
             <div class="modal-title">
                 <h1>N° {{ idSegmento }}</h1>
+                <div class="modal-title-buttons">
                 <!-- usando a função para trocar o estado do modal-->
                 <button class="modal-fechar" @click="toggleModalEdit()">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                        <path
+                        <path   
                             d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                     </svg>
                 </button>
-                <button class="modal-fechar" @click="() => { toggleModalEdit(); atualizarPrestador(); }">
-                    finalizar
+                <button class="modal-aplicar" @click="() => { toggleModalEdit(); atualizarSegmento(); }">
+                    <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-check2"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                    </svg>
                 </button>
+            </div>
             </div>
             <div class="modal-cons-body">
                 <div class="modal-box-group">
@@ -39,14 +45,8 @@
                                 <path
                                     d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
                             </svg>
-                            Checklist:
+                            <!-- Checklist: -->
                         </p>
-                        <div class="input-box">
-                            <label for="id_categoria">Segmento</label>
-                            <select id="id_categoria" v-model="categoriaSelecionada">
-                                <option v-for="ctg in categoria" :key="ctg.id" :value="ctg.id">{{ ctg.checklist }}</option>
-                            </select>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -56,60 +56,10 @@
 
 <script setup lang="ts">
 import '../assets/css/modal/modal.css'
-
-async function coletarCategoria() {
-  try {
-    const response = await axios.get('http://localhost:8080/segmento');
-    categoria.value = response.data; // Atribuir diretamente à ref
-    console.log(categoria.value);
-  } catch (error) {
-    console.error('Ocorreu um erro ao coletar a categoria:', error);
-  }
-}
-
+import '../views/ConsSegmento.vue'
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
 
-//variaveis auxiliares para capturar os valores das props E PASSAR PARA AS V-MODEL
-//que o usuário irá passar no componente pai*/
-const idProps = props.id;
-const nomeProps = props.nome;
-
-//VARIAVEIS V-MODEL PARA PASSAR PARA O CORPO DA REQUISICAO
-const id = ref(idProps)
-const categoria = ref([]);
-const nome = ref(nomeProps);
-const cnpj = ref(cnpjProps);
-const email = ref(emailProps);
-const senha = ref();
-const categoriaSelecionada = ref(null); // Inicialize com um valor padrão ou null
-
-async function atualizarPrestador() {
-// Verifique se uma categoria foi selecionada
-if (categoriaSelecionada.value === null) {
-  alert('Selecione uma categoria antes de cadastrar.');
-  return;
-}
-
-// Fazendo a requisição POST com os valores capturados
-try {
-    let rota = 'http://localhost:8080/prestador/' + id.value
-    console.log(rota);
-  await axios.put(rota, {
-    prestadorNome: nome.value,
-    cnpj: cnpj.value,
-    email: email.value,
-    senha: senha.value,
-    segmentoId: 1 
-  });
-
-    alert('Registro atualizado!!');
-  
-} catch (error) {
-  console.error('Ocorreu um erro ao cadastrar o prestador:', error);
-  alert('Erro ao cadastrar o prestador.');
-}
-}
 
 //aqui importando a função para ser usada no modal
 const props = defineProps({
@@ -119,16 +69,36 @@ const props = defineProps({
     },
 
     /* (1° PASSO) DECLARE AS PROPS DA ENTIDADE PARA PASSAR PARA OS CAMPOS HTML*/
-    id: String,
-    nome: String,
-    email: String,
-    cnpj: String,
-    segmento: String
+    idSegmento: String,
+    nomeSegmento: String
 
 });
 
-onMounted(()=>{
-  coletarCategoria();
-})
+//variaveis auxiliares para capturar os v alores das props E PASSAR PARA AS V-MODEL
+//que o usuário irá passar no componente pai*/
+const idProps = props.idSegmento;
+const nomeProps = props.nomeSegmento;
+
+//VARIAVEIS V-MODEL PARA PASSAR PARA O CORPO DA REQUISICAO
+const id = ref(idProps)
+const nome = ref(nomeProps);
+
+async function atualizarSegmento() {
+// Fazendo a requisição POST com os valores capturados
+try {
+    let rota = 'http://localhost:8080/segmento/' + id.value
+    console.log(rota);
+  await axios.put(rota, {
+    nome: nome.value
+  });
+
+    alert('Segmento atualizado!');
+  
+} catch (error) {
+  console.error('Ocorreu um erro ao atualizar o segmento:', error);
+  alert('Erro ao atualizar o segmento.');
+}
+}
+
 
 </script>

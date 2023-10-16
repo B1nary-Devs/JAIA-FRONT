@@ -1,5 +1,5 @@
 <template>
-    <div div class="modal-ordem-background">
+    <div div class="modal-segmento-background">
         <div class="modal">
             <div class="modal-title">
                 <h1>N° {{ idSegmento }}</h1>
@@ -25,6 +25,9 @@
                             Nome:
                         </p>
                         <span>{{ nomeSegmento }}</span>
+                        <div class="itens" v-for="checklist in checklistList" :key="checklist.checklistId">
+                                - {{ checklist.checklistNome }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -33,7 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import '../assets/css/modal/modal.css'
+import '../assets/css/modal/modal.css';
+import { type PropType } from 'vue';
 
 //aqui importando a função para ser usada no modal
 const props = defineProps({
@@ -45,7 +49,10 @@ const props = defineProps({
     /* (1° PASSO) DECLARE AS PROPS DA ENTIDADE PARA PASSAR PARA OS CAMPOS HTML*/
     idSegmento: String,
     nomeSegmento: String,
-
+    checklistList: {
+        type: Array as PropType<{ checklistId: number, checklistNome: string }[]>, // Especifique o tipo
+        required: true,
+    }
 });
 
 </script>
