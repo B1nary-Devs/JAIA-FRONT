@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-import CadastroPrestador from './components/CadastroPrestador.vue'
-import CadastroCategoria from './components/CadastroCategoria.vue';
+import CadastroPrestador from './views/CadastroPrestador.vue'
+import CadastroCategoria from './views/CadastroCategoria.vue';
+import CadastroOrdemServico from './views/CadastroOrdemServico.vue';
 import TheHeader from './components/The Header.vue';
 import TheNav from './components/TheNav.vue';
 
