@@ -23,15 +23,55 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../components/CadastroPrestador.vue')
+      component: () => import('../views/CadastroPrestador.vue')
     },
     {
-      path: '/cadSegmento',
-      name: 'cadCategoria',
+      path: '/consPrestador',
+      name: 'consPrestador',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../components/CadastroCategoria.vue')
+      component: () => import('../views/ConsPrestador.vue')
+    },
+    {
+      path: '/cadSegmento',
+      name: 'cadSegmento',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/CadastroSegmento.vue')
+    },
+    {
+      path: '/consSegmento',
+      name: 'consSegmento',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ConsSegmento.vue') 
+    },
+    {
+      path: '/cadOrdem',
+      name: 'cadOrdem',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ConsOrdemServico.vue')
+    },
+    {
+      path: '/consOrdem',
+      name: 'consOrdem',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ConsPrestador.vue')
+    },
+    {
+      path: '/cadOrdemServico',
+      name: 'cadOrdemServico',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/CadastroOrdemServico.vue')
     }
   ]
 })

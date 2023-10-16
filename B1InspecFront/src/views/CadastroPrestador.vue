@@ -2,7 +2,7 @@
   <div class="form-cadastro">
       <div class="form-title">
           <h1>Prestador de Serviço</h1>
-          <span> Cadastro</span>
+          <span>> Cadastro</span>
       </div>
       <div class="form-body">
           <div class="input-group">
@@ -35,6 +35,7 @@
           </div>
 
           <div class="form-submit">
+                  <button @click="returnarPag" class="button-return">Voltar</button>
                   <button @click="cadastrarPrestador">Cadastrar</button>
           </div>
 
@@ -64,7 +65,7 @@ const senha = ref("");
 
 async function coletarCategoria() {
   try {
-    const response = await axios.get('http://localhost:8080/categoria');
+    const response = await axios.get('http://localhost:8080/segmento');
     categoria.value = response.data; // Atribuir diretamente à ref
     console.log(categoria.value);
   } catch (error) {
@@ -88,7 +89,8 @@ try {
     cnpj: cnpj.value,
     email: email.value,
     senha: senha.value,
-    categoriaId: categoriaSelecionada.value 
+    segmentoId: categoriaSelecionada.value
+   
   });
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
@@ -107,6 +109,10 @@ function limparCampos(){
   email.value = "";
   senha.value = "";
   categoriaSelecionada.value = null;
+}
+
+function returnarPag(){
+  window.history.back();
 }
 
 onMounted(()=>{
