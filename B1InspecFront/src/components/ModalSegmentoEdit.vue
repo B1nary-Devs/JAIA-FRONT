@@ -93,7 +93,8 @@ try {
   });
 
     alert('Segmento atualizado!');
-  
+    window.location.reload();
+
 } catch (error) {
   console.error('Ocorreu um erro ao atualizar o segmento:', error);
   alert('Erro ao atualizar o segmento.');

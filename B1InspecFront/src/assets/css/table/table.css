@@ -70,6 +70,13 @@
     margin-left: 1px;
 }
 /*----------------------------------------------------------- TABLE ---------------------------------------------------------------------- */
+#filtro{
+    background: none;
+    border: none;
+    width: 35%;
+    height: 35%;
+    cursor: pointer;
+}
 
 table {
     width: 85%;

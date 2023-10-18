@@ -117,7 +117,7 @@
                     </div>
                 </div>
                 <div class="submenu" v-show="showSubMenuOrdem">
-                    <router-link to="/" id="cadOrdem" title="Realizar um novo cadastro">
+                    <router-link to="/cadOrdem" id="cadOrdem" title="Realizar um novo cadastro">
                         <div class="item-submenu">
                             <p>Cadastrar</p>
                         </div>

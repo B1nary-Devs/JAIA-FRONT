@@ -55,7 +55,7 @@ export default {
       this.showPopup = true; // Define showPopup como true para exibir o popup
     },
     ocultarPopup() {
-      this.showPopup = false; // Define showPopup como false para ocultar o popup
+      window.location.reload(); // Define showPopup como false para ocultar o popup
     }
   }
 }

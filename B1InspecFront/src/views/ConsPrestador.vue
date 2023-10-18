@@ -18,7 +18,14 @@
 
                 <div class="Buttons">
 
-                    <button type="button" @click="aplicarFiltros">Filtrar</button>
+                    <button type="button" id="filtro" @click="aplicarFiltros"> <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                    <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" 
+                    stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(2.13333,2.13333)">
+                        <rect x="-10.33127" y="91.07442" transform="rotate(-45.001)" width="15" height="62.367" fill="#000000" opacity="0.35"></rect><rect x="-7.50279" y="88.24604"
+                         transform="rotate(-45.001)" width="15" height="62.367" fill="#000000"></rect><circle cx="49" cy="53" r="37" fill="#000000" opacity="0.35"></circle><circle cx="49"
+                          cy="49" r="37" fill="#0862e9e8"></circle><circle cx="49" cy="53" r="28" fill="#000000" opacity="0.35"></circle><circle cx="49" cy="49" r="28" fill="#ffffff"></circle></g></g>
+                    </svg>
+                    </button>
 
                 </div>
 
@@ -29,7 +36,7 @@
                     <th>Nome</th>
                     <th>Cnpj</th>
                     <th>E-mail</th>
-                    <th>Departamento</th>
+                    <th>Segmento</th>
                     <th>Ações</th>
                 </thead>
                 <tbody>

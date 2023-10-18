@@ -133,7 +133,7 @@ function returnarPag(){
 async function cadastrarChecklist(idCategoria) {
   try {
     const nomesItens = itens.value.map((item) => ({
-      categorias: [
+      segmentos: [
         {
           id: idCategoria
         }
