@@ -122,6 +122,7 @@ nav{
     display: flex;
     align-items: center;
     transition: all .55s ease;
+    cursor: pointer;
 }
 
 .link-item svg{
