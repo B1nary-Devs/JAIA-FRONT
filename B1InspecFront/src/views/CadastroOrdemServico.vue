@@ -8,7 +8,7 @@
 
       <div class="check-itens">
         
-        <input type="radio" value="existente" v-model="picked" @click="radio(true)"/>
+        <input type="radio" value="existente" v-model="picked" @click="radio(true )"/>
         <label for="existente">Selecionar cliente existente</label>
 
         <input type="radio" value="novo" v-model="picked" @click="() => { radio(true); limpar() }"/>
@@ -44,6 +44,7 @@
         <select id="id_segmento" v-model="segmentoSelecionado" @change="carregarPrestadoresAndChecklists">
           <option v-for="ctg in segmento" :key="ctg.id" :value="ctg.id">{{ ctg.nome }}</option>
         </select>
+        <button class="add_segmento" @click="adicionarCampos">Adicionar Segmento</button>
         </div>
 
         <div class="input-box">
@@ -52,7 +53,6 @@
           <option v-for="ptr in prestadoresSelecionados" :key="ptr.prestadorId" :value="ptr.prestadorId">{{ ptr.prestadorNome }}</option>
         </select>
         </div>
-
 
         <div class="input-box">
           <label for="id_checklist">Checklist</label>
@@ -66,8 +66,35 @@
             </button>
           </div>
         </div>
-      </div>
 
+        <div class="input-box" v-for="(novoSegmento, index) in novosSegmentos" :key="index">
+        <label for="id_novo_segmento">Segmento</label>
+        <select id="id_novo_segmento" v-model="novosSegmentos[index]" @change="carregarPrestadoresAndChecklists">
+          <option v-for="ctg in segmento" :key="ctg.id" :value="ctg.id">{{ ctg.nome }}</option>
+        </select>
+        </div>
+
+        <div class="input-box" v-for="(novoPrestador, index) in novosPrestadores" :key="index">
+          <label for="id_novo_prestador">Novo Prestador</label>
+          <select id="id_novo_prestador" v-model="novosPrestadores" @change="ptrs()">
+          <option v-for="ptr in prestadoresSelecionados" :key="ptr.prestadorId" :value="ptr.prestadorId">{{ ptr.prestadorNome }}</option>
+          </select>
+        </div>
+
+        <div class="input-box" v-for="(novoChecklist, index) in novosChecklists" :key="index">
+          <label for="id_novo_checklist">Novo Checklist</label>
+          <div class="checklist-action">
+            <input type="text" id="id__novo_checklist" v-model="novosChecklists[index]" @keydown.enter="inserirItem" />
+            <button @click="inserirItem" class="adicionar">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1.2em" viewBox="0 0 448 512" fill="#3498db">
+                <path
+                  d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+        
       <div class="section-itens">
       <div class="section-title-itens">
         <h1>Itens cadastrados</h1>
@@ -153,6 +180,10 @@ const itemEditando = ref(null);
 const radioB = ref();
 const checklistsPersonalizado = ref([]);
 const clienteCNPJ = ref("")
+const novosSegmentos = ref([]);
+const novosPrestadores = ref([]);
+const novosChecklists = ref([]);
+
 
 function ptrs(){
   console.log(empresaSelect.value);
@@ -200,6 +231,12 @@ function radio(valor: boolean){
   console.log(clienteSelecionado.value);
   const valor2 = clienteSelecionado.value;
   console.log(`eu sou o valor ${valor2}`);
+}
+
+function adicionarCampos() {
+  novosSegmentos.value.push('');
+  novosPrestadores.value.push('');
+  novosChecklists.value.push('');
 }
 
 async function coletarSegmento() {
@@ -277,14 +314,6 @@ async function carregarPrestadores() {
     }
   } catch (error) {
     console.error('Ocorreu um erro na requisição GET:', error);
-  }
-}
-
-function prestadorSelecionado() {
-  // Quando um prestador é selecionado, você pode acessar o ID do prestador em prestador.value
-  if (prestador.value) {
-    // Adicione o ID do prestador aos dados da ordem de serviço
-    ordemServicoData.prestadores = [prestador.value];
   }
 }
 
@@ -409,7 +438,11 @@ async function cadastrarChecklistPersonalizadoNovo(idOrdemServico) {
 
 function limpar(){
   clienteCNPJ.value = ""
-  console.log('caralhoooooooooooooooo');
+  nome.value = ""
+  descricao.value = ""
+  prestador.value = ""
+  checklist.value = ""
+
   
 }
 
