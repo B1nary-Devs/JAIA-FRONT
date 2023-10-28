@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { verifyTokenAcesso } from '@/auth/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,12 +8,26 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: HomeView,
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     },
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/Login.vue')
+      component: () => import('../views/Login.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (!verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/')
+      }
     },
     {
       path: '/about',
@@ -20,7 +35,14 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('../views/AboutView.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     },
     {
       path: '/cadPrestador',
@@ -28,7 +50,14 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/CadastroPrestador.vue')
+      component: () => import('../views/CadastroPrestador.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     },
     {
       path: '/consPrestador',
@@ -36,7 +65,14 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ConsPrestador.vue')
+      component: () => import('../views/ConsPrestador.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     },
     {
       path: '/cadSegmento',
@@ -44,7 +80,14 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/CadastroSegmento.vue')
+      component: () => import('../views/CadastroSegmento.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     },
     {
       path: '/consSegmento',
@@ -52,7 +95,14 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ConsSegmento.vue') 
+      component: () => import('../views/ConsSegmento.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     },
     {
       path: '/cadOrdem',
@@ -60,7 +110,14 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/CadastroOrdemServico.vue')
+      component: () => import('../views/CadastroOrdemServico.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     },
     {
       path: '/consOrdem',
@@ -68,7 +125,14 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ConsOrdemServico.vue')
+      component: () => import('../views/ConsOrdemServico.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     },
     {
       path: '/cadOrdemServico',
@@ -76,7 +140,14 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/CadastroOrdemServico.vue')
+      component: () => import('../views/CadastroOrdemServico.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
     }
   ]
 })

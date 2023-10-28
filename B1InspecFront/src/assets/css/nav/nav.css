@@ -62,12 +62,23 @@ nav{
     fill: #00A4C8;
 }
 
-.logo-link-item p{
+/* .logo-link-item p{
+    color: #00A4C8;
+    font-weight: bold;
+    margin-left: 15px;
+} */
+.logo-link-item-p{
+    display: flex;
+    flex-direction: column;
+    
     color: #00A4C8;
     font-weight: bold;
     margin-left: 15px;
 }
 
+.sair{
+    font-size: 10px;
+}
 /*ANIMAÇÕES*/
 .logo-link-item:hover{
     fill: #ffffff;

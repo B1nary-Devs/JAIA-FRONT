@@ -38,6 +38,8 @@
     import axios from 'axios'
     import ThePopUp from '../components/ThePopUp.vue';
     import {exibirPopup} from '../components/ThePopUp.vue'
+    import {signIn} from '../auth/auth'
+    import router from '@/router';
 
     const email = ref("")
     const senha = ref("")
@@ -52,6 +54,9 @@
             if(senha.value === ""){
                 errorSenha.value = true
             }
+
+            await signIn(email.value, senha.value)
+            router.push('/');
             
         } catch (error) {
             console.log(error)

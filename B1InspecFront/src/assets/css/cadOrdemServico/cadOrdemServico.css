@@ -65,6 +65,7 @@
     height: 5%;
     display: flex;
     justify-content: center;
+    padding: 5px;
 }
 
 .form-body .input-group {
@@ -98,6 +99,7 @@
     border-radius: 9px;
     border: 0.5px solid transparent;
     outline: 1px solid #5e68b3;
+    padding: 5px;
 }
 
 .form-body .input-group .input-box input::placeholder {
