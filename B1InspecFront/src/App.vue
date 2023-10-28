@@ -9,7 +9,6 @@ import TheNav from './components/TheNav.vue';
 
 const route = useRoute()
 
-
 </script>
 
 <template>
@@ -21,10 +20,7 @@ const route = useRoute()
 <!-- 
   Ver um jeito de entrar no login sem usar o nav  -->
 
-  <TheNav v-if="route.path !== '/login'"/>
-  <nav v-if="route.path !== '/login'">
-    <RouterLink to="/cadPrestador"></RouterLink>
-    <RouterLink to="/cadCategoria"></RouterLink>
-  </nav>
+  <TheNav v-if="route.path !== '/login' && route.path !== '/'" />
+
   <RouterView />
 </template>
