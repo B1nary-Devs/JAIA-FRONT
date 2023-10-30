@@ -32,7 +32,18 @@
                     
                 </div>
                 <div class="card-cons-actions">
-                    <button @click="() => { capturarOrdem(os.servicoId); toggleModal('buttonTriggers'); }"
+                    <router-link :to="{ 
+                            name: 'aprovOrdemServico2', 
+                            params: { 
+                                dataAbertura: os.dataAbertura, 
+                                empresa: os.cliente.clienteNome,  
+                                status: os.status,
+                                segmento: os.prestador[0].segmento.nome, 
+                                prestador: os.prestador[0].prestadorNome, 
+                                descricao: os.descricao,
+                            }
+                            }">
+                    <button
                         class="card-button-view">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye"
                             viewBox="0 0 16 16">
@@ -42,6 +53,7 @@
                                 d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                         </svg>
                     </button>
+                    </router-link>
                     <button class="card-button-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                             viewBox="0 0 16 16">
@@ -49,11 +61,6 @@
                                 d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
                         </svg>
                     </button>
-                    <ModalOrdem :id="idOrdem" :prestador="prestadorOrdem" :segmento="segmentoOrdem" :cliente="cliente"
-                        :desc="desc" :status="staus" :dtaAbertura="dtaAbertura" :dta-fechamento="dtaFechamento" :check="check"
-                        v-if="modalTriggers.buttonTriggers" :toggleModal="() => toggleModal('buttonTriggers')">
-                        <h2>Meu modal</h2>
-                    </ModalOrdem>
                 </div>
             </div>
         </div>
@@ -64,14 +71,15 @@
 import '../assets/css/Ordem/consultaOrdem.css'
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import ModalOrdem from '../components/ModalAprovOrdem.vue';
+import { useRoute } from 'vue-router';
+
 
 const ordem = ref([]);
 
 const idOrdem = ref('');
 const dtaAbertura = ref('');
 const dtaFechamento = ref('');
-const staus = ref('');
+const status = ref('');
 const prestadorOrdem = ref('');
 const segmentoOrdem = ref('');
 const cliente = ref('');
@@ -87,7 +95,7 @@ async function capturarOrdem(id: string) {
         idOrdem.value = ordemData.servicoId;
         dtaAbertura.value = ordemData.dataAbertura;
         dtaFechamento.value = ordemData.dataFechamento;
-        staus.value = ordemData.status;
+        status.value = ordemData.status;
 
         /*CAPTURANDO NOME PRESTADOR*/
         const prestador = ordemData.prestador[0];
@@ -128,17 +136,6 @@ async function loadTabela() {
         console.error('Ocorreu um erro ao coletar os ordem:', error);
     }
 }
-
-//aqui a variavel responsavel por guardar se exibe o modal ou nao
-const modalTriggers = ref<{ [key: string]: boolean }>({
-    buttonTriggers: false
-});
-
-//variavel que usa um evento para mudar o estado de exibir do modal
-const toggleModal = (trigger: keyof typeof modalTriggers.value) => {
-    modalTriggers.value[trigger] = !modalTriggers.value[trigger];
-    console.log(modalTriggers.value)
-};
 
 onMounted(() => {
     loadTabela();
