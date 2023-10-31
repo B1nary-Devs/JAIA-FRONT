@@ -40,10 +40,21 @@
             <p>{{ $route.params.prestador }}</p>
           </div>
 
+          <div class="input-box">
+            <label for="id_checklist">Checklist:</label>
+            <div class="checklist-body">
+              <div class="checklist-body-items">
+                <p>perso</p>
+                <button>Aprovar</button>
+                <button>Reprovar</button>
+              </div>
+            </div>
+          
+          </div>
+
+          
+
         </div>
-      </div>
-      <div class="form-footer">
-        <p>© B1naryInspec | V.01</p>
       </div>
     </div>
   </template>
@@ -62,12 +73,31 @@
   const descricao = ref('')
   const segmentoOrdem = ref('')
   const prestadorOrdem = ref('')
- 
+  const checklist = ref('')
   
   const router = useRouter()
+
+  async function capturarOrdem() {
+    let rota = `http://localhost:8080/ordemservico/${5}`
+    try {
+        const response = await axios.get(rota);
+        const ordemData = response.data;
+        const checkPersonalizado = ordemData.checklistPersonalizados
+        
+        console.log(checkPersonalizado.checklistPersonalizadoNome);
+        
+        
+    }catch(error){
+      console.error('Ocorreu um erro ao coletar as ordens:', error);
+    }
+  }
   
   // Escute o evento personalizado para visualizar a ordem e preencher os campos
   onMounted(() => {
+
+    capturarOrdem()
+
+
     document.addEventListener('visualizarOrdem', (event) => {
       const ordem = event.detail
   
@@ -79,6 +109,7 @@
       descricao.value = ordem.descricao
       segmentoOrdem.value = ordem.segmentoOrdem
       prestadorOrdem.value = ordem.prestadorOrdem
+
     })
   })
 
