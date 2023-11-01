@@ -1,158 +1,120 @@
 <template>
     <div class="formulario-cadastro">
-      <div class="form-title">
-        <h1>Nova Ordem de serviço</h1>
-        <span>> {Formulario}</span>
-      </div>
-
-      <div class="form-body-form">
-        <div class="input-group-form">
-          <div class="input-box-form">
-            <label for="id_nome">Nome da Empresa</label>
-            <input type="text" id="id_nome" v-model="nome" />
-          </div>
-  
-          <div class="input-box-form">
-            <label for="id_cnpj">CNPJ</label>
-            <input type="number" id="id_cnpj" v-model="clienteCNPJ" />
-          </div>
-  
-          <div class="input-box-form">
-            <label for="id_descricao">Descrição</label>
-            <input type="text" id="id_descricao" v-model="descricao" />
-          </div>
-  
-          <div class="input-box-form">
-          <label for="id_segmento">Segmento</label>
-          <select id="id_segmento" v-model="segmentoSelecionado">
-            <option v-for="ctg in segmento" :key="ctg.id" :value="ctg.id">{{ ctg.nome }}</option>
-          </select>
-          </div>
+        <div class="form-title">
+            <div class="top-page-links-form">
+            <div class="logo-form-link">
+          <img src="../assets/img/home/logo.png" alt="">
+            </div>
+            <div class="page-link-form">
+          <RouterLink to="../">
+            <div class="link-alternativo-form">
+              <p>Home</p>
+            </div>
+          </RouterLink>
+          <RouterLink to="../login">
+            <div class="link-home-form">
+              <p>Login</p>
+            </div>
+          </RouterLink>
         </div>
-  
-        <div class="form-submit">
-          <button @click="" class="button-return">Voltar</button>
-          <button @click="cadastrarOrdemServico" >Cadastrar</button>
-        </div>
-      </div>
-  
-      <div class="form-footer">
-        <p>© B1naryInspec | V.01</p>
-      </div>
     </div>
-    <ThePopUp></ThePopUp>
-  </template>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+                integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        </div>
+        <div class="formulario-ordem">
+            <h3>Nova Ordem de serviço</h3>
+        <div class = "form-body-nova-ordem">
+            
+            <div class="form-row">
+                <div class="col">
+                    <label>Nome da Empresa</label>
+                    <input type="text" class="form-control" placeholder="B1naryInspec" v-model="nomeEmpresa">
+                </div>
+                <div class="col">
+                    <label>CNPJ</label>
+                    <input type="text" class="form-control" placeholder="89.423.819/0001-75" v-model="CNPJEmpresa">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label>Descrição</label>
+                    <input type="text" class="form-control" placeholder="Predial" v-model="descricao">
+                </div>
+                <div class="col">
+                    <label for="id_categoria">Segmento</label>
+                    <select id="id_categoria" v-model="segmentoSelecionada">
+                  <option v-for="ctg in segmento" :key="ctg.id" :value="ctg.id">{{ ctg.nome }}</option>
+                </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-submit">
+            <button @click="" class="button-return">Voltar</button>
+            <button @click="cadastrarOrdem">Cadastrar</button>
+        </div>
+    </div>
+    <div class="form-footer">
+        <p>© B1naryInspec | V.01</p>
+    </div>
+</div>
+<ThePopUp></ThePopUp>
+</template>
   
-  <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
-  import '../assets/css/cadOrdemServico/cadOrdemServico.css'
-  import ThePopUp from '../components/ThePopUp.vue'
-  import { exibirPopup } from '../components/ThePopUp.vue'
-  import axios from 'axios'
-  
-  const nome = ref("");
-  const cnpj = ref("");
-  const descricao = ref("");
-  const segmento = ref("");
-  const segmentoSelecionado = ref(null);
-  const clienteSelecionado = ref(null);
-  const prestador = ref(null);
-  const empresaSelect = ref(null);
-  const radioB = ref();
-  const clienteCNPJ = ref("")
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import axios from 'axios';
+import '../assets/css/cadastroNovaOrdem/cadNovaOrdem.css'
+import ThePopUp from '../components/ThePopUp.vue'
 
-  async function coletarSegmento() {
-    try {
-      const response = await axios.get('http://localhost:8080/segmento');
-      segmento.value = response.data; 
-      console.log(segmento.value);
-    } catch (error) {
-      console.error('Ocorreu um erro ao coletar o segmento:', error);
-    }
+const nomeEmpresa = ref("");
+const CNPJEmpresa = ref("");
+const descricao = ref("");
+const segmento = ref("");
+
+
+
+async function coletarSegmento() {
+  try {
+    const response = await axios.get('http://localhost:8080/segmento');
+    segmento.value = response.data; // Atribuir diretamente à ref
+    console.log(segmento.value);
+  } catch (error) {
+    console.error('Ocorreu um erro ao coletar a segmento:', error);
   }
-  
-  async function coletarCliente() {
-    try {
-      const response = await axios.get('http://localhost:8080/cliente');
-      const clientes = response.data;
-      clienteSelecionado.value = clientes; // Agora estamos preenchendo o valor selecionado
-    } catch (error) {
-      console.error('Ocorreu um erro ao coletar o segmento:', error);
-    }
-  }
-  
-  async function cadastrarCliente() {
-    try {
-      const clienteData = {
-        clienteCnpj: cnpj.value,
-        clienteNome: nome.value,
-      };
-  
-      const response = await axios.post('http://localhost:8080/cliente', clienteData);
-  
-      if (response.status === 201) {
-        const clienteId = response.data.clienteId;
-        return clienteId; // Retorne o ID do cliente
-      } else {
-        console.error(`Falha na solicitação POST: Código de status ${response.status}`);
-        throw new Error('Falha ao cadastrar o cliente');
-      }
-    } catch (error) {
-      console.error('Ocorreu um erro ao cadastrar o cliente:', error);
-      throw error; // Propague o erro para que a função de chamada possa tratá-lo
-    }
-  }
-  
-  async function cadastrarOrdemServico() {
+}
+
+const segmentoSelecionada = ref(null); // Inicialize com um valor padrão ou null
+
+async function cadastrarOrdem() {
+// Verifique se uma categoria foi selecionada
+if (segmentoSelecionada.value === null) {
+  alert('Selecione um segmento antes de cadastrar.');
+  return;
+}
+
+// Fazendo a requisição POST com os valores capturados
+try {
+  await axios.post('http://localhost:8080/ordemservico', {
+    prestadorNome: nome.value,
+    cnpj: cnpj.value,
+    email: email.value,
+    senha: senha.value,
+    segmentoId: categoriaSelecionada.value
    
-    try {
-      if (!prestador.value) {
-        alert('Selecione um prestador de serviço');
-        return;
-      }
-  
-      var clienteId = null
-      
-      if (radioB.value){
-  
-        clienteId = empresaSelect.value   
-  
-      }else{
-  
-        clienteId = await cadastrarCliente();
-  
-      }
-    
-      const ordemServicoData = {
-        dataFechamento: null,
-        status: "aberto em andamento",
-        descricao: descricao.value, 
-        cliente: clienteId,
-        prestadores: [prestador.value], 
-  
-      };
-  
-      const ordemServicoResponse = await axios.post('http://localhost:8080/ordemservico', ordemServicoData);
-  
-      console.log('OBJ CADASTRADO:', ordemServicoResponse);
-  
-  
-      // Acessar o servicoId da resposta
-      const idOrdemServico = ordemServicoResponse.data.servicoId;
-      console.log('ID da Ordem de Serviço:', idOrdemServico);
- 
-  
-      exibirPopup('Cadastro Realizado com Sucesso', 'Nova Ordem de Serviço Cadastrada.', 123);
-    } catch (error) {
-      console.error('Ocorreu um erro ao cadastrar a ordem de serviço:', error);
-      alert('Erro ao cadastrar a ordem de serviço.');
-    }
-  }
-  
-  onMounted(() => {
-    coletarSegmento();
-    coletarCliente();
   });
+
+  // Requisição bem-sucedida, exibir um alerta de confirmação
+  exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
+  limparCampos();
   
-  </script>
+} catch (error) {
+  console.error('Ocorreu um erro ao cadastrar o prestador:', error);
+  alert('Erro ao cadastrar o prestador.');
+}
+}
+
+onMounted(()=>{
+  coletarSegmento();
+})
+</script>
   

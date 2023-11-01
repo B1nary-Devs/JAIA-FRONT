@@ -10,14 +10,14 @@
           <img src="../assets/img/home/logo.png" alt="">
         </div>
         <div class="page-link">
-          <RouterLink to="">
+          <RouterLink to="../Formulario">
             <div class="link-alternativo">
               <p>Nova Ordem</p>
             </div>
           </RouterLink>
-          <RouterLink to="../views/Login.vue">
+          <RouterLink to="../login">
             <div class="link-home">
-              <p>Acessar</p>
+              <p>Login</p>
             </div>
           </RouterLink>
         </div>

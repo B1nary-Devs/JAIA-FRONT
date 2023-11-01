@@ -20,7 +20,7 @@ const route = useRoute()
 <!-- 
   Ver um jeito de entrar no login sem usar o nav  -->
 
-  <TheNav v-if="route.path !== '/login' && route.path !== '/'" />
+  <TheNav v-if="route.path !== '/login' && route.path !== '/' && route.path !== '/Formulario'" />
 
   <RouterView />
 </template>

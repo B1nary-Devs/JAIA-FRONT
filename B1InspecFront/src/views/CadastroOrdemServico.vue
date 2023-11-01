@@ -409,7 +409,6 @@ async function cadastrarChecklistPersonalizadoNovo(idOrdemServico) {
 
 function limpar(){
   clienteCNPJ.value = ""
-  console.log('caralhoooooooooooooooo');
   
 }
 
