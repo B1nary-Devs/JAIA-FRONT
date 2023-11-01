@@ -148,7 +148,6 @@ const router = createRouter({
         }
         next('/login')
       }
-      component: () => import('../views/CadastroOrdemServico.vue')
     }
   ]
 })
