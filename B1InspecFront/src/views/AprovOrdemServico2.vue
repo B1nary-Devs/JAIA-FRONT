@@ -6,37 +6,37 @@
     <div class="form-body">
       <div class="input-group">
         <div class="input-box">
-          <label for="id_data_abertura">Data de Abertura:</label>
+          <label>Data de Abertura:</label>
           <p>{{ $route.params.dataAbertura }}</p>
         </div>
 
         <div class="input-box">
-          <label for="id_data_fechamento">Data de Fechamento:</label>
+          <label>Data de Fechamento:</label>
           <p>{{ $route.params.dataFechamento }}</p>
         </div>
 
         <div class="input-box">
-          <label for="id_empresa">Empresa:</label>
+          <label>Empresa:</label>
           <p>{{ $route.params.empresa }}</p>
         </div>
 
         <div class="input-box">
-          <label for="id_status">Status:</label>
+          <label>Status:</label>
           <p>{{ $route.params.status }}</p>
         </div>
 
         <div class="input-box">
-          <label for="id_descricao">Descrição:</label>
+          <label>Descrição:</label>
           <p>{{ $route.params.descricao }}</p>
         </div>
 
         <div class="input-box">
-          <label for="id_segmento">Segmento:</label>
+          <label>Segmento:</label>
           <p>{{ $route.params.segmento }}</p>
         </div>
 
         <div class="input-box">
-          <label for="id_prestador">Prestador:</label>
+          <label>Prestador:</label>
           <p>{{ $route.params.prestador }}</p>
         </div>
 
@@ -46,10 +46,10 @@
 
         <div class="checklist-body-items" v-for="(item, index) in checklist" :key="index">
           <p>{{ item.checklistPersonalizadoNome }}</p>
-          <button @click="exibicaoInput(false)">Aprovar</button>
+          <button @click="() => { exibicaoInput(false); aprovacao(item.checklistPersonalizadoNome, 'Aprovado'); }">Aprovar</button>
           <button @click="exibicaoInput(index)">Reprovar</button>
-          <input v-if="index === campo" placeholder="Informe o motivo de reprovação" />
-          <button v-if="index === campo">ooi</button>
+          <input v-if="index === campo" v-model="observacao" placeholder="Informe o motivo de reprovação" />
+          <button @click="() => { exibicaoInput(index); aprovacao(item.checklistPersonalizadoNome, 'Reprovado'); }" v-if="index === campo">ooi</button>
         </div>
 
 
@@ -73,9 +73,10 @@ const idSegmento = ref('')
 const observacao = ref('')
 const status = ref('')
 const nomecheck = ref('')
+const route = useRoute();
 
 
-function exibicaoInput(index) {
+function exibicaoInput(index: boolean) {
   campo.value = index;
   console.log(idSegmento.value);
 
@@ -83,7 +84,7 @@ function exibicaoInput(index) {
 
 
 async function capturarOrdem() {
-  let rota = `http://localhost:8080/ordemservico/${1}`
+  let rota = `http://localhost:8080/ordemservico/${route.params.idOrdem}`
   try {
     const response = await axios.get(rota);
     const ordemData = response.data;
@@ -99,19 +100,30 @@ async function capturarOrdem() {
   }
 }
 
-async function aprovacao(id: string) {
+async function aprovacao(nome: string, sts: string) {
+  status.value = sts
+  console.log('====================================');
+  console.log(nomecheck.value);
+  console.log(idOrdem.value);
+  console.log(idSegmento.value);
+  console.log(status.value);
+  console.log(observacao.value);
+  console.log('====================================');
   try {
-    await axios.post('http://localhost:8080/prestador', {
-      prestadorNome: nome.value,
-      cnpj: cnpj.value,
-      email: email.value,
-      senha: senha.value,
-      segmentoId: categoriaSelecionada.value
+    await axios.put(`http://localhost:8080/checklist_personalizado/1`, {
+      checklistPersonalizadoNome: "cortar yyyy",
+      ordemServicoId: 1,
+      segmentoId: 1,
+      observacao: observacao.value,
+      situacao: status.value
 
     });
+
+    alert('Atualizado')
+
   }catch(error){
-    console.error('Ocorreu um erro ao cadastrar o prestador:', error);
-    alert('Erro ao cadastrar o prestador.');
+    console.error('Ocorreu um erro ao atualizar a ordem:', error);
+    alert('Erro ao atualizar a ordem');
   }
 }
 
@@ -120,9 +132,9 @@ async function aprovacao(id: string) {
 
 // Escute o evento personalizado para visualizar a ordem e preencher os campos
 onMounted(() => {
-
+    
     capturarOrdem()
-    const route = useRoute();
+    
     idOrdem.value = route.params.idOrdem
     idSegmento.value = route.params.idSegmento
     status.value = route.params.status
