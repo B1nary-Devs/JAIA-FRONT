@@ -112,17 +112,18 @@
 
 .col select{
     height: 35px;
-    border-radius: 9px;
-    outline: 1px solid #5e68b3;
+    border-radius: 3px;
+    outline: 1px solid #7e808767;
     border: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    margin-top: 0px;
     appearance: none;
     background-image: url('../../img/select/select.png');
     background-position: right center;
     background-repeat: no-repeat;
     background-size: 20px;
-    padding-right: 20px; 
+    padding-right: 380px; 
 }
 
 .form-submit{
@@ -131,7 +132,7 @@
     height: 10%;
     display: flex;
     justify-content: end;
-    margin-top: 10px;
+    margin-top: 27px;
 }
 
 .form-submit button{

@@ -19,7 +19,7 @@
             <div class="divisor"></div>
             <div class="nav-menu">
                 <div class="nav-item">
-                    <router-link to="/" id="Home" title="Ir para página Inicial">
+                    <router-link to="/home" id="Home" title="Ir para página Inicial">
                         <div class="link-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-house"
                                 viewBox="0 0 16 16">
@@ -68,9 +68,9 @@
             <div class="menu-submenu">
                 <div class="link-item" @click="toggleSubMenuPrestador">
                     <div class="icons-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-fill"
-                            viewBox="0 0 16 16">
-                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-plus" viewBox="0 0 16 16">
+                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                            <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
                         </svg>
                         <p>Prestador</p>
                     </div>
@@ -96,6 +96,35 @@
                     </router-link>
                 </div>
             </div>
+
+
+            <div class="menu-submenu">
+                <div class="link-item" @click="toggleSubMenuSolicitacao">
+                    <div class="icons-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-send-exclamation-fill" viewBox="0 0 16 16">
+                            <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                            <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1.5a.5.5 0 0 1-1 0V11a.5.5 0 0 1 1 0Zm0 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                        </svg>
+                        <p>Solicitação</p>
+                    </div>
+                    <div class="icons-arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            :class="{ 'arrow-rotate': showSubMenuSolicitacao }" class="bi bi-chevron-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="submenu" v-show="showSubMenuSolicitacao">
+                    <router-link to="/solicitacao" id="solicitacao" title="Visualizar solicitacao">
+                        <div class="item-submenu">
+                            <p>Analisar</p>
+                        </div>
+                    </router-link>
+                </div>
+            </div>
+
+
             <div class="menu-submenu">
                 <div class="link-item" @click="toggleSubMenuOrdem">
                     <div class="icons-item">
@@ -142,6 +171,7 @@ const toggleSubMenuSegmento = () => {
     showSubMenuSegmento.value = !showSubMenuSegmento.value
     showSubMenuPrestador.value = false
     showSubMenuOrdem.value = false
+    showSubMenuSolicitacao.value = false
 }
 
 const showSubMenuPrestador = ref(false)
@@ -149,6 +179,15 @@ const toggleSubMenuPrestador = () => {
     showSubMenuPrestador.value = !showSubMenuPrestador.value
     showSubMenuSegmento.value = false
     showSubMenuOrdem.value = false
+    showSubMenuSolicitacao.value = false
+}
+
+const showSubMenuSolicitacao = ref(false)
+const toggleSubMenuSolicitacao = () => {
+    showSubMenuSolicitacao.value = !showSubMenuSolicitacao.value
+    showSubMenuOrdem.value = false
+    showSubMenuPrestador.value = false
+    showSubMenuSegmento.value = false
 }
 
 const showSubMenuOrdem = ref(false)
@@ -156,12 +195,14 @@ const toggleSubMenuOrdem = () => {
     showSubMenuOrdem.value = !showSubMenuOrdem.value
     showSubMenuPrestador.value = false
     showSubMenuSegmento.value = false
+    showSubMenuSolicitacao.value = false
 }
 
 const closeAllSubMenus = () => {
     // Feche todos os submenus definindo as variáveis como false
     showSubMenuSegmento.value = false
     showSubMenuPrestador.value = false
+    showSubMenuSolicitacao.value = false
     showSubMenuOrdem.value = false
 }
 

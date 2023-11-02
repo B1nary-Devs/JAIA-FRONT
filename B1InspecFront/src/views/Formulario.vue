@@ -41,7 +41,7 @@
                     <input type="text" class="form-control" placeholder="Predial" v-model="descricao">
                 </div>
                 <div class="col">
-                    <label for="id_categoria">Segmento</label>
+                    <label>Segmento</label><br>
                     <select id="id_categoria" v-model="segmentoSelecionada">
                   <option v-for="ctg in segmento" :key="ctg.id" :value="ctg.id">{{ ctg.nome }}</option>
                 </select>
