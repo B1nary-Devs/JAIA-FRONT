@@ -49,6 +49,7 @@
           <button @click="exibicaoInput(false)">Aprovar</button>
           <button @click="exibicaoInput(index)">Reprovar</button>
           <input v-if="index === campo" placeholder="Informe o motivo de reprovação" />
+          <button v-if="index === campo">ooi</button>
         </div>
 
 
@@ -60,26 +61,27 @@
 <script setup lang="ts">
 import { ref, onMounted, defineProps } from 'vue'
 import axios from 'axios'
+import { useRoute } from 'vue-router';
 import '../assets/css/aprovOrdemServico/aprovOrdemServico.css'
-import { useRouter } from 'vue-router'
+
 
 // Campos a serem exibidos
-const dataAbertura = ref('')
-const dataFechamento = ref('')
-const clienteNome = ref('')
-const status = ref('')
-const descricao = ref('')
-const segmentoOrdem = ref('')
-const prestadorOrdem = ref('')
 const checklist = ref([])
 const campo = ref(true)
+const idOrdem = ref('')
+const idSegmento = ref('')
+const observacao = ref('')
+const status = ref('')
+const nomecheck = ref('')
+
 
 function exibicaoInput(index) {
   campo.value = index;
+  console.log(idSegmento.value);
+
 }
 
 
-const router = useRouter()
 async function capturarOrdem() {
   let rota = `http://localhost:8080/ordemservico/${1}`
   try {
@@ -97,42 +99,35 @@ async function capturarOrdem() {
   }
 }
 
+async function aprovacao(id: string) {
+  try {
+    await axios.post('http://localhost:8080/prestador', {
+      prestadorNome: nome.value,
+      cnpj: cnpj.value,
+      email: email.value,
+      senha: senha.value,
+      segmentoId: categoriaSelecionada.value
+
+    });
+  }catch(error){
+    console.error('Ocorreu um erro ao cadastrar o prestador:', error);
+    alert('Erro ao cadastrar o prestador.');
+  }
+}
+
+
 
 
 // Escute o evento personalizado para visualizar a ordem e preencher os campos
 onMounted(() => {
 
-  capturarOrdem()
-
-
-  document.addEventListener('visualizarOrdem', (event) => {
-    const ordem = event.detail
-
-    // Preencha os campos com os dados da ordem
-    dataAbertura.value = ordem.dataAbertura
-    dataFechamento.value = ordem.dataFechamento
-    clienteNome.value = ordem.cliente.clienteNome
-    status.value = ordem.status
-    descricao.value = ordem.descricao
-    segmentoOrdem.value = ordem.segmentoOrdem
-    prestadorOrdem.value = ordem.prestadorOrdem
+    capturarOrdem()
+    const route = useRoute();
+    idOrdem.value = route.params.idOrdem
+    idSegmento.value = route.params.idSegmento
+    status.value = route.params.status
 
   })
-})
-
-
-const props = defineProps({
-  id: String,
-  dtaAbertura: String,
-  dtaFechamento: String,
-  prestador: String,
-  segmento: String,
-  cliente: String,
-  status: String,
-  desc: String,
-  check: Array,
-});
-
 
 </script>
   

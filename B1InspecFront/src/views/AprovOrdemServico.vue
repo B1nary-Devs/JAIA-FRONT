@@ -39,8 +39,11 @@
                                 empresa: os.cliente.clienteNome,  
                                 status: os.status,
                                 segmento: os.prestador[0].segmento.nome, 
-                                prestador: os.prestador[0].prestadorNome, 
+                                prestador: os.prestador[0].prestadorNome,
+                                idSegmento: os.prestador[0].segmento.id,
                                 descricao: os.descricao,
+                                idOrdem: os.servicoId,
+
                             }
                             }">
                     <button
@@ -82,6 +85,7 @@ const dtaFechamento = ref('');
 const status = ref('');
 const prestadorOrdem = ref('');
 const segmentoOrdem = ref('');
+const idSegmento = ref('');
 const cliente = ref('');
 const desc = ref('');
 const check = ref([]);
@@ -96,18 +100,26 @@ async function capturarOrdem(id: string) {
         dtaAbertura.value = ordemData.dataAbertura;
         dtaFechamento.value = ordemData.dataFechamento;
         status.value = ordemData.status;
+        idSegmento.value = ordemData.servicoId
+        console.log(idSegmento.value);
+        
 
-        /*CAPTURANDO NOME PRESTADOR*/
-        const prestador = ordemData.prestador[0];
-        prestadorOrdem.value = prestador.prestadorNome;
+        // Verifique se existem prestadores antes de acessar seus valores
+        if (ordemData.prestador.length > 0) {
+            prestadorOrdem.value = ordemData.prestador[0].prestadorNome;
+        } else {
+            prestadorOrdem.value = 'Nenhum prestador atribuído';
+        }
 
-        /*CAPTURANDO SEGMENTO*/
-        const segAuxiliar = ordemData.prestador[0];
-        const seg = ordemData.prestador[0];
-        segmentoOrdem.value = segAuxiliar.segmento.nome;
+        // Verifique se há segmentos antes de acessar seus valores
+        if (ordemData.prestador.length > 0 && ordemData.prestador[0].segmento) {
+            segmentoOrdem.value = ordemData.prestador[0].segmento.nome;
+        
+        } else {
+            segmentoOrdem.value = 'Nenhum segmento atribuído';
+        }
 
         cliente.value = ordemData.cliente.clienteNome;
-
         desc.value = ordemData.descricao;
         console.log(ordem.value);
     } catch (error) {

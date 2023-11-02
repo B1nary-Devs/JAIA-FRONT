@@ -82,7 +82,7 @@ const router = createRouter({
       component: () => import('../views/AprovOrdemServico.vue')
     },
     {
-      path: '/aprovOrdemServico2/:dataAbertura/:empresa/:status/:segmento/:prestador/:descricao',
+      path: '/aprovOrdemServico2/:dataAbertura/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
       name: 'aprovOrdemServico2',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
