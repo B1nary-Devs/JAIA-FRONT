@@ -1,22 +1,10 @@
-.tela-inicial {
-    background-color: black;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
 
-.tela-inicial-img p {
-    color: white; /* Cor do texto */
-    font-size: 24px; /* Tamanho da fonte */
-    text-align: center; /* Alinhamento do texto */
-    margin-bottom: 20px; /* Espaço entre o texto e a imagem */
-}
+
+
 
 .tela-inicial-img img {
-    width: 500px;
-    height: 150px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 1000px;
+    height: 630px;
+    margin-left: 396px;
+
 }

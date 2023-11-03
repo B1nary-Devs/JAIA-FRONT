@@ -141,10 +141,9 @@ const toggleModalEdit = (trigger: keyof typeof modalTriggersEdit.value) => {
 };
 
 onMounted(() => {
-    exibirPreload();
     setTimeout(() => {
         loadTabela();
-    }, 2000);
+    });
 });
 
 
