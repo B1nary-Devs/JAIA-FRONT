@@ -362,8 +362,10 @@ async function cadastrarOrdemServico() {
 }
 
 async function cadastrarChecklistPersonalizado(idOrdemServico) {
+  const segmentoId = segmentoSelecionado.value
   try {
     const nomesItens = checklistsAtribuidos.value.map((item) => ({
+      segmentoId: segmentoId,
       ordemServicoId: idOrdemServico,
       checklistPersonalizadoNome: item.checklistNome
     }))

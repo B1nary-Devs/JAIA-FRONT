@@ -55,6 +55,7 @@ import ThePopUp from '../components/ThePopUp.vue';
 import {exibirPopup} from '../components/ThePopUp.vue'
 import axios from 'axios';
 
+
  // Capturando os valores dos campos
 const categoria = ref([]);
 const erro = ref();
@@ -64,8 +65,13 @@ const email = ref("");
 const senha = ref("");
 
 async function coletarCategoria() {
+  const config = {
+    headers: {
+      'Authorization': `Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiZ3VpYWx2ZXNAZ21haWwuY29tIiwiaWF0IjoxNjk4ODg1NTM4LCJyb2xlcyI6IlVTRVIifQ.TB5L7rifGWyHo-ONwhqeWumuFgCmrhy3R_ojxEkHe9VUqwHPTwONB_n79QKutIdYD4olf0Wei93opL3Vi67GgULQNiRPgd5-IyBTscUwREc8XLW2zJTSb2g3O6EO7ZxKqNLo2PmlpWbGmzAswLepTS4IbXc40obAExFfMYQzOrCbl1i7yRuais5t-PpWqwh2WkojewQtCNetSQu0zUNTGA3TFo9z2rL69buuEnyzaXDViB_QR_cB8nLXboJIzsDa1yX3xHHWx11kqC7LNjaGtfuyGIRdKrJwFD-KQIBVq-cQTXdTEd-2TPTARJSHsOYxyCYKJFTKtvUjQA9S0ouodQ`,
+    }
+  };
   try {
-    const response = await axios.get('http://localhost:8080/segmento');
+    const response = await axios.get('http://localhost:8080/segmento', config);
     categoria.value = response.data; // Atribuir diretamente à ref
     console.log(categoria.value);
   } catch (error) {
@@ -82,16 +88,23 @@ if (categoriaSelecionada.value === null) {
   return;
 }
 
+const config = {
+    headers: {
+      'Authorization': `Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiZ3VpYWx2ZXNAZ21haWwuY29tIiwiaWF0IjoxNjk4ODg1NTM4LCJyb2xlcyI6IlVTRVIifQ.TB5L7rifGWyHo-ONwhqeWumuFgCmrhy3R_ojxEkHe9VUqwHPTwONB_n79QKutIdYD4olf0Wei93opL3Vi67GgULQNiRPgd5-IyBTscUwREc8XLW2zJTSb2g3O6EO7ZxKqNLo2PmlpWbGmzAswLepTS4IbXc40obAExFfMYQzOrCbl1i7yRuais5t-PpWqwh2WkojewQtCNetSQu0zUNTGA3TFo9z2rL69buuEnyzaXDViB_QR_cB8nLXboJIzsDa1yX3xHHWx11kqC7LNjaGtfuyGIRdKrJwFD-KQIBVq-cQTXdTEd-2TPTARJSHsOYxyCYKJFTKtvUjQA9S0ouodQ`,
+    }
+  };
+
+  var usuarioId = await cadastrarUsuario();
+
 // Fazendo a requisição POST com os valores capturados
 try {
   await axios.post('http://localhost:8080/prestador', {
     prestadorNome: nome.value,
     cnpj: cnpj.value,
-    email: email.value,
-    senha: senha.value,
+    usuarioId: usuarioId,
     segmentoId: categoriaSelecionada.value
-   
-  });
+
+  }, config);
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
   exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
@@ -102,6 +115,32 @@ try {
   alert('Erro ao cadastrar o prestador.');
 }
 }
+
+
+async function cadastrarUsuario() {
+
+// Fazendo a requisição POST com os valores capturados
+try {
+  const response = await axios.post('http://localhost:8080/register', {
+    email: email.value,
+    senha: senha.value
+  });
+
+  if (response.status === 201) {
+      const usuarioId = response.data.usuarioId;
+      return usuarioId; // Retorne o ID do cliente
+    } else {
+      console.error(`Falha na solicitação POST: Código de status ${response.status}`);
+      throw new Error('Falha ao cadastrar o usuario');
+    }
+  
+} catch (error) {
+  console.error('Ocorreu um erro ao cadastrar usuario:', error);
+  alert('Erro ao cadastrar o prestador.');
+}
+}
+
+
 
 function limparCampos(){
   nome.value = "";
