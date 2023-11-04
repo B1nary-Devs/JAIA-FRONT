@@ -154,6 +154,8 @@ const radioB = ref();
 const checklistsPersonalizado = ref([]);
 const clienteCNPJ = ref("")
 
+const token = localStorage.getItem('token')
+
 function ptrs(){
   console.log(empresaSelect.value);
 }
@@ -177,6 +179,10 @@ function salvarEdicao(index) {
     const checklistEditado = checklistsAtribuidos.value[estadoEdicao.value];
     axios.put(`http://localhost:8080/checklist/${checklistEditado.checklistId}`, {
       checklistNome: checklistEditado.checklistNome,
+    },{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
     })
     .then(response => {
       
@@ -204,7 +210,11 @@ function radio(valor: boolean){
 
 async function coletarSegmento() {
   try {
-    const response = await axios.get('http://localhost:8080/segmento');
+    const response = await axios.get('http://localhost:8080/segmento',{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     segmento.value = response.data; 
     console.log(segmento.value);
   } catch (error) {
@@ -214,7 +224,11 @@ async function coletarSegmento() {
 
 async function coletarCliente() {
   try {
-    const response = await axios.get('http://localhost:8080/cliente');
+    const response = await axios.get('http://localhost:8080/cliente',{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     const clientes = response.data;
     clienteSelecionado.value = clientes; // Agora estamos preenchendo o valor selecionado
   } catch (error) {
@@ -225,7 +239,11 @@ async function coletarCliente() {
 async function coletarClienteCPNJ() {
   try {
     const id = empresaSelect.value
-    const response = await axios.get(`http://localhost:8080/cliente/id/${id}`);
+    const response = await axios.get(`http://localhost:8080/cliente/id/${id}`,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     const cliente = response.data.clienteCnpj;
     clienteCNPJ.value = cliente; // Agora estamos preenchendo o valor selecionado
     console.log(`eu sou o selecionado ${clienteCNPJ}`)
@@ -238,7 +256,11 @@ async function coletarClienteCPNJ() {
 async function buscarChecklistsPorSegmento(segmentoId) {
   try {
     if (segmentoId) {
-      const response = await axios.get(`http://localhost:8080/segmento/${segmentoId}`);
+      const response = await axios.get(`http://localhost:8080/segmento/${segmentoId}`,{
+        headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+      });
 
       if (response.status === 200) {
         checklistsAtribuidos.value = response.data.checklistList;
@@ -263,7 +285,11 @@ async function carregarPrestadores() {
 
   try {
     if (segmentoId) {
-      const response = await axios.get(`http://localhost:8080/prestador?segmentoId=${segmentoId}`);
+      const response = await axios.get(`http://localhost:8080/prestador?segmentoId=${segmentoId}`,{
+        headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+      });
       
       if (response.status === 200) {
         const prestadores = response.data.filter(prestador => prestador.segmento.id === segmentoId);
@@ -295,7 +321,11 @@ async function cadastrarCliente() {
       clienteNome: nome.value,
     };
 
-    const response = await axios.post('http://localhost:8080/cliente', clienteData);
+    const response = await axios.post('http://localhost:8080/cliente', clienteData,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
 
     if (response.status === 201) {
       const clienteId = response.data.clienteId;
@@ -340,7 +370,11 @@ async function cadastrarOrdemServico() {
 
     };
 
-    const ordemServicoResponse = await axios.post('http://localhost:8080/ordemservico', ordemServicoData);
+    const ordemServicoResponse = await axios.post('http://localhost:8080/ordemservico', ordemServicoData,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
 
     console.log('OBJ CADASTRADO:', ordemServicoResponse);
 
@@ -370,7 +404,11 @@ async function cadastrarChecklistPersonalizado(idOrdemServico) {
 
     for (const nomeItem of nomesItens) {
      console.log(nomeItem)
-       await axios.post('http://localhost:8080/checklist_personalizado',nomeItem)
+       await axios.post('http://localhost:8080/checklist_personalizado',nomeItem,{
+        headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+       })
 
       console.log(`Requisição POST para ${nomeItem.checklistPersonalizadoNome} concluída.`)
       exibirPopup('Cadastro Realizado com Sucesso', 'Novo Segmento Registrado.', 123)
@@ -394,7 +432,11 @@ async function cadastrarChecklistPersonalizadoNovo(idOrdemServico) {
 
     for (const nomeItem of nomesItens) {
      console.log(nomeItem)
-       await axios.post('http://localhost:8080/checklist_personalizado',nomeItem)
+       await axios.post('http://localhost:8080/checklist_personalizado',nomeItem,{
+        headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+       })
 
       console.log(`Requisição POST para ${nomeItem.checklistPersonalizadoNome} concluída.`)
       exibirPopup('Cadastro Realizado com Sucesso', 'Novo Segmento Registrado.', 123)

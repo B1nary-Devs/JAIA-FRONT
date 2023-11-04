@@ -91,6 +91,23 @@
 <script setup lang="ts">
 import '../assets/css/modal/modal.css'
 
+//aqui importando a função para ser usada no modal
+const props = defineProps({
+    toggleModalEdit: {
+        type: Function,
+        required: true,
+    },
+
+    /* (1° PASSO) DECLARE AS PROPS DA ENTIDADE PARA PASSAR PARA OS CAMPOS HTML*/
+    id: String,
+    nome: String,
+    email: String,
+    cnpj: String,
+    segmento: String
+
+});
+
+
 async function coletarCategoria() {
     try {
         const response = await axios.get('http://localhost:8080/segmento');
@@ -119,6 +136,7 @@ const cnpj = ref(cnpjProps);
 const email = ref(emailProps);
 const senha = ref();
 const categoriaSelecionada = ref(null); // Inicialize com um valor padrão ou null
+const token = localStorage.getItem('token')
 
 async function atualizarPrestador() {
     // Verifique se uma categoria foi selecionada
@@ -137,7 +155,10 @@ async function atualizarPrestador() {
             email: email.value,
             senha: senha.value,
             segmentoId: categoriaSelecionada.value
-        });
+        },{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+        }});
 
         alert('Registro atualizado!!');
         window.location.reload();
@@ -148,21 +169,6 @@ async function atualizarPrestador() {
     }
 }
 
-//aqui importando a função para ser usada no modal
-const props = defineProps({
-    toggleModalEdit: {
-        type: Function,
-        required: true,
-    },
-
-    /* (1° PASSO) DECLARE AS PROPS DA ENTIDADE PARA PASSAR PARA OS CAMPOS HTML*/
-    id: String,
-    nome: String,
-    email: String,
-    cnpj: String,
-    segmento: String
-
-});
 
 onMounted(() => {
     coletarCategoria();

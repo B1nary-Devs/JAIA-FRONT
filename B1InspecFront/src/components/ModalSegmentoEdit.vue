@@ -82,15 +82,18 @@ const nomeProps = props.nomeSegmento;
 //VARIAVEIS V-MODEL PARA PASSAR PARA O CORPO DA REQUISICAO
 const id = ref(idProps)
 const nome = ref(nomeProps);
-
+const token = localStorage.getItem('token')
 async function atualizarSegmento() {
 // Fazendo a requisição POST com os valores capturados
 try {
     let rota = 'http://localhost:8080/segmento/' + id.value
     console.log(rota);
-  await axios.put(rota, {
-    nome: nome.value
-  });
+    await axios.put(rota, {
+        nome: nome.value
+    },{
+        headers: {
+            'Authorization': `Bearer ${token}` 
+    }});
 
     alert('Segmento atualizado!');
     window.location.reload();

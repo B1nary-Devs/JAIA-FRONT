@@ -85,11 +85,16 @@ const idSegmento = ref('');
 const checklistList = ref([]);
 const checklistNome = ref('');
 const checklistId = ref('');
+const token = localStorage.getItem('token')
 
 async function segmentoCaptura(id) {
     idSegmento.value = id.toString();
     try {
-        const response = await axios.get('http://localhost:8080/segmento/' + idSegmento.value);
+        const response = await axios.get('http://localhost:8080/segmento/' + idSegmento.value,{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         const segmentoData = response.data;
         console.log(segmentoData);
         /*passe os valores do response para as ref*/
@@ -106,7 +111,11 @@ async function segmentoCaptura(id) {
 
 async function loadTabela() {
     try {
-        const response = await axios.get('http://localhost:8080/segmento');
+        const response = await axios.get('http://localhost:8080/segmento',{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         segmento.value = response.data;
         console.log(segmento.value);
     } catch (error) {

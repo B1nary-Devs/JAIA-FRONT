@@ -62,10 +62,15 @@ const nome = ref("");
 const cnpj = ref("");
 const email = ref("");
 const senha = ref("");
+const token = localStorage.getItem('token')
 
 async function coletarCategoria() {
   try {
-    const response = await axios.get('http://localhost:8080/segmento');
+    const response = await axios.get('http://localhost:8080/segmento',{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     categoria.value = response.data; // Atribuir diretamente à ref
     console.log(categoria.value);
   } catch (error) {
@@ -91,6 +96,10 @@ try {
     senha: senha.value,
     segmentoId: categoriaSelecionada.value
    
+  },{
+    headers: {
+        'Authorization': `Bearer ${token}` 
+      }
   });
 
   // Requisição bem-sucedida, exibir um alerta de confirmação

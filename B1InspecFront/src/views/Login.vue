@@ -23,7 +23,6 @@
                 />
                 <p v-if="errorSenha">Senha Inválida!</p>
             </div>
-            <p>Esqueci a senha</p>
             <div class="btnEntrar" @click="Login">
                 <button class="btn" >Entrar</button>
             </div>
