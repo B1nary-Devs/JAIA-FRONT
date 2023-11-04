@@ -149,6 +149,22 @@ const router = createRouter({
         next('/login')
       }
       component: () => import('../views/CadastroOrdemServico.vue')
+    },
+    {
+      path: '/aprovOrdemServico',
+      name: 'aprovOrdemServico',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AprovOrdemServico.vue')
+    },
+    {
+      path: '/aprovOrdemServico2/:dataAbertura/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
+      name: 'aprovOrdemServico2',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AprovOrdemServico2.vue')
     }
   ]
 })
