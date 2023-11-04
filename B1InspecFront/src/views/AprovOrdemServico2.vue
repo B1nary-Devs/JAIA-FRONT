@@ -46,12 +46,15 @@
 
         <div class="checklist-body-items" v-for="(item, index) in checklist" :key="index">
           <p>{{ item.checklistPersonalizadoNome }}</p>
-          <button @click="() => { exibicaoInput(false); aprovacao(item.checklistPersonalizadoNome, 'Aprovado'); }">Aprovar</button>
-          <button @click="exibicaoInput(index)">Reprovar</button>
-          <input v-if="index === campo" v-model="observacao" placeholder="Informe o motivo de reprovação" />
-          <button @click="() => { exibicaoInput(index); aprovacao(item.checklistPersonalizadoNome, 'Reprovado'); }" v-if="index === campo">ooi</button>
+          <button class="aprovar" @click="() => { exibicaoInput(false); aprovacao(item.checklistPersonalizadoNome, 'Aprovado'); }">Aprovar</button>
+          <button class="reprovar" @click="exibicaoInput(index)">Reprovar</button>
+          <input v-if="index === campo" v-model="observacao" placeholder="Informe o motivo da reprovação" />
+          <button class="enviar" @click="() => { exibicaoInput(index); aprovacao(item.checklistPersonalizadoNome, 'Reprovado'); }" v-if="index === campo">
+          <span class="button-text">Enviar</span>
+          </button>
         </div>
 
+  
 
       </div>
     </div>
@@ -126,8 +129,6 @@ async function aprovacao(nome: string, sts: string) {
     alert('Erro ao atualizar a ordem');
   }
 }
-
-
 
 
 // Escute o evento personalizado para visualizar a ordem e preencher os campos
