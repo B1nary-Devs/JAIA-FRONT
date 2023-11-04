@@ -90,10 +90,16 @@ const cliente = ref('');
 const desc = ref('');
 const check = ref([]);
 
+const token = localStorage.getItem('token')
+
 async function capturarOrdem(id: string) {
     let rota = 'http://localhost:8080/ordemservico/' + id;
     try {
-        const response = await axios.get(rota);
+        const response = await axios.get(rota,{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         const ordemData = response.data;
 
         idOrdem.value = ordemData.servicoId;
@@ -130,7 +136,11 @@ async function capturarOrdem(id: string) {
 
 async function loadTabela() {
     try {
-        const response = await axios.get('http://localhost:8080/ordemservico');
+        const response = await axios.get('http://localhost:8080/ordemservico',{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         const data = response.data;
         
         // Preencha o check aqui antes de definir a ordem

@@ -40,8 +40,8 @@
                             <path
                                 d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                         </svg>
-                    </button>
-                    <button class="card-button-edit">
+                    </button >
+                    <button @click="() => {capturarOrdem(os.servicoId); toggleModalEdit('buttonTriggersEdit')}" class="card-button-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                             viewBox="0 0 16 16">
                             <path
@@ -49,10 +49,16 @@
                         </svg>
                     </button>
                     <ModalOrdem :id="idOrdem" :prestador="prestadorOrdem" :segmento="segmentoOrdem" :cliente="cliente"
-                        :desc="desc" :status="staus" :dtaAbertura="dtaAbertura" :dta-fechamento="dtaFechamento"
+                        :desc="desc" :status="staus" :dtaAbertura="dtaAbertura" :dta-fechamento="dtaFechamento" :check = "check"
                         v-if="modalTriggers.buttonTriggers" :toggleModal="() => toggleModal('buttonTriggers')">
                         <h2>Meu modal</h2>
                     </ModalOrdem>
+
+                    <ModalOrdemEdit :id="idOrdem" :prestador="prestadorOrdem" :segmento="segmentoOrdem" :cliente="cliente"
+                        :desc="desc" :status="staus" :dtaAbertura="dtaAbertura" :check = "check" :dta-fechamento="dtaFechamento" :clienteId = "clienteId" :prestadorId = "prestadorId" v-if="modalTriggersEdit.buttonTriggersEdit" :toggleModalEdit="() => toggleModalEdit('buttonTriggersEdit')">
+                        <h2>Meu modal</h2>
+                    </ModalOrdemEdit>
+
                 </div>
             </div>
         </div>
@@ -64,6 +70,7 @@ import '../assets/css/Ordem/consultaOrdem.css'
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import ModalOrdem from '../components/ModalOrdem.vue';
+import ModalOrdemEdit from '@/components/ModalOrdemEdit.vue';
 
 const ordem = ref([]);
 
@@ -75,11 +82,20 @@ const prestadorOrdem = ref('');
 const segmentoOrdem = ref('');
 const cliente = ref('');
 const desc = ref('');
+const check = ref([])
+const clienteId = ref('')
+const prestadorId = ref('')
+
+const token = localStorage.getItem('token')
 
 async function capturarOrdem(id: string) {
-    let rota = 'http://localhost:8080/ordemservico/' + id
+    let rota = `http://localhost:8080/ordemservico/${id}`
     try {
-        const response = await axios.get(rota);
+        const response = await axios.get(rota,{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         const ordemData = response.data;
 
         idOrdem.value = ordemData.servicoId;
@@ -99,7 +115,15 @@ async function capturarOrdem(id: string) {
         cliente.value = ordemData.cliente.clienteNome;
 
         desc.value = ordemData.descricao;
-        console.log(ordem.value);
+
+        check.value = ordemData.checklistPersonalizados
+        console.log(check.value);
+
+        clienteId.value = ordemData.cliente.clienteId
+        prestadorId.value = ordemData.prestador[0].prestadorId
+
+
+
     } catch (error) {
         console.error('Ocorreu um erro ao coletar as ordens:', error);
     }
@@ -108,14 +132,19 @@ async function capturarOrdem(id: string) {
 
 async function loadTabela() {
     try {
-        const response = await axios.get('http://localhost:8080/ordemservico');
+
+        const response = await axios.get('http://localhost:8080/ordemservico',{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }});
+
         ordem.value = response.data;
         console.log(ordem.value);
     } catch (error) {
         console.error('Ocorreu um erro ao coletar os ordem:', error);
     }
 }
-
+/* ------------MODAL DA ORDEM----------------------*/
 //aqui a variavel responsavel por guardar se exibe o modal ou nao
 const modalTriggers = ref<{ [key: string]: boolean }>({
     buttonTriggers: false
@@ -125,6 +154,17 @@ const modalTriggers = ref<{ [key: string]: boolean }>({
 const toggleModal = (trigger: keyof typeof modalTriggers.value) => {
     modalTriggers.value[trigger] = !modalTriggers.value[trigger];
     console.log(modalTriggers.value)
+};
+
+
+/* ------------MODAL DE EDITAR ORDEM----------------------*/
+const modalTriggersEdit = ref<{ [key: string]: boolean }>({
+    buttonTriggersEdit: false
+});
+
+const toggleModalEdit = (trigger: keyof typeof modalTriggersEdit.value) => {
+    modalTriggersEdit.value[trigger] = !modalTriggersEdit.value[trigger];
+    console.log(modalTriggersEdit.value)
 };
 
 onMounted(() => {

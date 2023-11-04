@@ -64,6 +64,7 @@ import axios from 'axios'
 import { useRoute } from 'vue-router';
 import '../assets/css/aprovOrdemServico/aprovOrdemServico.css'
 
+const token = localStorage.getItem('token')
 
 // Campos a serem exibidos
 const checklist = ref([])
@@ -86,7 +87,11 @@ function exibicaoInput(index: boolean) {
 async function capturarOrdem() {
   let rota = `http://localhost:8080/ordemservico/${route.params.idOrdem}`
   try {
-    const response = await axios.get(rota);
+    const response = await axios.get(rota,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     const ordemData = response.data;
     checklist.value = ordemData.checklistPersonalizados.map(item => {
       return {
@@ -117,6 +122,10 @@ async function aprovacao(nome: string, sts: string) {
       observacao: observacao.value,
       situacao: status.value
 
+    },{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
     });
 
     alert('Atualizado')

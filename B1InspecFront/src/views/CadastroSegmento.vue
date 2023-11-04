@@ -82,6 +82,7 @@ import '../assets/css/cadprestador/cadprestador.css'
 import ThePopUp from '../components/ThePopUp.vue';
 import {exibirPopup} from '../components/ThePopUp.vue'
 
+const token = localStorage.getItem('token')
 let nomeCategoria = ref('')
 let item = ref('')
 let itens = ref<string[]>([])
@@ -110,6 +111,10 @@ async function cadastrarDepartamento(callback) {
   try {
     const response = await axios.post('http://localhost:8080/segmento', {
       nome: nomeCategoria.value
+    },{
+      headers: {
+          'Authorization': `Bearer ${token}` 
+        }
     })
 
     if (response.data.id) {
@@ -130,6 +135,8 @@ function returnarPag(){
   window.history.back();
 }
 
+
+
 async function cadastrarChecklist(idCategoria) {
   try {
     const nomesItens = itens.value.map((item) => ({
@@ -142,7 +149,11 @@ async function cadastrarChecklist(idCategoria) {
     }))
 
     for (const nomeItem of nomesItens) {
-      await axios.post('http://localhost:8080/checklist', nomeItem)
+      await axios.post('http://localhost:8080/checklist', nomeItem,{
+        headers: {
+          'Authorization': `Bearer ${token}` 
+        }
+      })
 
       console.log(`Requisição POST para ${nomeItem.checklistNome} concluída.`)
       exibirPopup('Cadastro Realizado com Sucesso', 'Novo Segmento Registrado.', 123)

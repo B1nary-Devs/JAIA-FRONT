@@ -122,12 +122,16 @@ const email = ref('');
 const cnpj = ref('');
 const id = ref('');
 const segmento = ref('');
-
+const token = localStorage.getItem('token')
 /*função para realizar a requisição por cnpj do prestador*/
 async function valoresPrestador(cnpjPrestador) {
     cnpj.value = cnpjPrestador.toString();
     try {
-        const response = await axios.get('http://localhost:8080/prestador/cnpj/' + cnpj.value);
+        const response = await axios.get('http://localhost:8080/prestador/cnpj/' + cnpj.value,{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         const prestadorData = response.data;
         /*passe os valores do response para as ref*/
         id.value = prestadorData.prestadorId;
@@ -144,7 +148,11 @@ async function valoresPrestador(cnpjPrestador) {
 
 async function loadTabela() {
     try {
-        const response = await axios.get('http://localhost:8080/prestador');
+        const response = await axios.get('http://localhost:8080/prestador',{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         prestador.value = response.data;
         dadosOriginais = response.data; // Armazenar os dados originais
         console.log(prestador.value);
