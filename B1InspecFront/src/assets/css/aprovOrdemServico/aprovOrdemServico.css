@@ -173,3 +173,40 @@ input{
     text-align: center;
 
 }
+
+.form-actions{
+    background-color: rgb(33, 37, 33);
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.form-actions button{
+    width: 120px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgba(87, 153, 228, 0.979);
+    margin-right: 15px;
+    color: #f8f8f9;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+}
+
+.form-actions button svg{
+    width: 25px;
+    margin-left: 10px;
+}
+
+.form-actions button:hover{
+    background-color: #f8f8f9;
+    border-radius: 8px;
+    border: 1px solid rgba(87, 153, 228, 0.979);
+    color:rgba(87, 153, 228, 0.979);
+    font-weight: bold;
+}

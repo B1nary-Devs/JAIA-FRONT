@@ -55,7 +55,7 @@
             }
 
             await signIn(email.value, senha.value)
-            router.push('/');
+            router.push('/homeinicial');
             
         } catch (error) {
             console.log(error)

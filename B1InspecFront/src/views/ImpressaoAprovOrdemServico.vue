@@ -1,4 +1,22 @@
 <template>
+  <div class="form-actions">
+    <button @click="returnarPag()">
+      Retornar
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-square"
+        viewBox="0 0 16 16">
+        <path fill-rule="evenodd"
+          d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+      </svg>
+    </button>
+    <button @click="exportToPDF()">
+      Imprimir
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-printer" viewBox="0 0 16 16">
+        <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" />
+        <path
+          d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z" />
+      </svg>
+    </button>
+  </div>
   <div class="form-cadastro" id="element-to-pdf">
     <div class="form-title">
       <h1>Ordem de Serviço N° {{ $route.params.idOrdem }}</h1>
@@ -46,7 +64,9 @@
 
         <div class="checklist-body-items" v-for="(item, index) in checklist" :key="index">
           <ul>
-            <li><p>{{ item.checklistPersonalizadoNome }}</p></li>
+            <li>
+              <p>{{ item.checklistPersonalizadoNome }}</p>
+            </li>
           </ul>
           <p>{{ item.situacao }}</p>
           <p>{{ item.observacao }}</p>
@@ -87,9 +107,9 @@ function exibicaoInput(index: boolean) {
 async function capturarOrdem() {
   let rota = `http://localhost:8080/ordemservico/${route.params.idOrdem}`
   try {
-    const response = await axios.get(rota,{
+    const response = await axios.get(rota, {
       headers: {
-        'Authorization': `Bearer ${token}` 
+        'Authorization': `Bearer ${token}`
       }
     });
     const ordemData = response.data;
@@ -106,46 +126,45 @@ async function capturarOrdem() {
 }
 
 async function exportToPDF() {
-    try {
-        const element = document.getElementById('element-to-pdf');
-        const pdfOptions = {
-            margin: 10,
-            filename: 'solicitacao.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        };
+  try {
+    const element = document.getElementById('element-to-pdf');
+    const pdfOptions = {
+      margin: 10,
+      filename: 'solicitacao.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    };
 
-        const pdfBlob = await html2pdf().from(element).set(pdfOptions).outputPdf('blob');
-        const url = URL.createObjectURL(pdfBlob);
+    const pdfBlob = await html2pdf().from(element).set(pdfOptions).outputPdf('blob');
+    const url = URL.createObjectURL(pdfBlob);
 
-        // Crie um link para download e clique nele para baixar o PDF
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'solicitacao.pdf';
-        a.click();
-    } catch (error) {
-        console.error('Erro ao exportar para PDF:', error);
-    }
+    // Crie um link para download e clique nele para baixar o PDF
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'solicitacao.pdf';
+    a.click();
+  } catch (error) {
+    console.error('Erro ao exportar para PDF:', error);
+  }
 }
 
-
+function returnarPag() {
+  window.history.back();
+}
 
 
 // Escute o evento personalizado para visualizar a ordem e preencher os campos
 onMounted(() => {
-    
-    capturarOrdem()
-    
-    idOrdem.value = route.params.idOrdem
-    idSegmento.value = route.params.idSegmento
-    status.value = route.params.status
 
-    setTimeout(() => {
-      exportToPDF()
-    }, 1000);
+  capturarOrdem()
 
-  })
+  idOrdem.value = route.params.idOrdem
+  idSegmento.value = route.params.idSegmento
+  status.value = route.params.status
+
+
+})
 
 </script>
   
