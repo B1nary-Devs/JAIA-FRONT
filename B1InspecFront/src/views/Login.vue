@@ -18,7 +18,7 @@
       </div>
       <ThePopUp />
     </div>
-  </template>
+ </template>
   
   <script setup lang="ts">
   import '../assets/css/login/login.css'

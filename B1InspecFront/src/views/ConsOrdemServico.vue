@@ -31,7 +31,21 @@
                     </div>
                 </div>
                 <div class="card-cons-actions">
-                    <button @click="() => { capturarOrdem(os.servicoId); toggleModal('buttonTriggers'); }"
+                    <router-link :to="{ 
+                            name: 'ImpressaoOrdem', 
+                            params: { 
+                                dataAbertura: os.dataAbertura, 
+                                empresa: os.cliente.clienteNome,  
+                                status: os.status,
+                                segmento: os.prestador[0].segmento.nome, 
+                                prestador: os.prestador[0].prestadorNome,
+                                idSegmento: os.prestador[0].segmento.id,
+                                descricao: os.descricao,
+                                idOrdem: os.servicoId,
+
+                            }
+                            }">
+                    <button
                         class="card-button-view">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye"
                             viewBox="0 0 16 16">
@@ -40,7 +54,8 @@
                             <path
                                 d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                         </svg>
-                    </button >
+                    </button>
+                    </router-link>
                     <button @click="() => {capturarOrdem(os.servicoId); toggleModalEdit('buttonTriggersEdit')}" class="card-button-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                             viewBox="0 0 16 16">

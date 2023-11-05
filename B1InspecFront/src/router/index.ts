@@ -8,14 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
-      beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenAcesso()) {       // de acessar a página Home.
-          next();
-          return;
-        }
-        next('/login')
-      }
+      component: HomeView
     },
     {
       path: '/login',
@@ -173,6 +166,36 @@ const router = createRouter({
       component: () => import('../views/AprovOrdemServico2.vue'),
       beforeEnter (_, __, next) { // Impede usuários não assinados
         if (verifyTokenEspecial()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
+    },
+    {
+      path: '/ImpressaoOrdem/:dataAbertura/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
+      name: 'ImpressaoOrdem',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ImpressaoAprovOrdemServico.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+      }
+    },
+    {
+      path: '/homeinicial',
+      name: 'homeinicial',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/HomeInicial.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
           next();
           return;
         }

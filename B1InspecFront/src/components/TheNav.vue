@@ -24,7 +24,7 @@
             <div class="divisor"></div>
             <div class="nav-menu">
                 <div class="nav-item">
-                    <router-link to="/" id="Home" title="Ir para página Inicial">
+                    <router-link to="/homeinicial" id="Home" title="Ir para página Inicial">
                         <div class="link-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-house"
                                 viewBox="0 0 16 16">
@@ -130,6 +130,11 @@
                     <router-link to="/consOrdem" id="consOrdem" title="Realizar consulta">
                         <div class="item-submenu">
                             <p>Consultar</p>
+                        </div>
+                    </router-link>
+                    <router-link to="/aprovOrdemServico" title="Aprovar Ordens">
+                        <div class="item-submenu">
+                            <p>Aprovar Ordem de Serviço</p>
                         </div>
                     </router-link>
                 </div>
