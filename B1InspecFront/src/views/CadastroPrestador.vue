@@ -67,7 +67,7 @@ const senha = ref("");
 async function coletarCategoria() {
   const config = {
     headers: {
-      'Authorization': `Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiZ3VpYWx2ZXNAZ21haWwuY29tIiwiaWF0IjoxNjk4ODg1NTM4LCJyb2xlcyI6IlVTRVIifQ.TB5L7rifGWyHo-ONwhqeWumuFgCmrhy3R_ojxEkHe9VUqwHPTwONB_n79QKutIdYD4olf0Wei93opL3Vi67GgULQNiRPgd5-IyBTscUwREc8XLW2zJTSb2g3O6EO7ZxKqNLo2PmlpWbGmzAswLepTS4IbXc40obAExFfMYQzOrCbl1i7yRuais5t-PpWqwh2WkojewQtCNetSQu0zUNTGA3TFo9z2rL69buuEnyzaXDViB_QR_cB8nLXboJIzsDa1yX3xHHWx11kqC7LNjaGtfuyGIRdKrJwFD-KQIBVq-cQTXdTEd-2TPTARJSHsOYxyCYKJFTKtvUjQA9S0ouodQ`,
+      'Authorization': `Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjk5MTEwMjM2LCJyb2xlcyI6IkFETUlOIn0.XIq1PFmzGlsFBsPNn3tmUy065AgdmMQU_4cqauIhenP_INjAIMXWlN4T08vJ4g9vpokbAbp2geH4dFIGDI4TvPyJKlYFnQTGMNqdQA7qPRY2Emk-j3nNNHU8LM8cMzMjFNF1oqM0lDw_X1TPlLhGuEB0NBrbkGNTUV2RUKZsy0ccj7PfAOEY9ZckA_cffGCfcRmmeWaSy-XpOCddBTzc4-pMwR9RnV1tBNcvWee4CIN3-Qsk2QigWimGIgy6ogq7tD4Bm3AOr1Y_KLn6rf10zVTwbmZmM40l3uU7Dc4zWkmSXxo0K2sPQofCc-cdsbCwapcSv8Ltl6eoZBDWR9rgpw`,
     }
   };
   try {
@@ -90,11 +90,12 @@ if (categoriaSelecionada.value === null) {
 
 const config = {
     headers: {
-      'Authorization': `Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiZ3VpYWx2ZXNAZ21haWwuY29tIiwiaWF0IjoxNjk4ODg1NTM4LCJyb2xlcyI6IlVTRVIifQ.TB5L7rifGWyHo-ONwhqeWumuFgCmrhy3R_ojxEkHe9VUqwHPTwONB_n79QKutIdYD4olf0Wei93opL3Vi67GgULQNiRPgd5-IyBTscUwREc8XLW2zJTSb2g3O6EO7ZxKqNLo2PmlpWbGmzAswLepTS4IbXc40obAExFfMYQzOrCbl1i7yRuais5t-PpWqwh2WkojewQtCNetSQu0zUNTGA3TFo9z2rL69buuEnyzaXDViB_QR_cB8nLXboJIzsDa1yX3xHHWx11kqC7LNjaGtfuyGIRdKrJwFD-KQIBVq-cQTXdTEd-2TPTARJSHsOYxyCYKJFTKtvUjQA9S0ouodQ`,
+      'Authorization': `Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzZWxmIiwic3ViIjoiYWRtaW5AZ21haWwuY29tIiwiaWF0IjoxNjk5MTEwMjM2LCJyb2xlcyI6IkFETUlOIn0.XIq1PFmzGlsFBsPNn3tmUy065AgdmMQU_4cqauIhenP_INjAIMXWlN4T08vJ4g9vpokbAbp2geH4dFIGDI4TvPyJKlYFnQTGMNqdQA7qPRY2Emk-j3nNNHU8LM8cMzMjFNF1oqM0lDw_X1TPlLhGuEB0NBrbkGNTUV2RUKZsy0ccj7PfAOEY9ZckA_cffGCfcRmmeWaSy-XpOCddBTzc4-pMwR9RnV1tBNcvWee4CIN3-Qsk2QigWimGIgy6ogq7tD4Bm3AOr1Y_KLn6rf10zVTwbmZmM40l3uU7Dc4zWkmSXxo0K2sPQofCc-cdsbCwapcSv8Ltl6eoZBDWR9rgpw`,
     }
   };
 
-  var usuarioId = await cadastrarUsuario();
+  const usuarioId = await cadastrarUsuario();
+  
 
 // Fazendo a requisição POST com os valores capturados
 try {
@@ -121,12 +122,13 @@ async function cadastrarUsuario() {
 
 // Fazendo a requisição POST com os valores capturados
 try {
-  const response = await axios.post('http://localhost:8080/register', {
+  const response = await axios.post('http://localhost:8080/auth/register', {
     email: email.value,
     senha: senha.value
   });
 
-  if (response.status === 201) {
+  if (response.status === 200) {
+      alert("cadastrei user")
       const usuarioId = response.data.usuarioId;
       return usuarioId; // Retorne o ID do cliente
     } else {
