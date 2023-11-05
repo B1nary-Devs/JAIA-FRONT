@@ -132,6 +132,11 @@
                             <p>Consultar</p>
                         </div>
                     </router-link>
+                    <router-link to="/aprovOrdemServico" title="Aprovar Ordens">
+                        <div class="item-submenu">
+                            <p>Aprovar Ordem de Serviço</p>
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </nav>

@@ -99,20 +99,28 @@
                     </div>
                 </div>
 
-                <div class="modal-box-group" v-for="xx in check">
-                    <div class="modal-box" >
-                        <p>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
-                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
-                            </svg>
-                            ChecklistList:
-                        </p>
-                        <!-- <span>{{  xx.checklistPersonalizadoNome }}</span> -->
-                    </div>
-                    <div class="modal-box-check">
-                        <span>{{  xx.checklistPersonalizadoNome }}</span>
-                        <button>{{xx.situacao}}</button>
+                <div class="modal-box-check-background">
+                    <div class="modal-box-group" >
+                        <div class="modal-box">
+                            <p>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-card-checklist"
+                                    viewBox="0 0 16 16">
+                                    <path
+                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+                                    <path
+                                        d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z" />
+                                </svg>
+                                Checklist:
+                            </p>
+                            <!-- <span>{{  xx.checklistPersonalizadoNome }}</span> -->
+                        </div>
+                        <div class="modal-box-check" v-for="xx in check">
+                            <ul>
+                                <li><span>{{ xx.checklistPersonalizadoNome }}</span></li>
+                            </ul>
+                            <p class="check-situacao">{{ xx.situacao }}</p>
+                            <p>{{ xx.observacao }}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -138,8 +146,17 @@
 
 <script setup lang="ts">
 import '../assets/css/modal/modal.css'
-
 import { ref } from 'vue';
+
+
+
+
+function te() {
+    console.log('====================================');
+    console.log(idOrdem);
+    console.log('====================================');
+}
+
 //aqui importando a função para ser usada no modal
 const props = defineProps({
     toggleModal: {
@@ -159,5 +176,7 @@ const props = defineProps({
 });
 //outra parte do import
 const { toggleModal } = props;
+
+const idOrdem = props.id;
 
 </script>

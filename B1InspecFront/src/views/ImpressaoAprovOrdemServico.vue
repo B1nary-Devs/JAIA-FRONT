@@ -1,5 +1,5 @@
 <template>
-  <div class="form-cadastro">
+  <div class="form-cadastro" id="element-to-pdf">
     <div class="form-title">
       <h1>Ordem de Serviço N° {{ $route.params.idOrdem }}</h1>
     </div>
@@ -45,15 +45,12 @@
         </div>
 
         <div class="checklist-body-items" v-for="(item, index) in checklist" :key="index">
-          <p>{{ item.checklistPersonalizadoNome }}</p>
-          <button class="aprovar" @click="() => { exibicaoInput(false); aprovacao(item.checklistPersonalizadoNome, 'Aprovado', item.checklistPersonalizadoId); }">Aprovar</button>
-          <button class="reprovar" @click="exibicaoInput(index)">Reprovar</button>
-          <input v-if="index === campo" v-model="observacao" placeholder="Informe o motivo da reprovação" />
-          <button class="enviar" @click="() => { exibicaoInput(index); aprovacao(item.checklistPersonalizadoNome, 'Reprovado', item.checklistPersonalizadoId); }" v-if="index === campo">
-          <span class="button-text">Enviar</span>
-          </button>
+          <ul>
+            <li><p>{{ item.checklistPersonalizadoNome }}</p></li>
+          </ul>
+          <p>{{ item.situacao }}</p>
+          <p>{{ item.observacao }}</p>
         </div>
-
 
       </div>
     </div>
@@ -61,6 +58,7 @@
 </template>
   
 <script setup lang="ts">
+import html2pdf from "html2pdf.js"
 import { ref, onMounted, defineProps } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router';
@@ -95,9 +93,6 @@ async function capturarOrdem() {
       }
     });
     const ordemData = response.data;
-    console.log('====================================');
-    console.log(ordemData);
-    console.log('====================================');
     checklist.value = ordemData.checklistPersonalizados.map(item => {
       return {
         ...item,
@@ -110,31 +105,28 @@ async function capturarOrdem() {
   }
 }
 
-async function aprovacao(nome: string, sts: string, id: string) {
-  status.value = sts
-  console.log('====================================');
-  console.log(nome);
-  console.log('====================================');
-  try {
-    await axios.put(`http://localhost:8080/checklist_personalizado/${id}`, {
-      checklistPersonalizadoNome: nome,
-      ordemServicoId: idOrdem.value,
-      segmentoId: idSegmento.value,
-      observacao: observacao.value,
-      situacao: status.value
+async function exportToPDF() {
+    try {
+        const element = document.getElementById('element-to-pdf');
+        const pdfOptions = {
+            margin: 10,
+            filename: 'solicitacao.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        };
 
-    },{
-      headers: {
-        'Authorization': `Bearer ${token}` 
-      }
-    });
+        const pdfBlob = await html2pdf().from(element).set(pdfOptions).outputPdf('blob');
+        const url = URL.createObjectURL(pdfBlob);
 
-    alert('Atualizado')
-
-  }catch(error){
-    console.error('Ocorreu um erro ao atualizar a ordem:', error);
-    alert('Erro ao atualizar a ordem');
-  }
+        // Crie um link para download e clique nele para baixar o PDF
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'solicitacao.pdf';
+        a.click();
+    } catch (error) {
+        console.error('Erro ao exportar para PDF:', error);
+    }
 }
 
 
@@ -148,6 +140,10 @@ onMounted(() => {
     idOrdem.value = route.params.idOrdem
     idSegmento.value = route.params.idSegmento
     status.value = route.params.status
+
+    setTimeout(() => {
+      exportToPDF()
+    }, 1000);
 
   })
 
