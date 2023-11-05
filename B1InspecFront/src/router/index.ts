@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import { verifyTokenAcesso } from '@/auth/auth';
+import { verifyTokenAcesso, verifyTokenEspecial } from '@/auth/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -157,7 +157,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AprovOrdemServico.vue'),
       beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenAcesso()) {       // de acessar a página Home.
+        if (verifyTokenEspecial()) {       // de acessar a página Home.
           next();
           return;
         }
@@ -172,7 +172,7 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AprovOrdemServico2.vue'),
       beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenAcesso()) {       // de acessar a página Home.
+        if (verifyTokenEspecial()) {       // de acessar a página Home.
           next();
           return;
         }
