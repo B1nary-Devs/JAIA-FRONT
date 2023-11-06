@@ -149,12 +149,17 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AprovOrdemServico.vue'),
-      beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenEspecial()) {       // de acessar a página Home.
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
           next();
-          return;
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
         }
-        next('/login')
       }
     },
     {
@@ -164,12 +169,17 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AprovOrdemServico2.vue'),
-      beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenEspecial()) {       // de acessar a página Home.
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
           next();
-          return;
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
         }
-        next('/login')
       }
     },
     {
@@ -194,12 +204,17 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/HomeInicial.vue'),
-      beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenAcesso()) {       // de acessar a página Home.
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
           next();
-          return;
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
         }
-        next('/login')
       }
     }
   ]

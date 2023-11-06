@@ -45,7 +45,7 @@
         const acesso = localStorage.getItem('acesso')
   
         if (acesso === 'ADMIN') {
-          router.push('/') // Redireciona para a página inicial se for adm
+          router.push('/homeinicial') // Redireciona para a página inicial se for adm
         } else if (acesso === 'USER') {
           router.push('/aprovOrdemServico') // Redireciona para a rota '/aprovOrdemServico' se for prestador
         } else {
