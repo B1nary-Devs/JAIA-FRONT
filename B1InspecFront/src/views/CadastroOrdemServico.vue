@@ -11,27 +11,27 @@
         <input type="radio" value="existente" v-model="picked" @click="radio(true)"/>
         <label for="existente">Selecionar cliente existente</label>
 
-        <input type="radio" value="novo" v-model="picked" @click="radio(false)"/>
+        <input type="radio" value="novo" v-model="picked" @click="() => { radio(true); limpar() }"/>
         <label for="novo">Cadastrar novo cliente</label>
         
       </div>
 
-      <div class="input-group">
-        <div class="input-box"  v-if="picked === 'novo'">
+      <div class="input-group" >
+        <div class="input-box" v-if="picked === 'novo'">
           <label for="id_nome">Nome da Empresa</label>
           <input type="text" id="id_nome" v-model="nome" />
         </div>
 
         <div class="input-box" v-else>
           <label for="id_selnome">Nome da Empresa</label>
-          <select id="id_selnome" v-model="clienteSelecionado.value">
-          <option v-for="cliente in clienteSelecionado" :key="cliente.clienteId" :value="cliente.clienteId">{{ cliente.clienteNome }}</option>
+          <select id="id_selnome" @change="coletarClienteCPNJ()" v-model="empresaSelect">
+          <option v-for="cli in clienteSelecionado" :key="cli.clienteId" :value="cli.clienteId">{{ cli.clienteNome }}</option>
           </select>
         </div>
 
         <div class="input-box">
           <label for="id_cnpj">CNPJ</label>
-          <input type="number" id="id_cnpj" v-model="cnpj" />
+          <input type="number" id="id_cnpj" v-model="clienteCNPJ" />
         </div>
 
         <div class="input-box">
@@ -48,8 +48,8 @@
 
         <div class="input-box">
         <label for="id_prestador">Prestador de Serviço</label>
-        <select id="id_prestador" v-model="prestador" @change="prestadorSelecionado">
-          <option v-for="prestador in prestadoresSelecionados" :key="prestador.prestadorId" :value="prestador.prestadorId">{{ prestador.prestadorNome }}</option>
+        <select id="id_prestador" v-model="prestador" @change="ptrs()">
+          <option v-for="ptr in prestadoresSelecionados" :key="ptr.prestadorId" :value="ptr.prestadorId">{{ ptr.prestadorNome }}</option>
         </select>
         </div>
 
@@ -74,9 +74,27 @@
       </div>
       <div class="itens" v-for="(checklistItem, index) in checklistsAtribuidos" :key="index">
         <div class="column">
-          {{ index + 1 }}:
+          <!--{{ index + 1 }}: -->
           <span v-if="index !== estadoEdicao">{{ checklistItem.checklistNome }}</span>
           <input v-else v-model="checklistsAtribuidos[index].checklistNome" />
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16" @click="editarItem(index)" v-if="index !== estadoEdicao" style="margin-right: 10px;">
+          <path fill="black" d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+          <path fill="black" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16" @click="salvarEdicao(index)" v-if="index === estadoEdicao" style="margin-right: 10px;">
+          <path fill="black" d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
+          <path fill="black" d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" id="btn-remover" width="20" height="20" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16" @click="removerItem(index)">
+          <path fill="black" d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+        </svg>
+      </div>
+      <div class="itens" v-for="(checklistPerson, index) in checklistsPersonalizado" :key="index">
+        <div class="column">
+          <!-- {{ index + 1 }}: -->
+          <span v-if="index !== estadoEdicao">{{ checklistPerson }}</span>
+          <input v-else v-model="checklistsPersonalizado[index]" />
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16" @click="editarItem(index)" v-if="index !== estadoEdicao" style="margin-right: 10px;">
           <path fill="black" d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -125,18 +143,28 @@ const clienteSelecionado = ref(null);
 const nomeSelecionado = ref([]);
 const prestador = ref(null);
 const prestadoresSelecionados = ref([]);
+const prestSelec = ref(null);
+const empresaSelect = ref(null);
 const itens = ref<string[]>([])
 const estadoEdicao = ref(-1)
 const checklistsAtribuidos = ref([]);
 const item = ref("");
 const itemEditando = ref(null);
 const radioB = ref();
+const checklistsPersonalizado = ref([]);
+const clienteCNPJ = ref("")
+
+const token = localStorage.getItem('token')
+
+function ptrs(){
+  console.log(empresaSelect.value);
+}
 
 function inserirItem() {
   console.log(`chechlistvalor -->  ${checklist.value}`)
   if (checklist.value.trim() !== "") {
-    checklistsAtribuidos.value.push(checklist.value);
-    console.log(`lista -->  ${checklistsAtribuidos.value}`)
+    checklistsPersonalizado.value.push(checklist.value);
+    console.log(`lista -->  ${checklistsPersonalizado.value}`)
     checklist.value = "";
   }
 }
@@ -151,6 +179,10 @@ function salvarEdicao(index) {
     const checklistEditado = checklistsAtribuidos.value[estadoEdicao.value];
     axios.put(`http://localhost:8080/checklist/${checklistEditado.checklistId}`, {
       checklistNome: checklistEditado.checklistNome,
+    },{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
     })
     .then(response => {
       
@@ -178,7 +210,11 @@ function radio(valor: boolean){
 
 async function coletarSegmento() {
   try {
-    const response = await axios.get('http://localhost:8080/segmento');
+    const response = await axios.get('http://localhost:8080/segmento',{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     segmento.value = response.data; 
     console.log(segmento.value);
   } catch (error) {
@@ -188,7 +224,11 @@ async function coletarSegmento() {
 
 async function coletarCliente() {
   try {
-    const response = await axios.get('http://localhost:8080/cliente');
+    const response = await axios.get('http://localhost:8080/cliente',{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     const clientes = response.data;
     clienteSelecionado.value = clientes; // Agora estamos preenchendo o valor selecionado
   } catch (error) {
@@ -196,12 +236,31 @@ async function coletarCliente() {
   }
 }
 
+async function coletarClienteCPNJ() {
+  try {
+    const id = empresaSelect.value
+    const response = await axios.get(`http://localhost:8080/cliente/id/${id}`,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
+    const cliente = response.data.clienteCnpj;
+    clienteCNPJ.value = cliente; // Agora estamos preenchendo o valor selecionado
+    console.log(`eu sou o selecionado ${clienteCNPJ}`)
+  } catch (error) {
+    console.error('Ocorreu um erro ao coletar o segmento:', error);
+  }
+}
 
 
 async function buscarChecklistsPorSegmento(segmentoId) {
   try {
     if (segmentoId) {
-      const response = await axios.get(`http://localhost:8080/segmento/${segmentoId}`);
+      const response = await axios.get(`http://localhost:8080/segmento/${segmentoId}`,{
+        headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+      });
 
       if (response.status === 200) {
         checklistsAtribuidos.value = response.data.checklistList;
@@ -216,7 +275,6 @@ async function buscarChecklistsPorSegmento(segmentoId) {
   }
 }
 
-
 async function carregarPrestadoresAndChecklists() {
   await carregarPrestadores();
   await buscarChecklistsPorSegmento(segmentoSelecionado.value); 
@@ -227,7 +285,11 @@ async function carregarPrestadores() {
 
   try {
     if (segmentoId) {
-      const response = await axios.get(`http://localhost:8080/prestador?segmentoId=${segmentoId}`);
+      const response = await axios.get(`http://localhost:8080/prestador?segmentoId=${segmentoId}`,{
+        headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+      });
       
       if (response.status === 200) {
         const prestadores = response.data.filter(prestador => prestador.segmento.id === segmentoId);
@@ -252,7 +314,6 @@ function prestadorSelecionado() {
   }
 }
 
-
 async function cadastrarCliente() {
   try {
     const clienteData = {
@@ -260,7 +321,11 @@ async function cadastrarCliente() {
       clienteNome: nome.value,
     };
 
-    const response = await axios.post('http://localhost:8080/cliente', clienteData);
+    const response = await axios.post('http://localhost:8080/cliente', clienteData,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
 
     if (response.status === 201) {
       const clienteId = response.data.clienteId;
@@ -275,27 +340,26 @@ async function cadastrarCliente() {
   }
 }
 
-
-
 async function cadastrarOrdemServico() {
-  if (!nome.value) {
-    alert('Insira o nome da empresa');
-    return;
-  }
+ 
 
   try {
     if (!prestador.value) {
       alert('Selecione um prestador de serviço');
       return;
     }
+
+    var clienteId = null
     
-    //if (radioB.value){
-      //const clienteId = clienteSelecionado
-   
-    //}
+    if (radioB.value){
 
-    const clienteId = await cadastrarCliente();
+      clienteId = empresaSelect.value   
 
+    }else{
+
+      clienteId = await cadastrarCliente();
+
+    }
   
     const ordemServicoData = {
       dataFechamento: null,
@@ -306,13 +370,84 @@ async function cadastrarOrdemServico() {
 
     };
 
-    const ordemServicoResponse = await axios.post('http://localhost:8080/ordemservico', ordemServicoData);
+    const ordemServicoResponse = await axios.post('http://localhost:8080/ordemservico', ordemServicoData,{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
 
+    console.log('OBJ CADASTRADO:', ordemServicoResponse);
+
+
+    // Acessar o servicoId da resposta
+    const idOrdemServico = ordemServicoResponse.data.servicoId;
+    console.log('ID da Ordem de Serviço:', idOrdemServico);
    
+    cadastrarChecklistPersonalizado(idOrdemServico)
+
+    cadastrarChecklistPersonalizadoNovo(idOrdemServico)
+
+
     exibirPopup('Cadastro Realizado com Sucesso', 'Nova Ordem de Serviço Cadastrada.', 123);
   } catch (error) {
     console.error('Ocorreu um erro ao cadastrar a ordem de serviço:', error);
     alert('Erro ao cadastrar a ordem de serviço.');
+  }
+}
+
+async function cadastrarChecklistPersonalizado(idOrdemServico) {
+  try {
+    const nomesItens = checklistsAtribuidos.value.map((item) => ({
+      ordemServicoId: idOrdemServico,
+      checklistPersonalizadoNome: item.checklistNome
+    }))
+
+    for (const nomeItem of nomesItens) {
+     console.log(nomeItem)
+       await axios.post('http://localhost:8080/checklist_personalizado',nomeItem,{
+        headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+       })
+
+      console.log(`Requisição POST para ${nomeItem.checklistPersonalizadoNome} concluída.`)
+      exibirPopup('Cadastro Realizado com Sucesso', 'Nova ordem de serviço Registrada.', 123)
+    }
+
+    console.log('Todos os checklists foram cadastrados com sucesso.')
+  } catch (error) {
+    console.error(error)
+    console.log('Erro ao cadastrar checklists.')
+  }
+}
+
+async function cadastrarChecklistPersonalizadoNovo(idOrdemServico) {
+  const segmentoId = segmentoSelecionado.value
+  try {
+    const nomesItens = checklistsPersonalizado.value.map((item) => ({
+      segmentoId: segmentoId,
+      ordemServicoId: idOrdemServico,
+      checklistPersonalizadoNome: item
+    }))
+
+    console.log(nomesItens)
+
+    for (const nomeItem of nomesItens) {
+     console.log(nomeItem)
+       await axios.post('http://localhost:8080/checklist_personalizado',nomeItem,{
+        headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+       })
+
+      console.log(`Requisição POST para ${nomeItem.checklistPersonalizadoNome} concluída.`)
+      exibirPopup('Cadastro Realizado com Sucesso', 'Nova ordem de serviço Registrada.', 123)
+    }
+
+    console.log('Todos os checklists foram cadastrados com sucesso.')
+  } catch (error) {
+    console.error(error)
+    console.log('Erro ao cadastrar checklists.')
   }
 }
 

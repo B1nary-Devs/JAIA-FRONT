@@ -3,7 +3,7 @@
         <nav>
             <div class="logo">
                 <div class="logo-item">
-                    <router-link to="/" id="cadPrestador" title="I para página Inicial">
+                    <router-link to="/login" id="login" title="I para página Inicial" @click = 'sair'>
                         <div class="logo-link-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
                                 viewBox="0 0 16 16">
@@ -11,7 +11,12 @@
                                 <path fill-rule="evenodd"
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                             </svg>
-                            <p>Login</p>
+                            <div class="logo-link-item-p">
+                                <p>Usuário</p>
+                                <p class="sair">Sair</p>
+                            </div>
+                            
+
                         </div>
                     </router-link>
                 </div>
@@ -19,7 +24,7 @@
             <div class="divisor"></div>
             <div class="nav-menu">
                 <div class="nav-item">
-                    <router-link to="/" id="Home" title="Ir para página Inicial">
+                    <router-link to="/homeinicial" id="Home" title="Ir para página Inicial">
                         <div class="link-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-house"
                                 viewBox="0 0 16 16">
@@ -117,7 +122,7 @@
                     </div>
                 </div>
                 <div class="submenu" v-show="showSubMenuOrdem">
-                    <router-link to="/" id="cadOrdem" title="Realizar um novo cadastro">
+                    <router-link to="/cadOrdem" id="cadOrdem" title="Realizar um novo cadastro">
                         <div class="item-submenu">
                             <p>Cadastrar</p>
                         </div>
@@ -127,6 +132,11 @@
                             <p>Consultar</p>
                         </div>
                     </router-link>
+                    <router-link to="/aprovOrdemServico" title="Aprovar Ordens">
+                        <div class="item-submenu">
+                            <p>Analisar</p>
+                        </div>
+                    </router-link>
                 </div>
             </div>
         </nav>
@@ -134,6 +144,7 @@
 </template>
 
 <script setup lang="ts">
+import { signOut } from '@/auth/auth';
 import '../assets/css/nav/nav.css'
 import { ref } from 'vue'
 
@@ -163,6 +174,10 @@ const closeAllSubMenus = () => {
     showSubMenuSegmento.value = false
     showSubMenuPrestador.value = false
     showSubMenuOrdem.value = false
+}
+
+function sair(){
+    signOut()
 }
 
 </script>

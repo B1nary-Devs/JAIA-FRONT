@@ -62,10 +62,15 @@ const nome = ref("");
 const cnpj = ref("");
 const email = ref("");
 const senha = ref("");
+const token = localStorage.getItem('token')
 
 async function coletarCategoria() {
   try {
-    const response = await axios.get('http://localhost:8080/segmento');
+    const response = await axios.get('http://localhost:8080/segmento',{
+      headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     categoria.value = response.data; // Atribuir diretamente à ref
     console.log(categoria.value);
   } catch (error) {
@@ -81,17 +86,25 @@ if (categoriaSelecionada.value === null) {
   alert('Selecione uma categoria antes de cadastrar.');
   return;
 }
+  var usuarioId = await cadastrarUsuario();
 
 // Fazendo a requisição POST com os valores capturados
 try {
+  
   await axios.post('http://localhost:8080/prestador', {
+
     prestadorNome: nome.value,
     cnpj: cnpj.value,
-    email: email.value,
-    senha: senha.value,
+    usuarioId: usuarioId,
     segmentoId: categoriaSelecionada.value
-   
-  });
+
+  }, 
+  {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+  }
+  );
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
   exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
@@ -99,6 +112,34 @@ try {
   
 } catch (error) {
   console.error('Ocorreu um erro ao cadastrar o prestador:', error);
+  alert('Erro ao cadastrar o prestador.');
+}
+}
+
+async function cadastrarUsuario() {
+
+// Fazendo a requisição POST com os valores capturados
+try {
+  const response = await axios.post('http://localhost:8080/auth/register', {
+    email: email.value,
+    senha: senha.value
+  },
+  {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+  });
+
+  if (response.status === 200) {
+      const usuarioId = response.data.usuarioId;
+      return usuarioId; // Retorne o ID do cliente
+    } else {
+      console.error(`Falha na solicitação POST: Código de status ${response.status}`);
+      throw new Error('Falha ao cadastrar o usuario');
+    }
+  
+} catch (error) {
+  console.error('Ocorreu um erro ao cadastrar usuario:', error);
   alert('Erro ao cadastrar o prestador.');
 }
 }

@@ -78,7 +78,7 @@
                                 <path
                                     d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
                             </svg>
-                            status:
+                            Status:
                         </p>
                         <span>{{ status }}</span>
                     </div>
@@ -93,37 +93,25 @@
                                 <path
                                     d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0Zm-1 0a7 7 0 1 0-13.202 3.249l1.988-1.657a4.5 4.5 0 0 1 7.537-4.623L7.497 6.5l1 2.5 1.333 3.11c-.56.251-1.18.39-1.833.39a4.49 4.49 0 0 1-1.592-.29L4.747 14.2A7 7 0 0 0 15 8Zm-8.295.139a.25.25 0 0 0-.288-.376l-1.5.5.159.474.808-.27-.595.894a.25.25 0 0 0 .287.376l.808-.27-.595.894a.25.25 0 0 0 .287.376l1.5-.5-.159-.474-.808.27.596-.894a.25.25 0 0 0-.288-.376l-.808.27.596-.894Z" />
                             </svg>
-                            segmento:
+                            Segmento:
                         </p>
                         <span>{{ segmento }}</span>
                     </div>
                 </div>
-
-                <div class="modal-box-check-background">
-                    <div class="modal-box-group" >
-                        <div class="modal-box">
-                            <p>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-card-checklist"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                    <path
-                                        d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z" />
-                                </svg>
-                                Checklist:
-                            </p>
-                            <!-- <span>{{  xx.checklistPersonalizadoNome }}</span> -->
-                        </div>
-                        <div class="modal-box-check" v-for="xx in check">
-                            <ul>
-                                <li><span>{{ xx.checklistPersonalizadoNome }}</span></li>
-                            </ul>
-                            <p class="check-situacao">{{ xx.situacao }}</p>
-                            <p>{{ xx.observacao }}</p>
-                        </div>
+                <div class="modal-box-group">
+                    <div class="modal-box">
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                                <path 
+                                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                <path 
+                                    d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                            Checklist:
+                        </p>
+                        <span>{{ check }}</span>
                     </div>
                 </div>
-
                 <div class="modal-box-group">
                     <div class="modal-box-desc">
                         <h4>
@@ -134,7 +122,7 @@
                                 <path
                                     d="M11.434 4H4.566L4.5 5.994h.386c.21-1.252.612-1.446 2.173-1.495l.343-.011v6.343c0 .537-.116.665-1.049.748V12h3.294v-.421c-.938-.083-1.054-.21-1.054-.748V4.488l.348.01c1.56.05 1.963.244 2.173 1.496h.386L11.434 4z" />
                             </svg>
-                            Descrição
+                            Descrição:
                         </h4>
                         <p id="text-desc">{{ desc }}</p>
                     </div>
@@ -146,17 +134,8 @@
 
 <script setup lang="ts">
 import '../assets/css/modal/modal.css'
+
 import { ref } from 'vue';
-
-
-
-
-function te() {
-    console.log('====================================');
-    console.log(idOrdem);
-    console.log('====================================');
-}
-
 //aqui importando a função para ser usada no modal
 const props = defineProps({
     toggleModal: {
@@ -172,11 +151,9 @@ const props = defineProps({
     cliente: String,
     status: String,
     desc: String,
-    check: Object
+    check: []
 });
 //outra parte do import
 const { toggleModal } = props;
-
-const idOrdem = props.id;
 
 </script>

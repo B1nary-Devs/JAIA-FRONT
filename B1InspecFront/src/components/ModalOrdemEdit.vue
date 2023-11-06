@@ -4,12 +4,21 @@
             <div class="modal-title">
                 <h1>Ordem N° {{ id }}</h1>
                 <!-- usando a função para trocar o estado do modal-->
-                <button class="modal-fechar" @click="toggleModal()">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                        <path
-                            d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-                    </svg>
-                </button>
+                <div class="modal-title-buttons">
+                    <button class="modal-fechar" @click="toggleModalEdit()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path
+                                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                        </svg>
+                    </button>
+                    <button class="modal-aplicar" @click="() => { toggleModalEdit(); atualizarOrdem(); }">
+                        <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-check2"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
             <div class="modal-cons-body">
                 <div class="modal-box-group">
@@ -24,7 +33,7 @@
                             </svg>
                             Data de Abertura:
                         </p>
-                        <span>{{ dtaAbertura }}</span>
+                        <input type="text" v-model="dataAbertura">
                     </div>
                 </div>
                 <div class="modal-box-group">
@@ -39,7 +48,7 @@
                             </svg>
                             Data de Fechamento:
                         </p>
-                        <span>{{ dtaFechamento }}</span>
+                        <input type="text" v-model="dataFechamento">
                     </div>
                 </div>
                 <div class="modal-box-group">
@@ -52,7 +61,7 @@
                             </svg>
                             Prestador:
                         </p>
-                        <span>{{ prestador }}</span>
+                        <input type="text" v-model="prestadorNome" disabled>
                     </div>
                 </div>
                 <div class="modal-box-group">
@@ -67,7 +76,7 @@
                             </svg>
                             Cliente:
                         </p>
-                        <span>{{ cliente }}</span>
+                        <input type="text" v-model="clienteNome" disabled>
                     </div>
                 </div>
                 <div class="modal-box-group">
@@ -80,7 +89,7 @@
                             </svg>
                             status:
                         </p>
-                        <span>{{ status }}</span>
+                        <input type="text" v-model="statusOrd">
                     </div>
                 </div>
                 <div class="modal-box-group">
@@ -95,33 +104,33 @@
                             </svg>
                             segmento:
                         </p>
-                        <span>{{ segmento }}</span>
+                        <input type="text" v-model="segmentoNome" disabled>
                     </div>
                 </div>
 
-                <div class="modal-box-check-background">
-                    <div class="modal-box-group" >
-                        <div class="modal-box">
-                            <p>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-card-checklist"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                        d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
-                                    <path
-                                        d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z" />
-                                </svg>
-                                Checklist:
-                            </p>
-                            <!-- <span>{{  xx.checklistPersonalizadoNome }}</span> -->
-                        </div>
-                        <div class="modal-box-check" v-for="xx in check">
-                            <ul>
-                                <li><span>{{ xx.checklistPersonalizadoNome }}</span></li>
-                            </ul>
-                            <p class="check-situacao">{{ xx.situacao }}</p>
-                            <p>{{ xx.observacao }}</p>
-                        </div>
+                <div class="modal-box-group" v-for="xx in checklist">
+                    <div class="modal-box" >
+                        <p>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
+                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                <path d="M7 5.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm-1.496-.854a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+                            </svg>
+                            ChecklistList:
+                        </p>
+                        <!-- <span>{{  xx.checklistPersonalizadoNome }}</span> -->
                     </div>
+                    <div class="modal-box-check">
+                        <span>{{  xx.checklistPersonalizadoNome }}</span>
+                        <button>{{xx.situacao}}</button>
+                    </div>
+
+                    <!-- <div v-for="(y, cont) in xx.segmento.checklistList" class="modal-box-check">
+                        <p><strong>Checklist Secundario: </strong>{{  y.checklistNome }}</p>
+                    </div> -->
+<!-- 
+                    <div class="modal-box-check">
+                        <p><strong>Situação: </strong>{{ xx.situacao }}</p>
+                    </div> -->
                 </div>
 
                 <div class="modal-box-group">
@@ -136,47 +145,78 @@
                             </svg>
                             Descrição
                         </h4>
-                        <p id="text-desc">{{ desc }}</p>
+                        <p id="text-desc">{{ descricao }}</p>
                     </div>
                 </div>
+
+                
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import '../assets/css/modal/modal.css'
-import { ref } from 'vue';
+    import '../assets/css/modal/modal.css'
+    import { ref,onMounted} from 'vue';
+    import axios from 'axios';
 
+    const props = defineProps({
+        toggleModalEdit: {
+            type: Function,
+            required: true,
+        },
 
+        id: String,
+        dtaAbertura: String,
+        dtaFechamento: String,
+        prestador: String,
+        segmento: String,
+        cliente: String,
+        status: String,
+        desc: String,
+        check: Object,
+        clienteId: String,
+        prestadorId: String
+    })
 
+    
+    const ordemId = ref(props.id);
+    const dataAbertura = ref(props.dtaAbertura)
+    const dataFechamento = ref(props.dtaFechamento)
+    const prestadorNome = ref(props.prestador)
+    const clienteNome = ref(props.cliente)
+    const segmentoNome = ref(props.segmento)
+    const statusOrd = ref(props.status)
+    const descricao = ref(props.desc)
+    const checklist = ref(props.check)
+    const clienteId = ref(props.clienteId)
+    const prestadorId = ref(props.prestadorId)
 
-function te() {
-    console.log('====================================');
-    console.log(idOrdem);
-    console.log('====================================');
-}
+    const token = localStorage.getItem('token')
+    async function atualizarOrdem(){
+        try {
+            await axios.put(`http://localhost:8080/ordemservico/${ordemId.value}`,{
+                dataAbertura: dataAbertura.value,
+                dataFechamento: dataFechamento.value,
+                status: statusOrd.value,
+                descricao: descricao.value,
+                cliente: clienteId.value,
+                prestadores: [prestadorId.value]
+            },{
+                headers: {
+                    'Authorization': `Bearer ${token}` 
+            }})
 
-//aqui importando a função para ser usada no modal
-const props = defineProps({
-    toggleModal: {
-        type: Function,
-        required: true,
-    },
+            alert('Registro atualizado!!');
+            window.location.reload();
+           
+        } catch (error) {
+            console.error('Ocorreu um erro ao cadastrar o prestador:', error);
+            alert('Erro ao cadastrar o prestador.');
+        }
+    }
 
-    id: String,
-    dtaAbertura: String,
-    dtaFechamento: String,
-    prestador: String,
-    segmento: String,
-    cliente: String,
-    status: String,
-    desc: String,
-    check: Object
-});
-//outra parte do import
-const { toggleModal } = props;
+    
 
-const idOrdem = props.id;
-
+    
 </script>
