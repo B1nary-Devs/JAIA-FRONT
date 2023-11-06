@@ -155,11 +155,23 @@
     border: 1px solid rgb(211, 211, 211);
 }
 
+.modal-box-check-background{
+    max-height: 155px;
+    overflow-y: scroll;
+    background-color: rgb(138, 138, 138);
+}
+
 .modal-box-check{
     display: flex;
     gap: 20px;
     margin: 5px 0 5px 50px;
 }
+
+.modal-box-check{
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
 .modal-box-check button{
     font-size: small;
     height: 25px;

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import { verifyTokenAcesso } from '@/auth/auth';
+import { verifyTokenAcesso, verifyTokenEspecial } from '@/auth/auth';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,14 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
-      beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenAcesso()) {       // de acessar a página Home.
-          next();
-          return;
-        }
-        next('/login')
-      }
+      component: HomeView
     },
     {
       path: '/login',
@@ -156,12 +149,17 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AprovOrdemServico.vue'),
-      beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenAcesso()) {       // de acessar a página Home.
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
           next();
-          return;
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
         }
-        next('/login')
       }
     },
     {
@@ -171,12 +169,52 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AprovOrdemServico2.vue'),
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
+          next();
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
+        }
+      }
+    },
+    {
+      path: '/ImpressaoOrdem/:dataAbertura/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
+      name: 'ImpressaoOrdem',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ImpressaoAprovOrdemServico.vue'),
       beforeEnter (_, __, next) { // Impede usuários não assinados
         if (verifyTokenAcesso()) {       // de acessar a página Home.
           next();
           return;
         }
         next('/login')
+      }
+    },
+    {
+      path: '/homeinicial',
+      name: 'homeinicial',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/HomeInicial.vue'),
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
+          next();
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
+        }
       }
     }
   ]

@@ -44,7 +44,7 @@
 
                         <td>{{ prestador.prestadorNome }}</td>
                         <td>{{ prestador.cnpj }}</td>
-                        <td>{{ prestador.email }}</td>
+                        <td>{{ prestador.usuario.email }}</td>
                         <td>{{ prestador.segmento.nome }}</td>
                         <td>
                             <button
@@ -135,7 +135,7 @@ async function valoresPrestador(cnpjPrestador) {
         const prestadorData = response.data;
         /*passe os valores do response para as ref*/
         id.value = prestadorData.prestadorId;
-        email.value = prestadorData.email;
+        email.value = prestadorData.usuario.email;
         nome.value = prestadorData.prestadorNome;
         cnpj.value = prestadorData.cnpj;
         segmento.value = prestadorData.segmento.nome;
@@ -217,9 +217,7 @@ const toggleModalEdit = (trigger: keyof typeof modalTriggersEdit.value) => {
 };
 
 onMounted(() => {
-    exibirPreload();
-    setTimeout(() => {
-        loadTabela();
-    }, 2000);
+
+    loadTabela();
 });
 </script>

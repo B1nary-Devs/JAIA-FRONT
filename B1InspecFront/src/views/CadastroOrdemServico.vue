@@ -422,8 +422,10 @@ async function cadastrarChecklistPersonalizado(idOrdemServico) {
 }
 
 async function cadastrarChecklistPersonalizadoNovo(idOrdemServico) {
+  const segmentoId = segmentoSelecionado.value
   try {
     const nomesItens = checklistsPersonalizado.value.map((item) => ({
+      segmentoId: segmentoId,
       ordemServicoId: idOrdemServico,
       checklistPersonalizadoNome: item
     }))
@@ -447,12 +449,6 @@ async function cadastrarChecklistPersonalizadoNovo(idOrdemServico) {
     console.error(error)
     console.log('Erro ao cadastrar checklists.')
   }
-}
-
-function limpar(){
-  clienteCNPJ.value = ""
-  console.log('caralhoooooooooooooooo');
-  
 }
 
 

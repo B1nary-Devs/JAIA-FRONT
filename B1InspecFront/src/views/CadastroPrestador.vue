@@ -86,21 +86,25 @@ if (categoriaSelecionada.value === null) {
   alert('Selecione uma categoria antes de cadastrar.');
   return;
 }
+  var usuarioId = await cadastrarUsuario();
 
 // Fazendo a requisição POST com os valores capturados
 try {
+  
   await axios.post('http://localhost:8080/prestador', {
+
     prestadorNome: nome.value,
     cnpj: cnpj.value,
-    email: email.value,
-    senha: senha.value,
+    usuarioId: usuarioId,
     segmentoId: categoriaSelecionada.value
-   
-  },{
+
+  }, 
+  {
     headers: {
         'Authorization': `Bearer ${token}` 
       }
-  });
+  }
+  );
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
   exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
