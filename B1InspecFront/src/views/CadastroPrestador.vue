@@ -36,7 +36,7 @@
 
           <div class="form-submit">
                   <button @click="returnarPag" class="button-return">Voltar</button>
-                  <button @click="cadastrarPrestador">Cadastrar</button>
+                  <button @click="cadastrarPrestador(enviarEmailCredenciais)">Cadastrar</button>
           </div>
 
       </div>
@@ -80,7 +80,7 @@ async function coletarCategoria() {
 
 const categoriaSelecionada = ref(null); // Inicialize com um valor padrão ou null
 
-async function cadastrarPrestador() {
+async function cadastrarPrestador(callback) {
 // Verifique se uma categoria foi selecionada
 if (categoriaSelecionada.value === null) {
   alert('Selecione uma categoria antes de cadastrar.');
@@ -105,12 +105,35 @@ try {
   // Requisição bem-sucedida, exibir um alerta de confirmação
   exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
   limparCampos();
+
+  if (typeof callback === 'function') {
+      callback(email.value, email.value, senha.value);
+    }
   
 } catch (error) {
   console.error('Ocorreu um erro ao cadastrar o prestador:', error);
   alert('Erro ao cadastrar o prestador.');
 }
 }
+
+async function enviarEmailCredenciais(toEmail, email, senha){
+  try {
+    const response = await axios.post('http://localhost:8080/email/credenciais', {
+      toEmail: toEmail,
+      email: email,
+      senha: senha
+    });
+
+    if (response.status === 200) {
+      console.log('Email enviado com sucesso!');
+    } else {
+      console.error('Erro ao enviar o email.');
+    }
+  } catch (error) {
+    console.error('Ocorreu um erro ao enviar o email:', error);
+  }
+}
+
 
 function limparCampos(){
   nome.value = "";
