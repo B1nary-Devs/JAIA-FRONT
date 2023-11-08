@@ -28,6 +28,7 @@
 
 .login-box label{
     font-size: 20px;
+    margin-bottom: 2px;
     color: black;
 }
 
@@ -57,7 +58,6 @@
 .btn{
     all: unset;
 }
-
 .btnEntrar{
     display: flex;
     justify-content: center;
