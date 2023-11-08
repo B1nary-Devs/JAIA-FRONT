@@ -134,7 +134,7 @@
                     </router-link>
                     <router-link to="/aprovOrdemServico" title="Aprovar Ordens">
                         <div class="item-submenu">
-                            <p>Aprovar Ordem de Serviço</p>
+                            <p>Analisar</p>
                         </div>
                     </router-link>
                 </div>

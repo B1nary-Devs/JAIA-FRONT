@@ -411,7 +411,7 @@ async function cadastrarChecklistPersonalizado(idOrdemServico) {
        })
 
       console.log(`Requisição POST para ${nomeItem.checklistPersonalizadoNome} concluída.`)
-      exibirPopup('Cadastro Realizado com Sucesso', 'Novo Segmento Registrado.', 123)
+      exibirPopup('Cadastro Realizado com Sucesso', 'Nova ordem de serviço Registrada.', 123)
     }
 
     console.log('Todos os checklists foram cadastrados com sucesso.')
@@ -441,7 +441,7 @@ async function cadastrarChecklistPersonalizadoNovo(idOrdemServico) {
        })
 
       console.log(`Requisição POST para ${nomeItem.checklistPersonalizadoNome} concluída.`)
-      exibirPopup('Cadastro Realizado com Sucesso', 'Novo Segmento Registrado.', 123)
+      exibirPopup('Cadastro Realizado com Sucesso', 'Nova ordem de serviço Registrada.', 123)
     }
 
     console.log('Todos os checklists foram cadastrados com sucesso.')
