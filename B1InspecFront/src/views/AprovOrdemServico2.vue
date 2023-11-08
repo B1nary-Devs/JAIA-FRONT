@@ -1,7 +1,7 @@
 <template>
   <div class="form-cadastro">
     <div class="form-title">
-      <h1>Ordem de Serviço N° {{ $route.params.idOrdem }}</h1>
+      <h1 class="titulo-ordem">Ordem de Serviço N° {{ $route.params.idOrdem }}</h1>
     </div>
     <div class="form-body">
       <div class="input-group">
@@ -48,7 +48,7 @@
           <p>{{ item.checklistPersonalizadoNome }}</p>
           <button class="aprovar" @click="() => { exibicaoInput(false); aprovacao(item.checklistPersonalizadoNome, 'Aprovado', item.checklistPersonalizadoId); }">Aprovar</button>
           <button class="reprovar" @click="exibicaoInput(index)">Reprovar</button>
-          <input v-if="index === campo" v-model="observacao" placeholder="Informe o motivo da reprovação" />
+          <input class="input-motivo" v-if="index === campo" v-model="observacao" placeholder="Informe o motivo da reprovação" />
           <button class="enviar" @click="() => { exibicaoInput(index); aprovacao(item.checklistPersonalizadoNome, 'Reprovado', item.checklistPersonalizadoId); }" v-if="index === campo">
           <span class="button-text">Enviar</span>
           </button>
