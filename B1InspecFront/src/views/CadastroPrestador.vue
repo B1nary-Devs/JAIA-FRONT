@@ -36,7 +36,7 @@
 
           <div class="form-submit">
                   <button @click="returnarPag" class="button-return">Voltar</button>
-                  <button @click="cadastrarPrestador(enviarEmailCredenciais)">Cadastrar</button>
+                  <button @click="cadastrarPrestador">Cadastrar</button>
           </div>
 
       </div>
@@ -80,7 +80,7 @@ async function coletarCategoria() {
 
 const categoriaSelecionada = ref(null); // Inicialize com um valor padrão ou null
 
-async function cadastrarPrestador(callback) {
+async function cadastrarPrestador() {
 // Verifique se uma categoria foi selecionada
 if (categoriaSelecionada.value === null) {
   alert('Selecione uma categoria antes de cadastrar.');
@@ -105,14 +105,13 @@ try {
       }
   }
   );
+  
+  enviarEmailCredenciais(email.value, senha.value);
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
   exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
   limparCampos();
 
-  if (typeof callback === 'function') {
-      callback(email.value, email.value, senha.value);
-    }
   
 } catch (error) {
   console.error('Ocorreu um erro ao cadastrar o prestador:', error);
@@ -120,24 +119,52 @@ try {
 }
 }
 
-async function enviarEmailCredenciais(toEmail, email, senha){
+async function enviarEmailCredenciais(email:String, senha:String){
   try {
     const response = await axios.post('http://localhost:8080/email/credenciais', {
-      toEmail: toEmail,
       email: email,
       senha: senha
+    },
+    {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+      }
     });
 
-    if (response.status === 200) {
       console.log('Email enviado com sucesso!');
-    } else {
-      console.error('Erro ao enviar o email.');
-    }
+
   } catch (error) {
     console.error('Ocorreu um erro ao enviar o email:', error);
   }
 }
 
+async function cadastrarUsuario() {
+
+// Fazendo a requisição POST com os valores capturados
+try {
+  const response = await axios.post('http://localhost:8080/auth/register', {
+    email: email.value,
+    senha: senha.value
+  },
+  {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+  });
+
+  if (response.status === 200) {
+      const usuarioId = response.data.usuarioId;
+      return usuarioId; // Retorne o ID do cliente
+    } else {
+      console.error(`Falha na solicitação POST: Código de status ${response.status}`);
+      throw new Error('Falha ao cadastrar o usuario');
+    }
+  
+} catch (error) {
+  console.error('Ocorreu um erro ao cadastrar usuario:', error);
+  alert('Erro ao cadastrar o prestador.');
+}
+}
 
 function limparCampos(){
   nome.value = "";
