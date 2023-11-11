@@ -56,6 +56,21 @@
                         </svg>
                     </button>
                     </router-link>
+                    <router-link :to="{
+                         name: 'editOrdem', 
+                            params: { 
+                                dataAbertura: os.dataAbertura, 
+                                empresa: os.cliente.clienteNome,  
+                                status: os.status,
+                                segmento: os.prestador[0].segmento.nome, 
+                                prestador: os.prestador[0].prestadorNome,
+                                idSegmento: os.prestador[0].segmento.id,
+                                descricao: os.descricao,
+                                idOrdem: os.servicoId,
+
+                            }
+
+                    }">
                     <button @click="() => {capturarOrdem(os.servicoId); toggleModalEdit('buttonTriggersEdit')}" class="card-button-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                             viewBox="0 0 16 16">
@@ -63,16 +78,12 @@
                                 d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
                         </svg>
                     </button>
+                    </router-link>
                     <ModalOrdem :id="idOrdem" :prestador="prestadorOrdem" :segmento="segmentoOrdem" :cliente="cliente"
                         :desc="desc" :status="staus" :dtaAbertura="dtaAbertura" :dta-fechamento="dtaFechamento" :check = "check"
                         v-if="modalTriggers.buttonTriggers" :toggleModal="() => toggleModal('buttonTriggers')">
                         <h2>Meu modal</h2>
                     </ModalOrdem>
-
-                    <ModalOrdemEdit :id="idOrdem" :prestador="prestadorOrdem" :segmento="segmentoOrdem" :cliente="cliente"
-                        :desc="desc" :status="staus" :dtaAbertura="dtaAbertura" :check = "check" :dta-fechamento="dtaFechamento" :clienteId = "clienteId" :prestadorId = "prestadorId" v-if="modalTriggersEdit.buttonTriggersEdit" :toggleModalEdit="() => toggleModalEdit('buttonTriggersEdit')">
-                        <h2>Meu modal</h2>
-                    </ModalOrdemEdit>
 
                 </div>
             </div>
@@ -85,7 +96,6 @@ import '../assets/css/Ordem/consultaOrdem.css'
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import ModalOrdem from '../components/ModalOrdem.vue';
-import ModalOrdemEdit from '@/components/ModalOrdemEdit.vue';
 
 const ordem = ref([]);
 
@@ -171,16 +181,6 @@ const toggleModal = (trigger: keyof typeof modalTriggers.value) => {
     console.log(modalTriggers.value)
 };
 
-
-/* ------------MODAL DE EDITAR ORDEM----------------------*/
-const modalTriggersEdit = ref<{ [key: string]: boolean }>({
-    buttonTriggersEdit: false
-});
-
-const toggleModalEdit = (trigger: keyof typeof modalTriggersEdit.value) => {
-    modalTriggersEdit.value[trigger] = !modalTriggersEdit.value[trigger];
-    console.log(modalTriggersEdit.value)
-};
 
 onMounted(() => {
     loadTabela();
