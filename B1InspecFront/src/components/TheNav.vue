@@ -3,7 +3,7 @@
         <nav>
             <div class="logo">
                 <div class="logo-item">
-                    <router-link to="/login" id="login" title="I para página Inicial" @click = 'sair'>
+                    <router-link to="/login" id="login" title="I para página Inicial" @click = 'sair' >
                         <div class="logo-link-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
                                 viewBox="0 0 16 16">
@@ -178,6 +178,7 @@ const closeAllSubMenus = () => {
 
 function sair(){
     signOut()
+    location.reload();
 }
 
 </script>
