@@ -16,7 +16,6 @@ const route = useRoute()
 <!-- 
   Ver um jeito de entrar no login sem usar o nav  -->
 
-  <TheNav v-if="route.path !== '/login' && route.path !== '/' && !route.path.startsWith('/solicitacoes/')" />
-
+  <TheNav v-if="route.path !== '/login' && route.path !== '/'" />
   <RouterView />
 </template>
