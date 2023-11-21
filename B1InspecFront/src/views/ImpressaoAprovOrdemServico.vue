@@ -142,9 +142,6 @@ async function capturarOrdem() {
   let rota = `http://localhost:8080/ordemservico/${route.params.idOrdem}`
   try {
     const response = await axios.get(rota, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
     });
     const ordemData = response.data;
     checklist.value = ordemData.checklistPersonalizados.map(item => {
