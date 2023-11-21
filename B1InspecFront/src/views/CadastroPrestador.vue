@@ -105,15 +105,37 @@ try {
       }
   }
   );
+  
+  enviarEmailCredenciais(email.value, senha.value);
 
   // Requisição bem-sucedida, exibir um alerta de confirmação
   exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
   limparCampos();
+
   
 } catch (error) {
   console.error('Ocorreu um erro ao cadastrar o prestador:', error);
   alert('Erro ao cadastrar o prestador.');
 }
+}
+
+async function enviarEmailCredenciais(email:String, senha:String){
+  try {
+    const response = await axios.post('http://localhost:8080/email/credenciais', {
+      email: email,
+      senha: senha
+    },
+    {
+    headers: {
+        'Authorization': `Bearer ${token}` 
+      }
+    });
+
+      console.log('Email enviado com sucesso!');
+
+  } catch (error) {
+    console.error('Ocorreu um erro ao enviar o email:', error);
+  }
 }
 
 async function cadastrarUsuario() {
