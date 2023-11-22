@@ -117,7 +117,7 @@ async function capturarOrdem() {
 }
 
 async function aprovacao(nome: string, sts: string, id: string) {
-  status.value = sts
+  status.value = sts;
 
   try {
     await axios.put(`http://localhost:8080/checklist_personalizado/${id}`, {
@@ -126,31 +126,32 @@ async function aprovacao(nome: string, sts: string, id: string) {
       segmentoId: idSegmento.value,
       observacao: observacao.value,
       situacao: status.value
-
     }, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     });
 
+    dadosResponsaveis()
+    // Atualizar manualmente o estado do checklist modificado
+    const index = checklist.value.findIndex(item => item.checklistPersonalizadoId == id);
+    if (index !== -1) {
+      checklist.value[index].situacao = sts;
+    }
+
+    alert('Atualizado');
+
+    // Verificar se todos os itens são 'Aprovado'
+    let todosAprovados = checklist.value.every(item => item.situacao === 'Aprovado');
+
+    if (todosAprovados) {
+      conclusaoOrdem()
+    }
+
   } catch (error) {
     console.error('Ocorreu um erro ao atualizar a ordem:', error);
     alert('Erro ao atualizar a ordem');
   }
-
-  // Verificando se todos os itens são 'Aprovado' com um loop for
-  let todosAprovados = true;
-  for (let item of checklist.value) {
-    if (item.situacao !== 'Aprovado' && sts == 'Aprovado') {
-      todosAprovados = false;
-      break;
-    }
-  }
-
-  if (todosAprovados) {
-    conclusaoOrdem();
-  }
-
 }
 
 

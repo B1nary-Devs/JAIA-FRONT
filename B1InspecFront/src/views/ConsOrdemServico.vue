@@ -34,7 +34,8 @@
                     <router-link :to="{ 
                             name: 'ImpressaoOrdem', 
                             params: { 
-                                dataAbertura: os.dataAbertura, 
+                                dataAbertura: os.dataAbertura,
+                                dataFechamento: os.dataFechamento, 
                                 empresa: os.cliente.clienteNome,  
                                 status: os.status,
                                 segmento: os.prestador[0].segmento.nome, 
