@@ -37,6 +37,7 @@
                                 name: 'ImpressaoOrdem',
                                 params: {
                                     dataAbertura: solicitacao.dataAbertura,
+                                    dataFechamento: solicitacao.dataFechamento, 
                                     empresa: solicitacao.cliente.clienteNome,
                                     status: solicitacao.status,
                                     segmento: solicitacao.prestador[0].segmento.nome,
