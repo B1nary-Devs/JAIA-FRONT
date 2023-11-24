@@ -238,6 +238,7 @@ async function coletarClienteCPNJ() {
 }
 
 
+
 async function buscarChecklistsPorSegmento(segmentoId) {
   try {
     if (segmentoId) {
