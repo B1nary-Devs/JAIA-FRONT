@@ -2,8 +2,7 @@
   <div class="form-actions">
     <button @click="returnarPag()">
       Retornar
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-square"
-        viewBox="0 0 16 16">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-left-square" viewBox="0 0 16 16">
         <path fill-rule="evenodd"
           d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
       </svg>
@@ -17,61 +16,96 @@
       </svg>
     </button>
   </div>
-  <div class="form-cadastro" id="element-to-pdf">
-    <div class="form-title">
+  <div class="form-pdf" id="element-to-pdf">
+    <div class="pdf-title">
       <h1>Ordem de Serviço N° {{ $route.params.idOrdem }}</h1>
+      <h3>{{ $route.params.prestador }}</h3>
+      <div class="pdf-title-datas">
+        <p>
+          <bold>Data de Abertura:</bold> {{ $route.params.dataAbertura }}
+        </p>
+        <p>
+          <bold>Data de Fechamento:</bold> {{ $route.params.dataFechamento }}
+        </p>
+      </div>
     </div>
-    <div class="form-body">
-      <div class="input-group">
-        <div class="input-box">
-          <label>Data de Abertura:</label>
-          <p>{{ $route.params.dataAbertura }}</p>
+    <div class="form-body-pdf">
+      <div class="group-pdf">
+        <div class="box-pdf">
+          <div class="box-pdf-title">
+            <h3>Empresa resposável</h3>
+          </div>
+          <div class="box-pdf-body">
+            <div class="box-item">
+              <div class="box-item-box">
+                <label>Nome</label>
+                <p>B1nary Inspec</p>
+              </div>
+              <div class="box-item-box">
+                <label>E-mail de Contato</label>
+                <p>b1naryinspec@gmail.com</p>
+              </div>
+            </div>
+            <div class="box-item">
+              <div class="box-item-box">
+                <label>Razão Social</label>
+                <p>B1nary Inspec LTDA</p>
+              </div>
+              <div class="box-item-box">
+                <label>Telefone</label>
+                <p>(12) 99999-9999</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box-pdf">
+          <div class="box-pdf-title">
+            <h3>Cliente</h3>
+          </div>
+          <div class="box-pdf-body">
+            <div class="box-item">
+              <div class="box-item-box">
+                <label>Nome</label>
+                <p>{{ $route.params.empresa }}</p>
+              </div>
+              <div class="box-item-box">
+                <label>URL de Acesso aos Chamados</label>
+                <p>{{ $route.params.empresa }}</p>
+              </div>
+            </div>
+            <div class="box-item">
+              <div class="box-item-box">
+                <label>CNPJ</label>
+                <p>{{ $route.params.empresa }}</p>
+              </div>
+              <div class="box-item-box">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="box-pdf">
+          <div class="box-pdf-title">
+            <h3>Informação Imóvel</h3>
+          </div>
+          <div class="box-pdf-body-check">
+            <div class="box-item-check" v-for="(item, index) in checklist" :key="index">
+              <label>{{ item.checklistPersonalizadoNome }}</label>
+              <p>{{ item.situacao }}</p>
+              <p v-if="item.observacao"> Motivo: {{ item.observacao }}</p>
+            </div>
+          </div>
         </div>
 
-        <div class="input-box">
-          <label>Data de Fechamento:</label>
-          <p>{{ $route.params.dataFechamento }}</p>
+        <div class="box-pdf">
+          <div class="box-pdf-title">
+            <h3>Prestador</h3>
+          </div>
+          <div class="box-pdf-body-check">
+            <div class="box-item-check">
+              <p>{{ $route.params.prestador }}</p>
+            </div>
+          </div>
         </div>
-
-        <div class="input-box">
-          <label>Empresa:</label>
-          <p>{{ $route.params.empresa }}</p>
-        </div>
-
-        <div class="input-box">
-          <label>Status:</label>
-          <p>{{ $route.params.status }}</p>
-        </div>
-
-        <div class="input-box">
-          <label>Descrição:</label>
-          <p>{{ $route.params.descricao }}</p>
-        </div>
-
-        <div class="input-box">
-          <label>Segmento:</label>
-          <p>{{ $route.params.segmento }}</p>
-        </div>
-
-        <div class="input-box">
-          <label>Prestador:</label>
-          <p>{{ $route.params.prestador }}</p>
-        </div>
-
-        <div class="input-box">
-          <label for="id_checklist">Checklist:</label>
-        </div>
-
-        <div class="checklist-body-items" v-for="(item, index) in checklist" :key="index">
-          <ul>
-            <li>
-              <p>{{ item.checklistPersonalizadoNome }}</p>
-            </li>
-          </ul>
-          <p>{{ item.situacao }}</p>
-          <p>{{ item.observacao }}</p>
-        </div>
-
       </div>
     </div>
   </div>
@@ -82,7 +116,7 @@ import html2pdf from "html2pdf.js"
 import { ref, onMounted, defineProps } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router';
-import '../assets/css/aprovOrdemServico/aprovOrdemServico.css'
+import '../assets/css/impressao/impressao.css'
 
 const token = localStorage.getItem('token')
 
@@ -108,9 +142,6 @@ async function capturarOrdem() {
   let rota = `http://localhost:8080/ordemservico/${route.params.idOrdem}`
   try {
     const response = await axios.get(rota, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
     });
     const ordemData = response.data;
     checklist.value = ordemData.checklistPersonalizados.map(item => {
