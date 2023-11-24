@@ -35,7 +35,8 @@
                     <router-link :to="{ 
                             name: 'aprovOrdemServico2', 
                             params: { 
-                                dataAbertura: os.dataAbertura, 
+                                dataAbertura: os.dataAbertura,
+                                dataFechamento: os.dataFechamento,  
                                 empresa: os.cliente.clienteNome,  
                                 status: os.status,
                                 segmento: os.prestador[0].segmento.nome, 
