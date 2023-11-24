@@ -7,37 +7,37 @@
       <div class="input-group">
         <div class="input-box">
           <label>Data de Abertura:</label>
-          <input v-model="dataAbertura" id="dataAbertura"  />
+          <input v-model="dataAbertura"  />
         </div>
 
         <div class="input-box">
           <label>Data de Fechamento:</label>
-          <input v-model="dataFechamento" id="dataFechamento" />
+          <input v-model="dataFechamento" />
         </div>
 
         <div class="input-box">
           <label>Empresa:</label>
-          <input v-model="empresa" id="empresa" />
+          <input v-model="empresa"  />
         </div>
 
         <div class="input-box">
           <label>Status:</label>
-          <input v-model="status" id="status" />
+          <input v-model="status" />
         </div>
 
         <div class="input-box">
           <label>Descrição:</label>
-          <input v-model="descricao" id="descricao" />
+          <input v-model="descricao" />
         </div>
 
         <div class="input-box">
           <label>Segmento:</label>
-          <input v-model="segmento" id="segmento" />
+          <input v-model="segmento"  />
         </div>
 
         <div class="input-box">
           <label>Prestador:</label>
-          <input v-model="prestador" id="prestador" />
+          <input v-model="prestador" />
         </div>
 
         <button @click="salvarAlteracoes">Salvar Alterações</button>
@@ -48,23 +48,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router'
 import '../assets/css/editOrdemServico/editOrdemServico.css'
 
 // Campos a serem exibidos
+const ordemId = ref('')
 const dataAbertura = ref('')
 const dataFechamento = ref('')
 const empresa = ref('')
 const status = ref('')
 const descricao = ref('')
 const prestador = ref('')
+const prestadorId = ref('')
+const checklistsId = ref('')
+const solicitacaoId = ref('')
 const segmento = ref('')
-const campo = ref(true)
 const idOrdem = ref('')
-const idSegmento = ref('')
-const observacao = ref('')
 const route = useRoute()
 
 const token = localStorage.getItem('token')
@@ -96,28 +97,30 @@ async function capturarOrdem() {
 
 async function salvarAlteracoes() {
   try {
-    const rota = `http://localhost:8080/ordemservico/${route.params.idOrdem}`;
-    const response = await axios.put(rota, {
-      dataAbertura: dataAbertura.value,
-      dataFechamento: dataFechamento.value,
-      clienteNome: empresa.value, 
-      status: status.value,
-      descricao: descricao.value,
-      
-    }, {
-      headers: {
-        Authorization: `Bearer ${token}`
+        await axios.put(`http://localhost:8080/ordemservico/${ordemId.value}}`,{
+        dataAbertura: dataAbertura.value,
+        dataFechamento: dataFechamento.value,
+        status: status.value,
+        descricao: descricao.value,
+        empresa: empresa.value,  
+        prestadores: [prestadorId.value],
+        checklists: [checklistsId.value],  
+        solicitacoes: [solicitacaoId.value]
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
-    });
+    );
 
-    console.log('Alterações salvas com sucesso:', response.data);
-   
+    alert('Registro atualizado!!');
+    window.location.reload();
   } catch (error) {
-    console.error('Ocorreu um erro ao salvar as alterações:', error);
-   
+    console.error('Ocorreu um erro', error);
+    alert('Erro');
   }
 }
-
 
 onMounted(() => {
   capturarOrdem()
