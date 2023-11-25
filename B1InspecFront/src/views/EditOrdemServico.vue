@@ -7,7 +7,7 @@
       <div class="input-group">
         <div class="input-box">
           <label>Data de Abertura:</label>
-          <input v-model="dataAbertura"  />
+          <input v-model="dataAbertura" disabled />
         </div>
 
         <div class="input-box">
@@ -17,7 +17,7 @@
 
         <div class="input-box">
           <label>Empresa:</label>
-          <input v-model="empresa"  />
+          <input v-model="empresa" disabled />
         </div>
 
         <div class="input-box">
@@ -32,12 +32,12 @@
 
         <div class="input-box">
           <label>Segmento:</label>
-          <input v-model="segmento"  />
+          <input v-model="segmento" disabled />
         </div>
 
         <div class="input-box">
           <label>Prestador:</label>
-          <input v-model="prestador" />
+          <input v-model="prestador" disabled />
         </div>
 
         <button @click="salvarAlteracoes">Salvar Alterações</button>
@@ -54,7 +54,6 @@ import { useRoute } from 'vue-router'
 import '../assets/css/editOrdemServico/editOrdemServico.css'
 
 // Campos a serem exibidos
-const ordemId = ref('')
 const dataAbertura = ref('')
 const dataFechamento = ref('')
 const empresa = ref('')
@@ -62,7 +61,7 @@ const status = ref('')
 const descricao = ref('')
 const prestador = ref('')
 const prestadorId = ref('')
-const checklistsId = ref('')
+const checklistId = ref('')
 const solicitacaoId = ref('')
 const segmento = ref('')
 const idOrdem = ref('')
@@ -80,7 +79,6 @@ async function capturarOrdem() {
     })
     const ordemData = response.data
 
-    
     dataAbertura.value = ordemData.dataAbertura;
     dataFechamento.value = ordemData.dataFechamento;
     empresa.value = ordemData.cliente.clienteNome; 
@@ -88,7 +86,11 @@ async function capturarOrdem() {
     descricao.value = ordemData.descricao;
     segmento.value = ordemData.prestador[0].segmento.nome;  
     prestador.value = ordemData.prestador[0].prestadorNome;  
+    prestadorId.value = ordemData.prestador[0].prestadorId;
     idOrdem.value = ordemData.servicoId;
+
+    console.log('ID do prestador:', prestadorId.value);
+    console.log('ID do checklist:', checklistId.value);
 
   } catch (error) {
     console.error('Ocorreu um erro ao coletar as ordens:', error)
@@ -97,15 +99,14 @@ async function capturarOrdem() {
 
 async function salvarAlteracoes() {
   try {
-        await axios.put(`http://localhost:8080/ordemservico/${ordemId.value}}`,{
+    
+        await axios.put(`http://localhost:8080/ordemservico/${idOrdem.value}`,{
         dataAbertura: dataAbertura.value,
         dataFechamento: dataFechamento.value,
         status: status.value,
         descricao: descricao.value,
         empresa: empresa.value,  
-        prestadores: [prestadorId.value],
-        checklists: [checklistsId.value],  
-        solicitacoes: [solicitacaoId.value]
+        prestadores: [prestadorId.value]
       },
       {
         headers: {

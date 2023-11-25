@@ -71,7 +71,7 @@
                             }
 
                     }">
-                    <button @click="() => {capturarOrdem(os.servicoId); toggleModalEdit('buttonTriggersEdit')}" class="card-button-edit">
+                    <button class="card-button-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                             viewBox="0 0 16 16">
                             <path
