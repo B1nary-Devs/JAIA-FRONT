@@ -1,7 +1,7 @@
 <template>
-    <div class="modal-ordem-background">
-        <div class="modal">
-            <div class="modal-title">
+    <div >
+        <div >
+            <div >
                 <h1>Ordem N° {{ id }}</h1>
                 <!-- usando a função para trocar o estado do modal-->
                 <div class="modal-title-buttons">

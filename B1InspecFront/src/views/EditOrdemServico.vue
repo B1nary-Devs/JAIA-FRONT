@@ -78,10 +78,10 @@ async function capturarOrdem() {
       }
     })
     const ordemData = response.data
-
+     console.log(ordemData)
     dataAbertura.value = ordemData.dataAbertura;
     dataFechamento.value = ordemData.dataFechamento;
-    empresa.value = ordemData.cliente.clienteNome; 
+    empresa.value = ordemData.cliente.clienteId; 
     status.value = ordemData.status;
     descricao.value = ordemData.descricao;
     segmento.value = ordemData.prestador[0].segmento.nome;  
@@ -99,13 +99,14 @@ async function capturarOrdem() {
 
 async function salvarAlteracoes() {
   try {
-    
+
+      console.log(empresa.value)
         await axios.put(`http://localhost:8080/ordemservico/${idOrdem.value}`,{
         dataAbertura: dataAbertura.value,
         dataFechamento: dataFechamento.value,
         status: status.value,
         descricao: descricao.value,
-        empresa: empresa.value,  
+        cliente: empresa.value,  
         prestadores: [prestadorId.value]
       },
       {
