@@ -40,9 +40,26 @@
           <input v-model="prestador" disabled />
         </div>
 
-        <button @click="salvarAlteracoes">Salvar Alterações</button>
+        <div class="input-box">
+          <label for="id_checklist">Checklist:</label>
+        </div>
+
+        <div class="checklist-body-items" v-for="(item, index) in checklist" :key="index">
+          <ul>
+            <li>
+              <p>{{ item.checklistPersonalizadoNome }}</p>
+            </li>
+          </ul>
+          <p>{{ item.situacao }}</p>
+          <p>{{ item.observacao }}</p>
+        </div>
 
       </div>
+
+      <div class="btn-salvar">
+      <button class="salvar" @click="salvarAlteracoes">Salvar Alterações</button>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -53,7 +70,6 @@ import axios from 'axios'
 import { useRoute } from 'vue-router'
 import '../assets/css/editOrdemServico/editOrdemServico.css'
 
-// Campos a serem exibidos
 const dataAbertura = ref('')
 const dataFechamento = ref('')
 const empresa = ref('')
@@ -61,9 +77,8 @@ const status = ref('')
 const descricao = ref('')
 const prestador = ref('')
 const prestadorId = ref('')
-const checklistId = ref('')
-const solicitacaoId = ref('')
 const segmento = ref('')
+const checklist = ref([])
 const idOrdem = ref('')
 const route = useRoute()
 
@@ -78,7 +93,7 @@ async function capturarOrdem() {
       }
     })
     const ordemData = response.data
-     console.log(ordemData)
+   
     dataAbertura.value = ordemData.dataAbertura;
     dataFechamento.value = ordemData.dataFechamento;
     empresa.value = ordemData.cliente.clienteId; 
@@ -87,10 +102,13 @@ async function capturarOrdem() {
     segmento.value = ordemData.prestador[0].segmento.nome;  
     prestador.value = ordemData.prestador[0].prestadorNome;  
     prestadorId.value = ordemData.prestador[0].prestadorId;
+    checklist.value = ordemData.checklistPersonalizados.map(item => {
+      return {
+        ...item,
+        
+      };
+    });
     idOrdem.value = ordemData.servicoId;
-
-    console.log('ID do prestador:', prestadorId.value);
-    console.log('ID do checklist:', checklistId.value);
 
   } catch (error) {
     console.error('Ocorreu um erro ao coletar as ordens:', error)
@@ -126,6 +144,5 @@ async function salvarAlteracoes() {
 
 onMounted(() => {
   capturarOrdem()
-
 })
 </script>
