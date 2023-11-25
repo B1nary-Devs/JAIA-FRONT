@@ -104,7 +104,7 @@ try {
   await axios.post('http://localhost:8080/solicitacao', {
     nomeEmpresa: nomeEmpresa.value,
     cnpj: CNPJEmpresa.value,
-    resultado: "Em andamento",
+    resultado: "Pendente",
     descricao: descricao.value,
     segmento: segmentoSelecionada.value
    
