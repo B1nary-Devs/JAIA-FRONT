@@ -122,6 +122,11 @@
                     </div>
                 </div>
                 <div class="submenu" v-show="showSubMenuOrdem">
+                    <router-link to="/consSolicitacoes" title="Analisar Solicitações">
+                        <div class="item-submenu">
+                            <p>Solicitações</p>
+                        </div>
+                    </router-link>
                     <router-link to="/cadOrdem" id="cadOrdem" title="Realizar um novo cadastro">
                         <div class="item-submenu">
                             <p>Cadastrar</p>

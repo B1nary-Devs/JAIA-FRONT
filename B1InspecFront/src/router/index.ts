@@ -217,6 +217,46 @@ const router = createRouter({
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/Solicitacoes.vue'),
+    },
+    {
+      path: '/consSolicitacoes',
+      name: 'consSolicitacoes',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ConsSolicitacoes.vue'),
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
+          next();
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
+        }
+      }
+    },
+    {
+      path: '/AprovSolicitacoes/:idEmpresa/:nomeEmpresa/:status/:idSegmento/:segmentoNome/:descricao/:cnpj',
+      name: 'AprovSolicitacoes',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AprovSolicitacoes.vue'),
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
+          next();
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
+        }
+      }
     }
   ]
 })

@@ -158,7 +158,6 @@ async function aprovacao(nome: string, sts: string, id: string) {
 //CADASTRAR NOVO VOCABULO
 async function conclusaoOrdem() {
  dataHoraBrasileira.value = String(formatarDataHora());
- console.log(dataHoraBrasileira.value);
   try {
     await axios.put(`http://localhost:8080/ordemservico/${route.params.idOrdem}`,
       {
