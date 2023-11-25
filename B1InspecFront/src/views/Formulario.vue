@@ -82,7 +82,7 @@ const voltarParaHome = () => {
 
 async function coletarSegmento() {
   try {
-    const response = await axios.get('http://localhost:8080/segmento');
+    const response = await axios.get('http://localhost:8080/segmento/todos');
     segmento.value = response.data; // Atribuir diretamente à ref
     console.log(segmento.value);
   } catch (error) {
