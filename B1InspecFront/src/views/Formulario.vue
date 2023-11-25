@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="form-submit">
-            <button @click="" class="button-return">Voltar</button>
+          <button @click="voltarParaHome" class="button-return">Voltar</button>
             <button @click="cadastrarOrdem">Cadastrar</button>
         </div>
     </div>
@@ -65,13 +65,20 @@ import { onMounted, ref } from 'vue'
 import axios from 'axios';
 import '../assets/css/cadastroNovaOrdem/cadNovaOrdem.css'
 import ThePopUp from '../components/ThePopUp.vue'
+import { exibirPopup } from '../components/ThePopUp.vue'
+import { useRouter } from 'vue-router';
+
 
 const nomeEmpresa = ref("");
 const CNPJEmpresa = ref("");
 const descricao = ref("");
 const segmento = ref("");
+const router = useRouter();
 
 
+const voltarParaHome = () => {
+    router.push('/'); // Substitua '/' pelo caminho da sua rota inicial, se for diferente
+};
 
 async function coletarSegmento() {
   try {
@@ -94,18 +101,19 @@ if (segmentoSelecionada.value === null) {
 
 // Fazendo a requisição POST com os valores capturados
 try {
-  await axios.post('http://localhost:8080/ordemservico', {
-    prestadorNome: nome.value,
-    cnpj: cnpj.value,
-    email: email.value,
-    senha: senha.value,
-    segmentoId: categoriaSelecionada.value
+  await axios.post('http://localhost:8080/solicitacao', {
+    nomeEmpresa: nomeEmpresa.value,
+    cnpj: CNPJEmpresa.value,
+    resultado: "Em andamento",
+    descricao: descricao.value,
+    segmento: segmentoSelecionada.value
    
   });
 
+  
   // Requisição bem-sucedida, exibir um alerta de confirmação
-  exibirPopup('Cadastro Realizado com Sucesso', 'Novo Prestador Registrado.', 123)
-  limparCampos();
+  exibirPopup('Cadastro Realizado com Sucesso', 'Nova Solicitacao registrada!', 123)
+
   
 } catch (error) {
   console.error('Ocorreu um erro ao cadastrar o prestador:', error);
