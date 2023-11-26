@@ -223,7 +223,9 @@ const router = createRouter({
           return;
         }
         next('/login')
-
+      }
+    },
+    {
       path: '/solicitacoes/:id',
       name: 'solicitacoes',
       // route level code-splitting
