@@ -211,6 +211,19 @@ const router = createRouter({
       }
     },
     {
+      path: '/editOrdem/:dataAbertura/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
+      name: 'editOrdem',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/EditOrdemServico.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/login')
+
       path: '/solicitacoes/:id',
       name: 'solicitacoes',
       // route level code-splitting

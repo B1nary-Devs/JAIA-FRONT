@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-ordem-background">
+    <div class="modal-ordem-background" >
         <div class="modal">
             <div class="modal-title">
                 <h1>Ordem N° {{ id }}</h1>
