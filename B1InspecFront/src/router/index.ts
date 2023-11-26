@@ -163,7 +163,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/aprovOrdemServico2/:dataAbertura/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
+      path: '/aprovOrdemServico2/:dataAbertura/:dataFechamento/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
       name: 'aprovOrdemServico2',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -183,19 +183,12 @@ const router = createRouter({
       }
     },
     {
-      path: '/ImpressaoOrdem/:dataAbertura/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
+      path: '/ImpressaoOrdem/:dataAbertura/:dataFechamento/:empresa/:status/:segmento/:prestador/:idSegmento/:descricao/:idOrdem',
       name: 'ImpressaoOrdem',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ImpressaoAprovOrdemServico.vue'),
-      beforeEnter (_, __, next) { // Impede usuários não assinados
-        if (verifyTokenAcesso()) {       // de acessar a página Home.
-          next();
-          return;
-        }
-        next('/login')
-      }
+      component: () => import('../views/ImpressaoAprovOrdemServico.vue')
     },
     {
       path: '/homeinicial',
@@ -230,6 +223,52 @@ const router = createRouter({
           return;
         }
         next('/login')
+
+      path: '/solicitacoes/:id',
+      name: 'solicitacoes',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/Solicitacoes.vue'),
+    },
+    {
+      path: '/consSolicitacoes',
+      name: 'consSolicitacoes',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ConsSolicitacoes.vue'),
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
+          next();
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
+        }
+      }
+    },
+    {
+      path: '/AprovSolicitacoes/:idEmpresa/:nomeEmpresa/:status/:idSegmento/:segmentoNome/:descricao/:cnpj',
+      name: 'AprovSolicitacoes',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/AprovSolicitacoes.vue'),
+      beforeEnter (to, from, next) { 
+        const user = localStorage.getItem('acesso')// Impede usuários não assinados
+        if (user === 'ADMIN') {
+          // Usuários do tipo 'admin' têm acesso à rota
+          next();
+        } else if (user === 'USER') {
+          next();
+        } else {
+          // Usuários não autenticados (guest) ou de outros tipos são redirecionados para uma página de login
+          next('/login');
+        }
       }
     }
   ]

@@ -1,0 +1,182 @@
+.form-actions{
+    background-color: rgb(33, 37, 33);
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.form-actions button{
+    width: 120px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:rgba(87, 153, 228, 0.979);
+    margin-right: 15px;
+    color: #f8f8f9;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s ease-in;
+}
+
+.form-actions button svg{
+    width: 25px;
+    margin-left: 10px;
+}
+
+.form-actions button:hover{
+    background-color: #f8f8f9;
+    border-radius: 8px;
+    border: 1px solid rgba(87, 153, 228, 0.979);
+    color:rgba(87, 153, 228, 0.979);
+    font-weight: bold;
+}
+
+.form-pdf{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.pdf-title{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.pdf-title h1{
+    color: rgb(0, 0, 0);
+    font-size: 40px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.pdf-title h3{
+    margin-top: 15px;
+    color: rgb(0, 0, 0);
+    font-size: 28px;
+}
+
+.pdf-title .pdf-title-datas{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.pdf-title-datas p{
+    font-size: 17px;
+}
+
+.form-body-pdf{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.group-pdf{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.box-pdf{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.box-pdf .box-pdf-title{
+    background-color: rgb(194, 194, 194);
+    width: 100%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+}
+
+.box-pdf .box-pdf-title h3{
+    margin-left: 20PX;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.box-pdf-body{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+}
+
+.box-pdf-body .box-item{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box-pdf-body .box-item .box-item-box{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: 0.5px solid rgb(194, 194, 194);
+}
+
+.box-pdf-body .box-item .box-item-box label{
+    font-size: 17px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.box-pdf-body .box-item .box-item-box p{
+    font-size: 14px;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.box-pdf-body-check{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.box-item-check{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border: 0.5px solid rgb(194, 194, 194);
+}
+
+.box-item-check label{
+    margin-top: 5px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.box-item-check p{
+    font-size: 16px;
+    margin-left: 10px;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}

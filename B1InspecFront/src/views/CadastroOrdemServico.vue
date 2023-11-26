@@ -160,11 +160,13 @@ function ptrs(){
   console.log(empresaSelect.value);
 }
 
+
 function inserirItem() {
-  console.log(`chechlistvalor -->  ${checklist.value}`)
   if (checklist.value.trim() !== "") {
-    checklistsPersonalizado.value.push(checklist.value);
-    console.log(`lista -->  ${checklistsPersonalizado.value}`)
+    const novoItem = {
+      checklistNome: checklist.value,
+    };
+    checklistsAtribuidos.value.push(novoItem);
     checklist.value = "";
   }
 }
@@ -174,25 +176,8 @@ function editarItem(index) {
 }
 
 function salvarEdicao(index) {
-  if (estadoEdicao.value !== -1) {
-    
-    const checklistEditado = checklistsAtribuidos.value[estadoEdicao.value];
-    axios.put(`http://localhost:8080/checklist/${checklistEditado.checklistId}`, {
-      checklistNome: checklistEditado.checklistNome,
-    },{
-      headers: {
-        'Authorization': `Bearer ${token}` 
-      }
-    })
-    .then(response => {
-      
-      checklistsAtribuidos.value.splice(estadoEdicao.value, 1);
-     
-      estadoEdicao.value = -1;
-    })
-    .catch(error => {
-      console.error('Erro ao salvar as alterações:', error);
-    });
+  if (estadoEdicao.value === index) {
+    estadoEdicao.value = -1;
   }
 }
 
@@ -317,8 +302,8 @@ function prestadorSelecionado() {
 async function cadastrarCliente() {
   try {
     const clienteData = {
-      clienteCnpj: cnpj.value,
-      clienteNome: nome.value,
+      clienteCnpj: clienteCNPJ.value,
+      clienteNome: nome.value
     };
 
     const response = await axios.post('http://localhost:8080/cliente', clienteData,{
@@ -342,7 +327,6 @@ async function cadastrarCliente() {
 
 async function cadastrarOrdemServico() {
  
-
   try {
     if (!prestador.value) {
       alert('Selecione um prestador de serviço');
@@ -385,7 +369,7 @@ async function cadastrarOrdemServico() {
    
     cadastrarChecklistPersonalizado(idOrdemServico)
 
-    cadastrarChecklistPersonalizadoNovo(idOrdemServico)
+
 
 
     exibirPopup('Cadastro Realizado com Sucesso', 'Nova Ordem de Serviço Cadastrada.', 123);
@@ -396,60 +380,32 @@ async function cadastrarOrdemServico() {
 }
 
 async function cadastrarChecklistPersonalizado(idOrdemServico) {
+  const segmentoId = segmentoSelecionado.value;
+
   try {
-    const nomesItens = checklistsAtribuidos.value.map((item) => ({
-      ordemServicoId: idOrdemServico,
-      checklistPersonalizadoNome: item.checklistNome
-    }))
+    for (const item of checklistsAtribuidos.value) {
+      const checklistItem = {
+        segmentoId: segmentoId,
+        ordemServicoId: idOrdemServico,
+        checklistPersonalizadoNome: item.checklistNome
+      };
 
-    for (const nomeItem of nomesItens) {
-     console.log(nomeItem)
-       await axios.post('http://localhost:8080/checklist_personalizado',nomeItem,{
+      await axios.post('http://localhost:8080/checklist_personalizado', checklistItem, {
         headers: {
-        'Authorization': `Bearer ${token}` 
-      }
-       })
-
-      console.log(`Requisição POST para ${nomeItem.checklistPersonalizadoNome} concluída.`)
-      exibirPopup('Cadastro Realizado com Sucesso', 'Nova ordem de serviço Registrada.', 123)
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      console.log(`Requisição POST para ${item.checklistNome} concluída.`);
     }
 
-    console.log('Todos os checklists foram cadastrados com sucesso.')
+    console.log('Todos os checklists foram cadastrados com sucesso.');
+    exibirPopup('Cadastro Realizado com Sucesso', 'Nova ordem de serviço Registrada.', 123);
   } catch (error) {
-    console.error(error)
-    console.log('Erro ao cadastrar checklists.')
+    console.error(error);
+    console.log('Erro ao cadastrar checklists.');
   }
 }
 
-async function cadastrarChecklistPersonalizadoNovo(idOrdemServico) {
-  const segmentoId = segmentoSelecionado.value
-  try {
-    const nomesItens = checklistsPersonalizado.value.map((item) => ({
-      segmentoId: segmentoId,
-      ordemServicoId: idOrdemServico,
-      checklistPersonalizadoNome: item
-    }))
-
-    console.log(nomesItens)
-
-    for (const nomeItem of nomesItens) {
-     console.log(nomeItem)
-       await axios.post('http://localhost:8080/checklist_personalizado',nomeItem,{
-        headers: {
-        'Authorization': `Bearer ${token}` 
-      }
-       })
-
-      console.log(`Requisição POST para ${nomeItem.checklistPersonalizadoNome} concluída.`)
-      exibirPopup('Cadastro Realizado com Sucesso', 'Nova ordem de serviço Registrada.', 123)
-    }
-
-    console.log('Todos os checklists foram cadastrados com sucesso.')
-  } catch (error) {
-    console.error(error)
-    console.log('Erro ao cadastrar checklists.')
-  }
-}
 
 
 onMounted(() => {

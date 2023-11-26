@@ -1,9 +1,9 @@
 <template>
     <div class="componente-nav" @mouseleave="closeAllSubMenus">
-        <nav>
+        <nav v-if="admin">
             <div class="logo">
                 <div class="logo-item">
-                    <router-link to="/login" id="login" title="I para página Inicial" @click = 'sair'>
+                    <router-link to="/login" id="login" title="I para página Inicial" @click = 'sair' >
                         <div class="logo-link-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
                                 viewBox="0 0 16 16">
@@ -12,7 +12,7 @@
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                             </svg>
                             <div class="logo-link-item-p">
-                                <p>Usuário</p>
+                                <p>{{ nameUser }}</p>
                                 <p class="sair">Sair</p>
                             </div>
                             
@@ -122,6 +122,11 @@
                     </div>
                 </div>
                 <div class="submenu" v-show="showSubMenuOrdem">
+                    <router-link to="/consSolicitacoes" title="Analisar Solicitações">
+                        <div class="item-submenu">
+                            <p>Solicitações</p>
+                        </div>
+                    </router-link>
                     <router-link to="/cadOrdem" id="cadOrdem" title="Realizar um novo cadastro">
                         <div class="item-submenu">
                             <p>Cadastrar</p>
@@ -140,13 +145,86 @@
                 </div>
             </div>
         </nav>
+        <nav v-if="user">
+            <div class="logo">
+                <div class="logo-item">
+                    <router-link to="/login" id="login" title="I para página Inicial" @click = 'sair'>
+                        <div class="logo-link-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-circle"
+                                viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                            <div class="logo-link-item-p">
+                                <p>{{ nameUser }}</p>
+                                <p class="sair">Sair</p>
+                            </div>
+                            
+
+                        </div>
+                    </router-link>
+                </div>
+            </div>
+            <div class="divisor"></div>
+            <div class="nav-menu">
+                <div class="nav-item">
+                    <router-link to="/homeinicial" id="Home" title="Ir para página Inicial">
+                        <div class="link-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-house"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z" />
+                            </svg>
+                            <p>Home</p>
+                        </div>
+                    </router-link>
+                </div>
+            </div>
+        </nav>
     </div>
 </template>
 
 <script setup lang="ts">
 import { signOut } from '@/auth/auth';
 import '../assets/css/nav/nav.css'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import axios from 'axios'
+
+const nameUser = ref('')
+const token = localStorage.getItem('token')
+
+const role = localStorage.getItem('role')
+const admin = ref(false)
+const user = ref(false)
+
+function roleUser(){
+    if (role === 'ADMIN'){
+        admin.value = true
+    }else if(role === 'USER'){
+        user.value = true
+    }
+}
+
+async function userName(){
+    const userId = localStorage.getItem('user');
+    if(userId === '1'){
+        nameUser.value = 'Admin'
+    }else{
+        const response = await axios.get(`http://localhost:8080/prestador/usuario/${userId}`,{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        })
+        nameUser.value = response.data.prestadorNome
+    }
+    
+}
+
+onMounted(() => {
+    userName(),
+    roleUser()
+});
 
 const showSubMenuSegmento = ref(false)
 const toggleSubMenuSegmento = () => {
@@ -178,6 +256,7 @@ const closeAllSubMenus = () => {
 
 function sair(){
     signOut()
+    location.reload();
 }
 
 </script>

@@ -10,12 +10,21 @@ export async function signIn(email: string, password: string){
 
         const response = await axios.post('http://localhost:8080/auth/login', login);
         const token = response.data.jwt;
-        const acesso = response.data.user.authorities[0].authority;
-        const userId = response.data.user.usuarioId;
-        localStorage.setItem('token', token);
-        localStorage.setItem('acesso', acesso);
-        localStorage.setItem('user', userId);
+        
+        if(token === 'Autenticação falhou'){
+            localStorage.setItem('token', token);
+            return
+        }else{
+            const acesso = response.data.user.authorities[0].authority;
+            const userId = response.data.user.usuarioId;
+            const role = response.data.user.role
+            localStorage.setItem('token', token);
+            localStorage.setItem('acesso', acesso);
+            localStorage.setItem('user', userId);
+            localStorage.setItem('role', role);
 
+            return
+        }
     } catch (error) {
         console.log(error)
     }
@@ -24,6 +33,8 @@ export async function signIn(email: string, password: string){
 export function signOut(){
     localStorage.removeItem('token')
     localStorage.removeItem('acesso')
+    localStorage.removeItem('user')
+    localStorage.removeItem('role')
 }
 
 // export async function user(){

@@ -185,4 +185,5 @@ const toggleModal = (trigger: keyof typeof modalTriggers.value) => {
 onMounted(() => {
     loadTabela();
 });
+
 </script>

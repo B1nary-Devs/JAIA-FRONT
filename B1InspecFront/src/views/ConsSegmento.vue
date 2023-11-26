@@ -53,12 +53,12 @@
         </div>
     </div>
      <!--passe as variaveis ref dentro dos parametros DAS PROPS do modal-->
-     <ModalSegmento :idSegmento="idSegmento" :nomeSegmento="nomeSegmento"
+     <ModalSegmento :idSegmento="idSegmento" :nomeSegmento="nomeSegmento" :checklist = "checklistList"
         v-if="modalTriggers.buttonTriggers" :toggleModal="() => toggleModal('buttonTriggers')">
     </ModalSegmento>
 
     <!-- passe os valores ref dentro dos parametros DAS PROPS do modal -->
-    <ModalSegmentoEdit :idSegmento="idSegmento" :nomeSegmento="nomeSegmento"
+    <ModalSegmentoEdit :idSegmento="idSegmento" :nomeSegmento="nomeSegmento" :checklist = "checklistList"
         v-if="modalTriggersEdit.buttonTriggersEdit" :toggleModalEdit="() => toggleModalEdit('buttonTriggersEdit')">
     </ModalSegmentoEdit>
 
