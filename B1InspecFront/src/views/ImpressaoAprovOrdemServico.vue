@@ -91,7 +91,7 @@
             <div class="box-item-check" v-for="(item, index) in checklist" :key="index">
               <label>{{ item.checklistPersonalizadoNome }}</label>
               <p>{{ item.situacao }}</p>
-              <p v-if="item.observacao"> Motivo: {{ item.observacao }}</p>
+              <p v-if="item.situacao !== 'Aprovado' && item.observacao"> Motivo: {{ item.observacao }}</p>
             </div>
           </div>
         </div>
