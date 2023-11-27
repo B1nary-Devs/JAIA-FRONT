@@ -369,7 +369,7 @@ async function cadastrarOrdemServico() {
    
     cadastrarChecklistPersonalizado(idOrdemServico)
 
-
+    enviarEmail(clienteId)
 
 
     exibirPopup('Cadastro Realizado com Sucesso', 'Nova Ordem de Serviço Cadastrada.', 123);
@@ -378,6 +378,33 @@ async function cadastrarOrdemServico() {
     alert('Erro ao cadastrar a ordem de serviço.');
   }
 }
+
+
+
+async function enviarEmail(idcliente) {
+
+    try {
+
+        let email = prompt("Email para receber o link personalizado:");
+        
+
+        await axios.post("http://localhost:8080/email/cliente",
+            {
+                email: email,
+                id: idcliente
+            },
+            {
+                headers: {
+                'Authorization': `Bearer ${token}`
+                }
+            });
+    
+    }
+    catch (ex) {
+        erro.value = (ex as Error).message;
+    }
+}
+
 
 async function cadastrarChecklistPersonalizado(idOrdemServico) {
   const segmentoId = segmentoSelecionado.value;
