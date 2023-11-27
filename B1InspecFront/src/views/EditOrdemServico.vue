@@ -51,7 +51,8 @@
             </li>
           </ul>
           <p>{{ item.situacao }}</p>
-          <p>{{ item.observacao }}</p>
+          <input v-if="item.situacao !== 'Aprovado'" v-model="item.observacao" placeholder="Informe o motivo da reprovação" />
+
         </div>
 
       </div>
