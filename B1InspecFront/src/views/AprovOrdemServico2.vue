@@ -1,50 +1,48 @@
 <template>
-  <div class="form-cadastro">
-    <div class="form-title">
+  <div class="form-cadastro-check">
+    <div class="form-title-check">
       <h1>Ordem de Serviço N° {{ $route.params.idOrdem }}</h1>
     </div>
-    <div class="form-body">
-      <div class="input-group">
-        <div class="input-box">
+    <div class="form-body-check">
+      <div class="input-group-check">
+        <div class="input-box-check">
           <label>Data de Abertura:</label>
           <p>{{ $route.params.dataAbertura }}</p>
         </div>
 
-        <div class="input-box">
+        <div class="input-box-check">
           <label>Data de Fechamento:</label>
           <p>{{ $route.params.dataFechamento }}</p>
         </div>
 
-        <div class="input-box">
+        <div class="input-box-check">
           <label>Empresa:</label>
           <p>{{ $route.params.empresa }}</p>
         </div>
 
-        <div class="input-box">
+        <div class="input-box-check">
           <label>Status:</label>
           <p>{{ $route.params.status }}</p>
         </div>
 
-        <div class="input-box">
+        <div class="input-box-check">
           <label>Descrição:</label>
           <p>{{ $route.params.descricao }}</p>
         </div>
 
-        <div class="input-box">
+        <div class="input-box-check">
           <label>Segmento:</label>
           <p>{{ $route.params.segmento }}</p>
         </div>
 
-        <div class="input-box">
+        <div class="input-box-check">
           <label>Prestador:</label>
           <p>{{ $route.params.prestador }}</p>
         </div>
 
-        <div class="input-box">
+        <div class="input-box-check">
           <label for="id_checklist">Checklist:</label>
-        </div>
-
-        <div class="checklist-body-items" v-for="(item, index) in checklist" :key="index">
+          <div class="checklist-body-items" v-for="(item, index, stats) in checklist" :key="index">
           <p>{{ item.checklistPersonalizadoNome }}</p>
           <button class="aprovar"
             @click="() => { exibicaoInput(false); aprovacao(item.checklistPersonalizadoNome, 'Aprovado', item.checklistPersonalizadoId); }">Aprovar</button>
@@ -55,6 +53,7 @@
             v-if="index === campo">
             <span class="button-text">Enviar</span>
           </button>
+        </div>
         </div>
 
 
@@ -67,7 +66,7 @@
 import { ref, onMounted, defineProps } from 'vue'
 import axios from 'axios'
 import { useRoute } from 'vue-router';
-import '../assets/css/aprovOrdemServico/aprovOrdemServico.css'
+import '../assets/css/aprovCheck/aprovCheck.css'
 
 const token = localStorage.getItem('token')
 
@@ -85,11 +84,11 @@ const idCliente = ref()
 const idPrestador = ref()
 const erro = ref();
 const dataHoraBrasileira = ref()
+const statsCheck = ref ()
 
 
 function exibicaoInput(index: boolean) {
   campo.value = index;
-  console.log(idSegmento.value);
 
 }
 
@@ -158,6 +157,7 @@ async function aprovacao(nome: string, sts: string, id: string) {
 //CADASTRAR NOVO VOCABULO
 async function conclusaoOrdem() {
  dataHoraBrasileira.value = String(formatarDataHora());
+ console.log(dataHoraBrasileira.value);
   try {
     await axios.put(`http://localhost:8080/ordemservico/${route.params.idOrdem}`,
       {

@@ -32,7 +32,7 @@
                     
                 </div>
                 <div class="card-cons-actions">
-                    <router-link v-if="os.dataFechamento" :to="{ 
+                    <router-link v-if="os.dataFechamento && os.descricao" :to="{ 
                             name: 'aprovOrdemServico2', 
                             params: { 
                                 dataAbertura: os.dataAbertura,
@@ -68,7 +68,7 @@
                                 segmento: os.prestador[0].segmento.nome, 
                                 prestador: os.prestador[0].prestadorNome,
                                 idSegmento: os.prestador[0].segmento.id,
-                                descricao: os.descricao,
+                                descricao:os.descricao,
                                 idOrdem: os.servicoId,
 
                             }
