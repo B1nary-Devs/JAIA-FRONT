@@ -42,6 +42,7 @@
                                 segmentoNome: os.segmento.nome,
                                 descricao: os.descricao,
                                 cnpj: os.cnpj,
+                                idSolicitacao: os.solicitacaoId
                             }
                             }">
                     <button
@@ -96,6 +97,8 @@ async function loadTabela() {
 
         const response = await axios.get('http://localhost:8080/solicitacao',{});
         ordem.value = response.data
+        console.log(response.data);
+        
     } catch (error) {
         console.error('Ocorreu um erro ao coletar os ordem:', error);
     }

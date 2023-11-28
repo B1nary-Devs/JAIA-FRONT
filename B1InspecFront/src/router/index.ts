@@ -254,7 +254,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/AprovSolicitacoes/:idEmpresa/:nomeEmpresa/:status/:idSegmento/:segmentoNome/:descricao/:cnpj',
+      path: '/AprovSolicitacoes/:idEmpresa/:nomeEmpresa/:status/:idSegmento/:segmentoNome/:descricao/:cnpj/:idSolicitacao',
       name: 'AprovSolicitacoes',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route

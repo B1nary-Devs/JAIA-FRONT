@@ -1,8 +1,7 @@
 <template>
     <div class="form-cadastro">
       <div class="form-title">
-        <h1>Ordem de Serviço</h1>
-        <span>> Cadastro</span>
+        <h1>Aprovação de Solicitações</h1>
       </div>
       <div class="form-body">
   
@@ -330,8 +329,9 @@
         dataFechamento: null,
         status: "Em Andamento",
         descricao: descricao.value, 
-        cliente: clienteId,
-        prestadores: [prestador.value], 
+        cliente: client.value,
+        prestadores: [prestador.value],
+        Solicitacao: IdSolicitacao.value
   
       };
   
@@ -352,7 +352,10 @@
   
       conclusaoSolicitacao()
 
-      enviarEmail(clienteId)
+      console.log(clientId.value);
+      
+
+      enviarEmail(client.value)
 
       exibirPopup('Cadastro Realizado com Sucesso', 'Nova Ordem de Serviço Cadastrada.', 123);
     } catch (error) {
@@ -361,7 +364,7 @@
     }
   }
   
-async function enviarEmail(idcliente) {
+async function enviarEmail(idcliente: bigint) {
 
   try {
       let email = prompt("Email para receber o link personalizado:");
@@ -384,11 +387,7 @@ async function enviarEmail(idcliente) {
   }
 }
 
-
-
-
-
-  async function cadastrarChecklistPersonalizado(idOrdemServico) {
+  async function cadastrarChecklistPersonalizado(idOrdemServico: BigInt) {
     const segmentoId = segmentoSelecionado.value;
   
     try {
