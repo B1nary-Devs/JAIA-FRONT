@@ -10,7 +10,7 @@
           <img src="../assets/img/home/logo.png" alt="">
         </div>
         <div class="page-link">
-          <RouterLink to="">
+          <RouterLink to="/novaOrdem">
             <div class="link-alternativo">
               <p>Nova Ordem</p>
             </div>

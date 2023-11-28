@@ -272,7 +272,19 @@ const router = createRouter({
           next('/login');
         }
       }
-    }
+    },
+    {
+      path: '/novaOrdem',
+      name: 'novaOrdem',
+      component: () => import('../views/FormularioPerson.vue'),
+      beforeEnter (_, __, next) { // Impede usuários não assinados
+        if (!verifyTokenAcesso()) {       // de acessar a página Home.
+          next();
+          return;
+        }
+        next('/')
+      }
+    },
   ]
 })
 
