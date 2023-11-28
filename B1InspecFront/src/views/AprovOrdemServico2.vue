@@ -181,8 +181,7 @@ async function conclusaoOrdem() {
 //função de captura de dados
 async function dadosResponsaveis() {
     try {                                  // COLOCAR URL DO GITPOD SERVIDOR SPRING //
-        od.value = (await axios.get(`http://localhost:8080/ordemservico/cliente/${route.params.idOrdem}`)).data;
-        idCliente.value = od.value[0].cliente.clienteId;
+        od.value = (await axios.get(`http://localhost:8080/ordemservico/${route.params.idOrdem}`)).data;
         idPrestador.value = od.value[0].prestador[0].prestadorId
         
     }
@@ -213,6 +212,9 @@ onMounted(() => {
   idOrdem.value = route.params.idOrdem
   idSegmento.value = route.params.idSegmento
   status.value = route.params.status
+  idCliente.value = route.params.idCliente
+  console.log(idCliente.value);
+  
 
 })
 

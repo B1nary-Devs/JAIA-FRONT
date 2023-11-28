@@ -44,6 +44,7 @@
                                 idSegmento: os.prestador[0].segmento.id,
                                 descricao: os.descricao,
                                 idOrdem: os.servicoId,
+                                idCliente: os.cliente.clienteId
 
                             }
                             }">
@@ -70,6 +71,7 @@
                                 idSegmento: os.prestador[0].segmento.id,
                                 descricao:os.descricao,
                                 idOrdem: os.servicoId,
+                                idCliente: os.cliente.clienteId
 
                             }
                             }">
@@ -121,6 +123,8 @@ async function capturarOrdem(id: string) {
             }
         });
         const ordemData = response.data;
+        console.log(response.data);
+        
 
         idOrdem.value = ordemData.servicoId;
         dtaAbertura.value = ordemData.dataAbertura;
@@ -162,6 +166,8 @@ async function loadTabela() {
             }
         });
         const data = response.data;
+        console.log(response.data);
+        
         
         // Preencha o check aqui antes de definir a ordem
         check.value = [];
