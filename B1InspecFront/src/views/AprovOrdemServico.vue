@@ -44,7 +44,8 @@
                                 idSegmento: os.prestador[0].segmento.id,
                                 descricao: os.descricao,
                                 idOrdem: os.servicoId,
-                                idCliente: os.cliente.clienteId
+                                idCliente: os.cliente.clienteId,
+                                idPrestador: os.prestador[0].prestadorId,
 
                             }
                             }">
@@ -71,7 +72,8 @@
                                 idSegmento: os.prestador[0].segmento.id,
                                 descricao:os.descricao,
                                 idOrdem: os.servicoId,
-                                idCliente: os.cliente.clienteId
+                                idCliente: os.cliente.clienteId,
+                                idPrestador: os.prestador[0].prestadorId,
 
                             }
                             }">

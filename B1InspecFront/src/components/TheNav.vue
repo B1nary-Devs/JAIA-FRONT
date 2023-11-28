@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 <div class="submenu" v-show="showSubMenuSolicitacao">
-                    <router-link to="/solicitacao" id="solicitacao" title="Visualizar solicitacao">
+                    <router-link to="/consSolicitacoes" id="solicitacao" title="Visualizar solicitacao">
                         <div class="item-submenu">
                             <p>Analisar</p>
                         </div>
