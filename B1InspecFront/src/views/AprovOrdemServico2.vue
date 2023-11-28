@@ -101,7 +101,6 @@ async function capturarOrdem() {
       }
     });
     const ordemData = response.data;
-    dadosResponsaveis()
     checklist.value = ordemData.checklistPersonalizados.map(item => {
       return {
         ...item,
@@ -130,7 +129,6 @@ async function aprovacao(nome: string, sts: string, id: string) {
       }
     });
 
-    dadosResponsaveis()
     // Atualizar manualmente o estado do checklist modificado
     const index = checklist.value.findIndex(item => item.checklistPersonalizadoId == id);
     if (index !== -1) {
@@ -178,19 +176,6 @@ async function conclusaoOrdem() {
   }
 }
 
-//função de captura de dados
-async function dadosResponsaveis() {
-    try {                                  // COLOCAR URL DO GITPOD SERVIDOR SPRING //
-        od.value = (await axios.get(`http://localhost:8080/ordemservico/${route.params.idOrdem}`)).data;
-        idPrestador.value = od.value[0].prestador[0].prestadorId
-        
-    }
-    catch (ex) {
-        erro.value = (ex as Error).message;
-        alert(erro.value)
-    }
-}
-
 function formatarDataHora() {
     const agora = new Date();
 
@@ -213,6 +198,7 @@ onMounted(() => {
   idSegmento.value = route.params.idSegmento
   status.value = route.params.status
   idCliente.value = route.params.idCliente
+  idPrestador.value = route.params.idPrestador
   console.log(idCliente.value);
   
 
