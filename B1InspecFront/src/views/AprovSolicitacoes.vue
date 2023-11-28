@@ -329,7 +329,7 @@
         dataFechamento: null,
         status: "Em Andamento",
         descricao: descricao.value, 
-        cliente: client.value,
+        cliente: 1,
         prestadores: [prestador.value],
         Solicitacao: IdSolicitacao.value
   
@@ -355,7 +355,7 @@
       console.log(clientId.value);
       
 
-      enviarEmail(client.value)
+      enviarEmail(1)
 
       exibirPopup('Cadastro Realizado com Sucesso', 'Nova Ordem de Serviço Cadastrada.', 123);
     } catch (error) {
@@ -364,7 +364,7 @@
     }
   }
   
-async function enviarEmail(idcliente: bigint) {
+async function enviarEmail(idcliente) {
 
   try {
       let email = prompt("Email para receber o link personalizado:");

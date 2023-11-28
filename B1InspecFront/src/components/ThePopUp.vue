@@ -26,7 +26,6 @@
 
 <script lang="ts">
 import { ref } from 'vue';
-import '../assets/css/popup/popup.css'
 
 const popup = ref(false)
 const mensagem = ref("");
