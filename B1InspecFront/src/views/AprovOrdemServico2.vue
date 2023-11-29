@@ -137,12 +137,14 @@ async function aprovacao(nome: string, sts: string, id: string) {
 
     alert('Atualizado');
 
-    // Verificar se todos os itens são 'Aprovado'
-    let todosAprovados = checklist.value.every(item => item.situacao === 'Aprovado');
+  // Verificar se todos os itens são 'Aprovado' ou 'Reprovado'
+  let todosAprovadosOuReprovados = checklist.value.every(item =>
+    item.situacao === 'Aprovado' || item.situacao === 'Reprovado'
+  );
 
-    if (todosAprovados) {
-      conclusaoOrdem()
-    }
+  if (todosAprovadosOuReprovados) {
+    conclusaoOrdem();
+  }
 
   } catch (error) {
     console.error('Ocorreu um erro ao atualizar a ordem:', error);
