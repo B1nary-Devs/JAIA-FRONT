@@ -113,6 +113,7 @@
       <div class="form-submit">
         <button @click="" class="button-return">Voltar</button>
         <button @click="cadastrarOrdemServico">Cadastrar</button>
+        <button @click="reprovaSolicitacao()">Reprovar</button>
       </div>
     </div>
 
@@ -483,6 +484,30 @@ async function conclusaoSolicitacao() {
   catch (ex) {
     alert('Errado')
   }
+}
+
+async function reprovaSolicitacao() {
+
+console.log('====================================');
+console.log(IdSolicitacao.value);
+console.log('====================================');
+try {
+  await axios.put(`http://localhost:8080/solicitacao/${IdSolicitacao.value}`,
+    {
+
+      nomeEmpresa: nome.value,
+      cnpj: cnpj.value,
+      resultado: "Reprovado",
+      descricao: descricao.value,
+      segmento: segmentoSelecionado.value
+    });
+
+  alert('Solicitacão Finalizada Finalizada.')
+
+}
+catch (ex) {
+  alert('Errado')
+}
 }
 
 onMounted(() => {
