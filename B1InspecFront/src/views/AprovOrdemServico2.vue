@@ -77,6 +77,11 @@ const observacao = ref('')
 const status = ref('')
 const nomecheck = ref('')
 const route = useRoute();
+const idCliente = ref()
+const idPrestador = ref()
+const erro = ref();
+const dataHoraBrasileira = ref()
+const statsCheck = ref ()
 
 
 function exibicaoInput(index: boolean) {

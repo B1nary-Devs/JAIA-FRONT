@@ -16,7 +16,8 @@
                         </div>
                         <div class="card-box">
                             <p>Data de Fechamento:</p>
-                            <span>{{ os.dataFechamento }}</span>
+                            <span v-if="os.dataFechamento">{{ os.dataFechamento }}</span>
+                            <span v-else>---</span>
                         </div>
                     </div>
                     <div class="card-box-group">
@@ -31,10 +32,11 @@
                     </div>
                 </div>
                 <div class="card-cons-actions">
-                    <router-link :to="{ 
+                    <router-link v-if="os.dataFechamento && os.descricao" :to="{ 
                             name: 'ImpressaoOrdem', 
                             params: { 
-                                dataAbertura: os.dataAbertura, 
+                                dataAbertura: os.dataAbertura,
+                                dataFechamento: os.dataFechamento, 
                                 empresa: os.cliente.clienteNome,  
                                 status: os.status,
                                 segmento: os.prestador[0].segmento.nome, 
@@ -56,23 +58,85 @@
                         </svg>
                     </button>
                     </router-link>
-                    <button @click="() => {capturarOrdem(os.servicoId); toggleModalEdit('buttonTriggersEdit')}" class="card-button-edit">
+                    <router-link v-else :to="{ 
+                            name: 'ImpressaoOrdem', 
+                            params: { 
+                                dataAbertura: os.dataAbertura,
+                                dataFechamento: '---', 
+                                empresa: os.cliente.clienteNome,  
+                                status: os.status,
+                                segmento: os.prestador[0].segmento.nome, 
+                                prestador: os.prestador[0].prestadorNome,
+                                idSegmento: os.prestador[0].segmento.id,
+                                descricao: 'N/D',
+                                idOrdem: os.servicoId,
+
+                            }
+                            }">
+                    <button
+                        class="card-button-view">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                            <path
+                                d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                        </svg>
+                    </button>
+                    </router-link>
+                    <router-link v-if="os.dataFechamento && os.descricao" :to="{
+                         name: 'editOrdem', 
+                            params: { 
+                                dataAbertura: os.dataAbertura,
+                                dataFechamento: os.dataFechamento, 
+                                empresa: os.cliente.clienteNome,  
+                                status: os.status,
+                                segmento: os.prestador[0].segmento.nome, 
+                                prestador: os.prestador[0].prestadorNome,
+                                idSegmento: os.prestador[0].segmento.id,
+                                descricao: os.descricao,
+                                idOrdem: os.servicoId,
+
+                            }
+
+                    }">
+                    <button class="card-button-edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
                             viewBox="0 0 16 16">
                             <path
                                 d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
                         </svg>
                     </button>
+                    </router-link>
+                    <router-link v-else :to="{
+                         name: 'editOrdem', 
+                            params: { 
+                                dataAbertura: os.dataAbertura,
+                                dataFechamento: '---', 
+                                empresa: os.cliente.clienteNome,  
+                                status: os.status,
+                                segmento: os.prestador[0].segmento.nome, 
+                                prestador: os.prestador[0].prestadorNome,
+                                idSegmento: os.prestador[0].segmento.id,
+                                descricao: os.descricao,
+                                idOrdem: os.servicoId,
+
+                            }
+
+                    }">
+                    <button class="card-button-edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                        </svg>
+                    </button>
+                    </router-link>
                     <ModalOrdem :id="idOrdem" :prestador="prestadorOrdem" :segmento="segmentoOrdem" :cliente="cliente"
                         :desc="desc" :status="staus" :dtaAbertura="dtaAbertura" :dta-fechamento="dtaFechamento" :check = "check"
                         v-if="modalTriggers.buttonTriggers" :toggleModal="() => toggleModal('buttonTriggers')">
                         <h2>Meu modal</h2>
                     </ModalOrdem>
-
-                    <ModalOrdemEdit :id="idOrdem" :prestador="prestadorOrdem" :segmento="segmentoOrdem" :cliente="cliente"
-                        :desc="desc" :status="staus" :dtaAbertura="dtaAbertura" :check = "check" :dta-fechamento="dtaFechamento" :clienteId = "clienteId" :prestadorId = "prestadorId" v-if="modalTriggersEdit.buttonTriggersEdit" :toggleModalEdit="() => toggleModalEdit('buttonTriggersEdit')">
-                        <h2>Meu modal</h2>
-                    </ModalOrdemEdit>
 
                 </div>
             </div>
@@ -85,7 +149,6 @@ import '../assets/css/Ordem/consultaOrdem.css'
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import ModalOrdem from '../components/ModalOrdem.vue';
-import ModalOrdemEdit from '@/components/ModalOrdemEdit.vue';
 
 const ordem = ref([]);
 
@@ -172,17 +235,8 @@ const toggleModal = (trigger: keyof typeof modalTriggers.value) => {
 };
 
 
-/* ------------MODAL DE EDITAR ORDEM----------------------*/
-const modalTriggersEdit = ref<{ [key: string]: boolean }>({
-    buttonTriggersEdit: false
-});
-
-const toggleModalEdit = (trigger: keyof typeof modalTriggersEdit.value) => {
-    modalTriggersEdit.value[trigger] = !modalTriggersEdit.value[trigger];
-    console.log(modalTriggersEdit.value)
-};
-
 onMounted(() => {
     loadTabela();
 });
+
 </script>

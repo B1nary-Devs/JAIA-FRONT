@@ -110,7 +110,11 @@ const props = defineProps({
 
 async function coletarCategoria() {
     try {
-        const response = await axios.get('http://localhost:8080/segmento');
+        const response = await axios.get('http://localhost:8080/segmento',{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        });
         categoria.value = response.data; // Atribuir diretamente à ref
         console.log(categoria.value);
     } catch (error) {
@@ -135,8 +139,23 @@ const nome = ref(nomeProps);
 const cnpj = ref(cnpjProps);
 const email = ref(emailProps);
 const senha = ref();
+const idcliente = ref();
 const categoriaSelecionada = ref(null); // Inicialize com um valor padrão ou null
 const token = localStorage.getItem('token')
+
+async function coletarIdprestador() {
+  try {
+    const response = await axios.get(`http://localhost:8080/prestador/${id.value}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    idcliente.value = response.data.usuario.usuarioId;
+  } catch (error) {
+    console.error('Ocorreu um erro ao coletar o segmento:', error);
+  }
+}
+
 
 async function atualizarPrestador() {
     // Verifique se uma categoria foi selecionada
@@ -152,8 +171,7 @@ async function atualizarPrestador() {
         await axios.put(rota, {
             prestadorNome: nome.value,
             cnpj: cnpj.value,
-            email: email.value,
-            senha: senha.value,
+            usuarioId: idcliente.value,
             segmentoId: categoriaSelecionada.value
         },{
             headers: {
@@ -165,13 +183,14 @@ async function atualizarPrestador() {
 
     } catch (error) {
         console.error('Ocorreu um erro ao cadastrar o prestador:', error);
-        alert('Erro ao cadastrar o prestador.');
+        alert('Erro ao atualizar o prestador.');
     }
 }
 
 
 onMounted(() => {
     coletarCategoria();
+    coletarIdprestador();
 })
 
 </script>
