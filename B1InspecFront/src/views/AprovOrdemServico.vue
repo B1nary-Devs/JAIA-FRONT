@@ -162,7 +162,17 @@ async function capturarOrdem(id: string) {
 
 async function loadTabela() {
     try {
-        const response = await axios.get('http://localhost:8080/ordemservico',{
+        const idUser = localStorage.getItem('user')
+
+        const responseId = await axios.get(`http://localhost:8080/prestador/usuario/${idUser}`,{
+            headers: {
+                'Authorization': `Bearer ${token}` 
+            }
+        })
+
+        const id = responseId.data.prestadorId
+
+        const response = await axios.get(`http://localhost:8080/ordemservico/prestador/${id}`,{
             headers: {
                 'Authorization': `Bearer ${token}` 
             }
