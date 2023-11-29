@@ -17,9 +17,6 @@
                 <span class="title">{{ title }}</span>
                 <p class="message">{{ mensagem }}</p>
             </div>
-            <div class="actions">
-                <button class="button-ok" @click="ocultarPopup">Ok</button>
-            </div>
         </div>
     </div>
 </template>
