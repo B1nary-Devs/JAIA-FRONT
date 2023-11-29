@@ -112,7 +112,7 @@
 
 
       <div class="form-submit">
-        <button @click="" class="button-return">Voltar</button>
+        <button @click="returnarPag" class="button-return">Voltar</button>
         <button @click="cadastrarOrdemServico" >Cadastrar</button>
       </div>
     </div>
@@ -185,12 +185,18 @@ function removerItem(index) {
   checklistsAtribuidos.value.splice(index, 1);
 }
 
+function returnarPag(){
+  window.history.back();
+}
 
 function radio(valor: boolean){
   radioB.value = valor;
   console.log(clienteSelecionado.value);
   const valor2 = clienteSelecionado.value;
   console.log(`eu sou o valor ${valor2}`);
+  clienteCNPJ.value = "";
+  descricao.value = "";
+  checklist.value = "";
 }
 
 async function coletarSegmento() {
